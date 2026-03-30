@@ -1,0 +1,33 @@
+# IDE-specific files (IntelliJ, Eclipse, etc.)
+.idea/
+.idea/.gitignore # IntelliJ's internal .gitignore
+*.iml
+*.ipr
+*.iws
+
+# Compilation outputs
+/out/
+/build/
+target/
+bin/
+**/*.class
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Operating System files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Maven-specific
+/target/
+log/
+pom.xml.tag
+pom.xml.next
+pom.xml.bak
+pom.xml.versions
+pom.xml.snapshots
+release.properties
