@@ -1,0 +1,37 @@
+<!-- actions.xml -->
+<!--    0 > act on others
+        1 > act on self      
+                            -->
+<actions>
+    <action id="1">
+        <name>Basic Attack</name>
+        <desc></desc>
+        <type>0</type>
+        <val>3</val>
+    </action>
+    <action id="2">
+        <name>Basic Defend</name>
+        <type>1</type>
+        <val>3</val>
+    </action>
+    <action id="3">
+        <name>Stun</name>
+        <type>0</type>
+        <val>1</val>
+    </action>
+    <action id="4">
+        <name>Use Healing Potion</name>
+        <type>1</type>
+        <val>100</val>
+    </action>
+    <action id="5">
+        <name>Use Power Stone</name>
+        <type>1</type>
+        <val>1</val>
+    </action>
+    <action id="6">
+        <name>Use Smoke Bomb</name>
+        <type>0</type>
+        <val>2</val>
+    </action>
+</actions>
