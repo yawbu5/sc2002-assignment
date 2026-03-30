@@ -1,6 +1,4 @@
-{
-  "actions": {
-    "action": [
+    [
       {
         "name": "BasicAttack",
         "desc": "Deals damage to an enemy.",
@@ -65,5 +63,3 @@
         "cooldown": 0
       }
     ]
-  }
-}

@@ -23,12 +23,12 @@ public class Ability {
         this.cooldown = cooldown;
     }
 
-    public Ability(AbilityConfig cfg) {
-        this.name = cfg.name;
-        this.desc = cfg.desc;
-        this.type = cfg.type;
-        this.aoe = cfg.aoe;
-        this.val = cfg.val;
-        this.cooldown = cfg.cooldown;
-    }
+    //public Ability(AbilityConfig cfg) {
+    //    this.name = cfg.name;
+    //    this.desc = cfg.desc;
+    //    this.type = cfg.type;
+    //    this.aoe = cfg.aoe;
+    //    this.val = cfg.val;
+    //    this.cooldown = cfg.cooldown;
+    //}
 }
