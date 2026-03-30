@@ -1,4 +1,9 @@
 notes.md
+# vim
+*.swp
+*.swo
+*.sub
+
 # IDE-specific files (IntelliJ, Eclipse, etc.)
 .idea/
 .idea/.gitignore # IntelliJ's internal .gitignore
