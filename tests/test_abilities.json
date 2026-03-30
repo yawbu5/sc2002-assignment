@@ -23,7 +23,7 @@
         "type": "Item",
         "aoe": true,
         "val": "1",
-        "cooldown":
+        "cooldown": 1
       }
     ]
   }
