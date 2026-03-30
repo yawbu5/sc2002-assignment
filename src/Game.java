@@ -23,6 +23,5 @@ public class Game {
     }
 
     private void getGameState() {
-        return gState;
     }
 }
