@@ -22,7 +22,6 @@ bin/
 *.log
 *.tmp
 *.bak
-*.swp
 
 # Operating System files
 .DS_Store # macOS
