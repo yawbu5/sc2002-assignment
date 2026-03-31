@@ -1,0 +1,65 @@
+[
+  {
+    "name": "BasicAttack",
+    "desc": "Deals damage to an enemy.",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "val": "1",
+    "cooldown": 0
+  },
+  {
+    "name": "Defend",
+    "desc": "Reduces incoming damage.",
+    "type": "ACTION_SELF",
+    "aoe": false,
+    "val": "3",
+    "cooldown": 0
+  },
+  {
+    "name": "Stun",
+    "desc": "Prevent an enemy from doing actions for {val} turns.",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "val": "1",
+    "cooldown": 0
+  },
+  {
+    "name": "Healing Potion",
+    "desc": "Heals for {val} HP.",
+    "type": "ITEM",
+    "aoe": false,
+    "val": "100",
+    "cooldown": 0
+  },
+  {
+    "name": "Power Stone",
+    "desc": "Triggers special ability once.",
+    "type": "ITEM",
+    "aoe": false,
+    "val": "1",
+    "cooldown": 0
+  },
+  {
+    "name": "Smoke Bomb",
+    "type": "ITEM",
+    "aoe": false,
+    "val": "2",
+    "cooldown": 0
+  },
+  {
+    "name": "Shield Bash",
+    "desc": "Warrior Special Ability",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "val": 1,
+    "cooldown": 0
+  },
+  {
+    "name": "Arcane Blast",
+    "desc": "Wizard Special Ability",
+    "type": "ACTION_TO",
+    "aoe": true,
+    "val": 1,
+    "cooldown": 0
+  }
+]
