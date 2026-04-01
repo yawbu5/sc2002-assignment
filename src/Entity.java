@@ -5,14 +5,19 @@ public class Entity {
         ENEMY,
         PLAYER
     }
-    private int id;
-    private EntityType type;
-    private int currHp, maxHp, attack, defence, speed;
 
-    public Entity(int id, EntityType type, int hp, int attack, int defence, int speed) {
-        this.id = id;
+    public String name;
+    public EntityType type;
+    public int currHp;
+    public int maxHp;
+    public int attack;
+    public int defence;
+    public int speed;
+
+    public Entity(String name, EntityType type, int hp, int attack, int defence, int speed) {
+        this.name = name;
         this.type = type;
-        this.maxHp = hp;
+        this.maxHp = this.currHp = hp;
         this.attack = attack;
         this.defence = defence;
         this.speed = speed;

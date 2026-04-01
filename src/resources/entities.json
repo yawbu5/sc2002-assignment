@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Warrior",
+    "type": "PLAYER",
+    "hp": 260,
+    "attack": 40,
+    "defence": 20,
+    "speed": 30,
+    "special": 7
+  },
+  {
+    "name": "Wizard",
+    "type": "PLAYER",
+    "hp": 200,
+    "attack": 50,
+    "defence": 10,
+    "speed": 20,
+    "special": 8
+  },
+  {
+    "name": "Goblin",
+    "type": "ENEMY",
+    "hp": 55,
+    "attack": 35,
+    "defence": 15,
+    "speed": 25,
+    "special": null
+  },
+  {
+    "name": "Wolf",
+    "type": "ENEMY",
+    "hp": 40,
+    "attack": 45,
+    "defence": 5,
+    "speed": 35,
+    "special": null
+  }
+]
