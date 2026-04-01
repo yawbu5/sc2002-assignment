@@ -7,6 +7,7 @@ public class Ability {
         ABILITY,
         ITEM
     }
+
     public String name;
     public String desc;
     public AbilityType type;
@@ -22,13 +23,4 @@ public class Ability {
         this.val = val;
         this.cooldown = cooldown;
     }
-
-    //public Ability(AbilityConfig cfg) {
-    //    this.name = cfg.name;
-    //    this.desc = cfg.desc;
-    //    this.type = cfg.type;
-    //    this.aoe = cfg.aoe;
-    //    this.val = cfg.val;
-    //    this.cooldown = cfg.cooldown;
-    //}
 }
