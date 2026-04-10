@@ -16,19 +16,40 @@ public class BattleEngine {
     }
     private Entity player;
     private List<Entity> entities;
-    private List<Ability> abilities;
     private Wave waves;
     private BATTLE_STATE bState;
     private GameView view;
     private GameResources db;
 
-    public BattleEngine() {
+    public BattleEngine(GameResources db) {
+        this.db = db;
         this.bState = BATTLE_STATE.LOADING;
     }
 
-    public boolean start(String difficulty_name, String chosen_character) {
+    // TODO: prepare items
+    public boolean start() {
+        String difficulty, character;
+        while (true) {
+            view.DisplayMessage("Select a difficulty");
+            for (int i = 0; i < db.waves.size(); i++) {
+                view.DisplayMessage((i + 1) + ": " + db.waves.get(i).name);
+            }
+            difficulty = db.waves.get(Integer.parseInt(view.GetUserInput("")) - 1).name;
+
+            view.DisplayMessage("Select a character");
+            for (int i = 0; i < 2; i++) {
+                view.DisplayMessage((i + 1) + ": " + db.entities.get(i).name);
+            }
+            character = db.entities.get(Integer.parseInt(view.GetUserInput("")) - 1).name;
+
+            if (!(difficulty == null || character == null)) {
+                break;
+            } else {
+                view.DisplayMessage("ERROR: INVALID SETTINGS, TRY AGAIN");
+            }
+        }
         for (Wave w : db.waves) {
-            if (w.name.equals(difficulty_name)) {
+            if (w.name.equals(difficulty)) {
                 this.waves = w;
             }
         }
@@ -36,7 +57,7 @@ public class BattleEngine {
         if (this.waves == null) return false;
 
         for (Entity e : db.entities) {
-            if (e.name.equals(chosen_character)) {
+            if (e.name.equals(character)) {
                 player = Entity.CreateEntity(e);
             }
         }
