@@ -8,6 +8,7 @@ public class Ability {
         ITEM
     }
 
+    public String id;
     public String name;
     public String desc;
     public AbilityType type;
@@ -15,7 +16,8 @@ public class Ability {
     public int val;
     public int cooldown;
 
-    public Ability(String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
+    public Ability(String id, String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
+        this.id = id;
         this.name = name;
         this.desc = desc;
         this.type = type;
