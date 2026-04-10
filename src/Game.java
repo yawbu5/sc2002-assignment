@@ -5,16 +5,7 @@ import src.view.ConsoleView;
 import src.view.GameView;
 
 public class Game {
-    public enum GAME_STATE {
-        MENU,
-        LOADING,
-        BATTLE,
-        RESULT
-    }
-
     public static void main(String[] args) {
-        GAME_STATE gState = GAME_STATE.MENU;
-
         BattleEngine engine = new BattleEngine();
         GameView view = new ConsoleView();
 
