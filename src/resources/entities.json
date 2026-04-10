@@ -34,7 +34,9 @@
     "attack": 35,
     "defence": 15,
     "speed": 25,
-    "abilities": []
+    "abilities": [
+      "basicattack"
+    ]
   },
   {
     "name": "Wolf",
@@ -43,6 +45,8 @@
     "attack": 45,
     "defence": 5,
     "speed": 35,
-    "abilities": []
+    "abilities": [
+      "basicattack"
+    ]
   }
 ]
