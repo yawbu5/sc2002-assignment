@@ -42,4 +42,13 @@ public class JSONLoader {
 
         return items;
     }
+
+    //public static <T> Map<Integer, T> convertListToMap(List<T> list) {
+    //    Map<Integer, T> map = new HashMap<>();
+    //    int count = 0;
+    //    for (T item: list) {
+    //        map.put(count++, item);
+    //    }
+    //    return map;
+    //}
 }

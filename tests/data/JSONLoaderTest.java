@@ -19,4 +19,11 @@ public class JSONLoaderTest {
         Assert.assertEquals("Charlie", dummies.get(2).name);
         Assert.assertEquals(4, dummies.get(3).id);
     }
+
+    @Test
+    public void testLoadListReturnsNothingWhenInvalidInputIsGiven() {
+        List<DummyClass> dummies = JSONLoader.loadList("blah", DummyClass.class);
+
+        Assert.assertNull(dummies);
+    }
 }
