@@ -1,27 +1,33 @@
 package src;
 
+import src.data.GameResources;
+import src.view.ConsoleView;
+import src.view.GameView;
+
 public class Game {
-    public static enum GAME_STATE {
+    public enum GAME_STATE {
         MENU,
+        LOADING,
         BATTLE,
         RESULT
     }
 
-    final EntityManager eManager;
-    final ActionManager aManager;
-    private GAME_STATE gState = GAME_STATE.MENU;
+    public static void main(String[] args) {
+        GAME_STATE gState = GAME_STATE.MENU;
 
-    public Game() {
+        BattleEngine engine = new BattleEngine();
+        GameView view = new ConsoleView();
 
-        while (true) {
+        engine.subscribe(view);
+        view.connectEngine(engine);
 
+        GameResources db = new GameResources();
+        engine.loadData(db);
+        String difficulty, character;
+
+        if (!engine.start(difficulty, character)) {
+            view.DisplayMessage("ERROR: INVALID SETTINGS");
+            return;
         }
-    }
-
-    private void setGameState(GAME_STATE new_state) {
-       gState = new_state; 
-    }
-
-    private void getGameState() {
     }
 }
