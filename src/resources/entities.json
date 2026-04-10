@@ -6,7 +6,12 @@
     "attack": 40,
     "defence": 20,
     "speed": 30,
-    "special": 7
+    "abilities": [
+      "basicattack",
+      "defend",
+      "stun",
+      "shieldbash"
+    ]
   },
   {
     "name": "Wizard",
@@ -15,7 +20,12 @@
     "attack": 50,
     "defence": 10,
     "speed": 20,
-    "special": 8
+    "abilities": [
+      "basicattack",
+      "defend",
+      "stun",
+      "arcaneblast"
+    ]
   },
   {
     "name": "Goblin",
@@ -24,7 +34,7 @@
     "attack": 35,
     "defence": 15,
     "speed": 25,
-    "special": null
+    "abilities": []
   },
   {
     "name": "Wolf",
@@ -33,6 +43,6 @@
     "attack": 45,
     "defence": 5,
     "speed": 35,
-    "special": null
+    "abilities": []
   }
 ]
