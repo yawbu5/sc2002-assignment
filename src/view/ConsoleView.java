@@ -13,13 +13,12 @@ public class ConsoleView implements GameView{
     }
 
     @Override
-    public Boolean connectEngine(BattleEngine engine) {
+    public void connectEngine(BattleEngine engine) {
         if (engine == null) {
-           return false;
+           return;
         }
 
         this.engine = engine;
-        return true;
     }
 
     @Override
@@ -28,8 +27,8 @@ public class ConsoleView implements GameView{
     }
 
     @Override
-    public String PromptInput(String msg) {
-        System.out.print(msg);
+    public String GetUserInput(String msg) {
+        System.out.print("> " + msg);
 
         return sc.nextLine();
     }
