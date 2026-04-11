@@ -3,6 +3,7 @@ notes.md
 *.swp
 *.swo
 *.sub
+.*.sw*
 
 # IDE-specific files (IntelliJ, Eclipse, etc.)
 .idea/
