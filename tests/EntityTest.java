@@ -11,7 +11,7 @@ public class EntityTest {
 
     @Test
     public void testCreateEntityListFromJSON() {
-        List<Entity> entities = JSONLoader.loadList("resources/entities.json", Entity.class);
+        List<Entity> entities = JSONLoader.loadList("resources/entityTemplates.json", Entity.class);
 
         Assert.assertNotNull(entities);
         Assert.assertEquals(4, entities.size());
