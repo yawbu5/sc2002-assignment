@@ -1,26 +1,30 @@
 package src;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Entity {
-    private enum EntityType {
+    public enum EntityType {
         ENEMY,
         PLAYER
     }
 
-    public String name;
+    public final String name;
     public EntityType type;
+    @SerializedName("hp")
+    public final int maxHp;
+    public final int attack;
+    public final int defence;
+    public final int speed;
+    public final List<String> abilities;
     public int currHp;
-    public int maxHp;
-    public int attack;
-    public int defence;
-    public int speed;
-    public List<String> abilities;
 
     public Entity(String name, EntityType type, int hp, int attack, int defence, int speed, List<String> abilities) {
         this.name = name;
         this.type = type;
-        this.maxHp = this.currHp = hp;
+        this.maxHp = hp;
+        this.currHp = hp;
         this.attack = attack;
         this.defence = defence;
         this.speed = speed;
@@ -28,10 +32,7 @@ public class Entity {
     }
 
     public static Entity CreateEntity(Entity e) {
+        // probably shaky deep copy used for abilities
         return new Entity(e.name, e.type, e.maxHp, e.attack, e.defence, e.speed, e.abilities);
-    }
-
-    void Update(Action a) {
-        // TODO: loop over effects
     }
 }

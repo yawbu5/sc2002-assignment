@@ -1,9 +1,11 @@
 package tests;
-import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-import src.Ability;
+import src.data.Ability;
 import src.data.JSONLoader;
+
+import java.util.List;
 
 public class AbilityTest {
 

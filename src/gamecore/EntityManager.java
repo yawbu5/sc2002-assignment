@@ -1,5 +1,7 @@
-package src;
-import java.sql.Array;
+package src.gameCore;
+
+import src.Entity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +17,13 @@ public class EntityManager {
     }
 
     private int _incr_count() {
-       return count++;
+        return count++;
     }
 
     public void DeleteEntity(int id) {
-        return;
     }
 
     public void AddEntity(Entity e) {
-        return;
     }
 
     public void UpdateEntities() {

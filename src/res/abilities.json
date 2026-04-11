@@ -5,7 +5,7 @@
     "desc": "Deals damage to an enemy.",
     "type": "ACTION_TO",
     "aoe": false,
-    "val": "1",
+    "val": 1,
     "cooldown": 0
   },
   {
@@ -14,7 +14,7 @@
     "desc": "Reduces incoming damage.",
     "type": "ACTION_SELF",
     "aoe": false,
-    "val": "3",
+    "val": 3,
     "cooldown": 0
   },
   {
@@ -23,7 +23,7 @@
     "desc": "Prevent an enemy from doing actions for {val} turns.",
     "type": "ACTION_TO",
     "aoe": false,
-    "val": "1",
+    "val": 1,
     "cooldown": 0
   },
   {
@@ -32,7 +32,7 @@
     "desc": "Heals for {val} HP.",
     "type": "ITEM",
     "aoe": false,
-    "val": "100",
+    "val": 100,
     "cooldown": 0
   },
   {
@@ -41,7 +41,7 @@
     "desc": "Triggers special ability once.",
     "type": "ITEM",
     "aoe": false,
-    "val": "1",
+    "val": 1,
     "cooldown": 0
   },
   {
@@ -49,7 +49,7 @@
     "name": "Smoke Bomb",
     "type": "ITEM",
     "aoe": false,
-    "val": "2",
+    "val": 2,
     "cooldown": 0
   },
   {
