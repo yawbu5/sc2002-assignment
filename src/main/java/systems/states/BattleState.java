@@ -3,7 +3,7 @@ package systems.states;
 import systems.BattleEngine;
 import ui.GameView;
 
-public class ResultState implements GameState{
+public class BattleState implements GameState {
     @Override
     public void onEnter(BattleEngine engine, GameView view) {
 
@@ -11,7 +11,7 @@ public class ResultState implements GameState{
 
     @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
-        return null;
+        return GameState.super.onUpdate(engine, view);
     }
 
     @Override
