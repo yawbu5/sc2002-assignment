@@ -57,4 +57,5 @@ public class Entity {
     public String getName() {
         return this.name;
     }
+    public EntityType getType() {return this.type;}
 }
