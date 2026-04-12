@@ -17,7 +17,6 @@ public class EntityTemplate {
     public final int defence;
     public final int speed;
     public final List<String> abilities;
-    public int currHp;
 
     /**
      * Data template class for Entities
