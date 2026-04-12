@@ -5,6 +5,7 @@ public class Ability {
         ACTION_TO,
         ACTION_SELF,
         ABILITY,
+        ITEM
     }
 
     public final String id;
@@ -16,7 +17,7 @@ public class Ability {
     public final int cooldown;
 
     /**
-     * Data template claass for Action Abilities
+     * Data template class for Action Abilities
      */
     public Ability(String id, String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
         this.id = id;
