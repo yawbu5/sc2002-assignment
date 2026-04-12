@@ -1,4 +1,4 @@
-package ui;
+package ui.console;
 
 public class EntityStats {
     String name;

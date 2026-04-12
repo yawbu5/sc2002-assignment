@@ -3,8 +3,8 @@ package commands;
 import systems.BattleEngine;
 
 public class StartMenuCommand implements Command {
-    private String title;
-    private Runnable action;
+    private final String title;
+    private final Runnable action;
 
     public StartMenuCommand(String title, Runnable action) {
         this.title = title;
