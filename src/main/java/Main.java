@@ -1,6 +1,6 @@
 import systems.BattleEngine;
 import data.GameResources;
-import ui.ConsoleView;
+import ui.console.ConsoleView;
 import ui.GameView;
 
 public class Main {
