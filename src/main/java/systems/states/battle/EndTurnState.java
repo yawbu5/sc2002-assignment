@@ -4,7 +4,10 @@ import systems.BattleEngine;
 import systems.states.GameState;
 import ui.GameView;
 
-public class EndState implements GameState {
+/**
+ * Responsibility: Check win/lose conditions, then process accordingly / move to next turn
+ */
+public class EndTurnState implements GameState {
     @Override
     public void onEnter(BattleEngine engine, GameView view) {
 

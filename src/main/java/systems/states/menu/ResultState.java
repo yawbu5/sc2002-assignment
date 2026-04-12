@@ -1,13 +1,18 @@
-package systems.states.battle;
+package systems.states.menu;
 
 import systems.BattleEngine;
 import systems.states.GameState;
 import ui.GameView;
 
-public class PlayerTurnState implements GameState {
+public class ResultState implements GameState {
     @Override
     public void onEnter(BattleEngine engine, GameView view) {
 
+    }
+
+    @Override
+    public GameState onUpdate(BattleEngine engine, GameView view) {
+        return null;
     }
 
     @Override
