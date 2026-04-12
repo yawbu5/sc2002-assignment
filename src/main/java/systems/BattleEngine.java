@@ -16,7 +16,7 @@ public class BattleEngine {
     private GameResources db;
     private BATTLE_STATE bState;
     private EntityManager em;
-    private src.gameCore.ActionManager am;
+    private ActionManager am;
     private GameView view;
     private Wave difficulty;
     private Entity selectedPlayer;

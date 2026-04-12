@@ -24,7 +24,7 @@ public class JSONLoader {
         List<T> items = null;
 
         try {
-            InputStream is = cls.getResourceAsStream(filePath);
+            InputStream is = cls.getClassLoader().getResourceAsStream(filePath);
 
             if (is == null) {
                 System.out.println("FAILED TO LOAD CONFIG: " + filePath);

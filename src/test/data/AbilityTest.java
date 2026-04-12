@@ -1,4 +1,4 @@
-package tests;
+package src.test.data;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,7 +11,7 @@ public class AbilityTest {
 
     @Test
     public void testCreateAbilityListFromJSON() {
-        List<Ability> abilities = JSONLoader.loadList("resources/abilities.json", Ability.class);
+        List<Ability> abilities = JSONLoader.loadList("abilities.json", Ability.class);
 
         Assert.assertNotNull(abilities);
         Assert.assertEquals(8, abilities.size());

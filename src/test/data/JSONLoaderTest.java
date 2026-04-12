@@ -1,9 +1,9 @@
-package tests.data;
+package src.test.data;
 
 import org.junit.Assert;
 import org.junit.Test;
 import data.JSONLoader;
-import tests.DummyClass;
+import src.test.DummyClass;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class JSONLoaderTest {
 
     @Test
     public void testLoadListFromJSON() {
-        List<DummyClass> dummies = JSONLoader.loadList("resources/dummy_data.json", DummyClass.class);
+        List<DummyClass> dummies = JSONLoader.loadList("dummy_data.json", DummyClass.class);
 
         Assert.assertNotNull(dummies);
         Assert.assertEquals("John", dummies.get(0).name);

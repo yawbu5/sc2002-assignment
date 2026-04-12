@@ -1,4 +1,4 @@
-package tests;
+package src.test.data;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,11 +7,11 @@ import data.JSONLoader;
 
 import java.util.List;
 
-public class EntityTest {
+public class EntityTemplateTest {
 
     @Test
     public void testCreateEntityListFromJSON() {
-        List<Entity> entities = JSONLoader.loadList("resources/entityTemplates.json", Entity.class);
+        List<Entity> entities = JSONLoader.loadList("entities.json", Entity.class);
 
         Assert.assertNotNull(entities);
         Assert.assertEquals(4, entities.size());

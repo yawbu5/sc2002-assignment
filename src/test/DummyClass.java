@@ -1,4 +1,4 @@
-package tests;
+package src.test;
 
 public class DummyClass {
     public String name;
