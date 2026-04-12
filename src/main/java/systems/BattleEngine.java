@@ -1,47 +1,81 @@
 package systems;
 
+import data.Ability;
+import data.EntityTemplate;
 import data.GameResources;
 import data.Wave;
+import systems.states.GameState;
+import systems.states.battle.EndState;
+import systems.states.InitialiseState;
 import ui.GameView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BattleEngine {
-    private enum BATTLE_STATE {
-        START,
-        PLAYER_TURN,
-        RESOLVE,
-        ENEMY_TURN,
-        END,
-        RESULT
-    }
+    //private enum BATTLE_STATE {
+    //    START,
+    //    PLAYER_TURN,
+    //    RESOLVE,
+    //    ENEMY_TURN,
+    //    END,
+    //    RESULT
+    //}
     private GameResources db;
-    private BATTLE_STATE bState;
     private EntityManager em;
     private ActionManager am;
+    private GameState gameState;
     private GameView view;
     private Wave difficulty;
-    private Entity selectedPlayer;
+    private EntityTemplate selectedPlayer;
+    private ArrayList playerInventory;
 
     public BattleEngine(GameResources db) {
         this.db = db;
     }
 
-    // TODO: prepare items
-
     /**
      * Game initialisation prompt
      */
     public void start() {
-        if (this.view == null) {
-            return;
-        }
+        gameState = new InitialiseState();
 
+        while (!(gameState instanceof EndState)) {
+            GameState potentialState = gameState.onUpdate(this, this.view);
+
+            if (potentialState != gameState) {
+                gameState = potentialState;
+                potentialState.onEnter(this, this.view);
+            }
+        }
+    }
+
+    public void startEnitityManager(List<EntityTemplate> entities) {
+        this.em = new EntityManager();
+        em.AddEntitiesFromList(entities);
+    }
+
+    public List<Ability> retrieveDbAbilities() {
+        return db.abilities;
+    }
+
+    public List<EntityTemplate> retrieveDbEntities() {
+        return db.entityTemplates;
+    }
+
+    public List<Wave> retrieveDbWaves() {
+        return db.waves;
+    }
+
+    public void setDifficulty(Wave wave) {
+        this.difficulty = wave;
+    }
+
+    public void setSelectedPlayer(EntityTemplate e) {
+        this.selectedPlayer = e;
     }
 
     public void subscribe(GameView view) {
         this.view = view;
-    }
-
-    public String getStateString() {
-        return this.bState.name();
     }
 }
