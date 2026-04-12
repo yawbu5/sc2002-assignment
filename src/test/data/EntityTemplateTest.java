@@ -15,9 +15,9 @@ public class EntityTemplateTest {
 
         Assert.assertNotNull(entities);
         Assert.assertEquals(4, entities.size());
-        Assert.assertEquals("Warrior", entities.get(0).name);
-        Assert.assertEquals("Wizard", entities.get(1).name);
-        Assert.assertEquals("Goblin", entities.get(2).name);
-        Assert.assertEquals("Wolf", entities.get(3).name);
+        Assert.assertEquals("Warrior", entities.get(0).getName());
+        Assert.assertEquals("Wizard", entities.get(1).getName());
+        Assert.assertEquals("Goblin", entities.get(2).getName());
+        Assert.assertEquals("Wolf", entities.get(3).getName());
     }
 }

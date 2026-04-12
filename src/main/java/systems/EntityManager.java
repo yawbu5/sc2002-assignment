@@ -1,6 +1,9 @@
 package systems;
 
+import data.EntityTemplate;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EntityManager {
@@ -15,10 +18,18 @@ public class EntityManager {
         return entityMap.size();
     }
 
-    public void AddEntity(Entity e) {
+    public String AddEntity(EntityTemplate e ) {
         Entity newEntity = Entity.CreateEntity(idCount, e);
         entityMap.put(idCount, newEntity);
         idCount++;
+
+        return (idCount + ": " + newEntity.getName());
+    }
+
+    public void AddEntitiesFromList(List<EntityTemplate> list) {
+       for (EntityTemplate e : list) {
+           this.AddEntity(e);
+       }
     }
 
     public Entity GetEntity(int id) {

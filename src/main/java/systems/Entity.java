@@ -1,5 +1,7 @@
 package systems;
 
+import data.EntityTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,18 +11,18 @@ public class Entity {
         PLAYER
     }
 
-    public transient int id;
+    private transient int id;
 
-    public final String name;
-    public EntityType type;
-    public final int maxHp;
-    public final int attack;
-    public final int defence;
-    public final int speed;
-    public final List<String> abilities;
-    public int currHp;
+    private final String name;
+    private EntityType type;
+    private final int maxHp;
+    private int attack;
+    private int defence;
+    private int speed;
+    private final List<String> abilities;
+    private int currHp;
 
-    public transient List<Action> actions;
+    private transient List<Action> actions;
 
     /**
      * Entity builder blueprint from JSON
@@ -46,9 +48,13 @@ public class Entity {
      * Primary method for creating gameplay Entities with trackable UID
      * Shallow copy ability list, don't need so many strings in memory
      */
-    public static Entity CreateEntity(int id, Entity e) {
-        Entity newEntity = new Entity(e.name, e.type, e.maxHp, e.attack, e.defence, e.speed, e.abilities);
+    public static Entity CreateEntity(int id, EntityTemplate e) {
+        Entity newEntity = new Entity(e.name, e.type, e.hp, e.attack, e.defence, e.speed, e.abilities);
         newEntity.id = id;
         return newEntity;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }
