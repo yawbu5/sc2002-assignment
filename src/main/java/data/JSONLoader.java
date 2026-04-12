@@ -15,7 +15,7 @@ public class JSONLoader {
      * Loads in a list of data from a JSON file, structured according to the class specified.
      * Note that the path is relative to where the class is implemented.
      *
-     * @param filePath The path to the config file, usually "resources/xxx.json".
+     * @param filePath The path to the config file, usually "xxx.json".
      * @param cls The class to specify as the blueprint. Its parameters must match the structure in JSON.
      * @return List
      */
@@ -24,6 +24,11 @@ public class JSONLoader {
         List<T> items = null;
 
         try {
+            //
+            // ClassLoader + getResourceAsStream uses absolute paths from the root of /resources.
+            // That is, to load a config, if placed as /resources/xxx.json,
+            // just use "xxx.json" in the filepath.
+            //
             InputStream is = cls.getClassLoader().getResourceAsStream(filePath);
 
             if (is == null) {
@@ -31,6 +36,10 @@ public class JSONLoader {
                 return null;
             }
 
+            //
+            // Gson reads in the data according to the serialised members of the class.
+            // Any members that shouldn't be read/written in serialisation should be set transient.
+            //
             try (Reader reader = new InputStreamReader(is)) {
                 Type listType = TypeToken.getParameterized(List.class, cls).getType();
 
@@ -42,13 +51,4 @@ public class JSONLoader {
 
         return items;
     }
-
-    //public static <T> Map<Integer, T> convertListToMap(List<T> list) {
-    //    Map<Integer, T> map = new HashMap<>();
-    //    int count = 0;
-    //    for (T item: list) {
-    //        map.put(count++, item);
-    //    }
-    //    return map;
-    //}
 }
