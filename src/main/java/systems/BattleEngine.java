@@ -5,8 +5,8 @@ import data.EntityTemplate;
 import data.GameResources;
 import data.Wave;
 import systems.states.GameState;
-import systems.states.battle.EndState;
-import systems.states.InitialiseState;
+import systems.states.battle.EndTurnState;
+import systems.states.menu.SelectDifficultyState;
 import ui.GameView;
 
 import java.util.ArrayList;
@@ -28,7 +28,8 @@ public class BattleEngine {
     private GameView view;
     private Wave difficulty;
     private EntityTemplate selectedPlayer;
-    private ArrayList playerInventory;
+    private final ArrayList<String> playerInventory = new ArrayList<>();
+    private int waveCount = 0;
 
     public BattleEngine(GameResources db) {
         this.db = db;
@@ -38,13 +39,13 @@ public class BattleEngine {
      * Game initialisation prompt
      */
     public void start() {
-        gameState = new InitialiseState();
+        this.gameState = new SelectDifficultyState();
 
-        while (!(gameState instanceof EndState)) {
-            GameState potentialState = gameState.onUpdate(this, this.view);
+        while (!(this.gameState instanceof EndTurnState)) {
+            GameState potentialState = this.gameState.onUpdate(this, this.view);
 
-            if (potentialState != gameState) {
-                gameState = potentialState;
+            if (potentialState != this.gameState) {
+                this.gameState = potentialState;
                 potentialState.onEnter(this, this.view);
             }
         }
@@ -52,7 +53,15 @@ public class BattleEngine {
 
     public void startEnitityManager(List<EntityTemplate> entities) {
         this.em = new EntityManager();
-        em.AddEntitiesFromList(entities);
+        this.em.AddEntitiesFromList(entities);
+    }
+
+    public void addToInventory(String a) {
+        this.playerInventory.add(a);
+    }
+
+    public void removeFromInventroy(int index) {
+        this.playerInventory.remove(index);
     }
 
     public List<Ability> retrieveDbAbilities() {
