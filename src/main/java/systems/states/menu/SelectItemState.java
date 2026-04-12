@@ -1,0 +1,44 @@
+package systems.states.menu;
+
+import commands.Command;
+import commands.StartMenuCommand;
+import data.Ability;
+import systems.BattleEngine;
+import systems.states.GameState;
+import systems.states.battle.InitialiseState;
+import ui.GameView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SelectItemState implements GameState {
+    @Override
+    public void onEnter(BattleEngine engine, GameView view) {
+
+    }
+
+    @Override
+    public GameState onUpdate(BattleEngine engine, GameView view) {
+        List<Command> itemChoices = new ArrayList<>();
+        List<Ability> abilities = engine.retrieveDbAbilities();
+
+        for (Ability a : abilities) {
+            if (a.type == Ability.AbilityType.ITEM) {
+                itemChoices.add(new StartMenuCommand(a.name, () -> engine.addToInventory(a.name)));
+            }
+        }
+
+        Command selected = view.PromptUserChoice("Select your 1st item: ", itemChoices);
+        selected.execute(null);
+
+        selected = view.PromptUserChoice("Select your 2nd item: ", itemChoices);
+        selected.execute(null);
+
+        return new InitialiseState();
+    }
+
+    @Override
+    public void onExit(BattleEngine engine, GameView view) {
+
+    }
+}
