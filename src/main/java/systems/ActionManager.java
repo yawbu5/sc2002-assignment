@@ -1,4 +1,4 @@
-package src.gameCore;
+package systems;
 
 public class ActionManager {
     public ActionManager() {
