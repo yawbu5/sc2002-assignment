@@ -1,12 +1,13 @@
-package ui;
+package ui.console;
 
 import systems.BattleEngine;
 import commands.Command;
+import ui.GameView;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleView implements GameView{
+public class ConsoleView implements GameView {
     private BattleEngine engine;
     private final Scanner sc;
     private boolean running;
@@ -39,16 +40,14 @@ public class ConsoleView implements GameView{
     }
 
     public Command PromptUserChoice(String msg, List<Command> options) {
-        System.out.println(msg);
-
-        for (int i = 0; i < options.size(); i++) {
-            System.out.println((i + 1) + ": " + options.get(i).getDisplayText());
-        }
-
-        System.out.println("> ");
-
         int input = -1;
         while (input < 1 || input > options.size()) {
+            System.out.println(msg);
+
+            for (int i = 0; i < options.size(); i++) {
+                System.out.println((i + 1) + ": " + options.get(i).getDisplayText());
+            }
+            System.out.print("> ");
             try {
                 input = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
