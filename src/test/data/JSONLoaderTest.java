@@ -1,8 +1,8 @@
 package src.test.data;
 
+import data.JSONLoader;
 import org.junit.Assert;
 import org.junit.Test;
-import data.JSONLoader;
 import src.test.DummyClass;
 
 import java.util.List;

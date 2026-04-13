@@ -16,7 +16,7 @@ public class JSONLoader {
      * Note that the path is relative to where the class is implemented.
      *
      * @param filePath The path to the config file, usually "xxx.json".
-     * @param cls The class to specify as the blueprint. Its parameters must match the structure in JSON.
+     * @param cls      The class to specify as the blueprint. Its parameters must match the structure in JSON.
      * @return List
      */
     public static <T> List<T> loadList(String filePath, Class<T> cls) {
@@ -46,7 +46,7 @@ public class JSONLoader {
                 items = gson.fromJson(reader, listType);
             }
         } catch (Exception e) {
-            System.out.println("ERROR LOADING CONFIG: " + filePath +": " + e.getMessage());
+            System.out.println("ERROR LOADING CONFIG: " + filePath + ": " + e.getMessage());
         }
 
         return items;
