@@ -1,7 +1,7 @@
 package ui.console;
 
-import systems.BattleEngine;
 import commands.Command;
+import systems.BattleEngine;
 import ui.GameView;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class ConsoleView implements GameView {
 
     public void connectEngine(BattleEngine engine) {
         if (engine == null) {
-           return;
+            return;
         }
 
         this.engine = engine;
@@ -29,9 +29,14 @@ public class ConsoleView implements GameView {
     }
 
     public void DisplayList(List<String> txts) {
-       for (String t : txts) {
-           DisplayMessage(t);
-       }
+        for (String t : txts) {
+            DisplayMessage(t);
+        }
+    }
+
+    @Override
+    public void Update() {
+
     }
 
     @Override
@@ -41,7 +46,13 @@ public class ConsoleView implements GameView {
 
     public Command PromptUserChoice(String msg, List<Command> options) {
         int input = -1;
+        boolean entered = false;
         while (input < 1 || input > options.size()) {
+            if (!entered) {
+                entered = true;
+            } else {
+                System.out.println("Erroneus input, try again!");
+            }
             System.out.println(msg);
 
             for (int i = 0; i < options.size(); i++) {
@@ -50,8 +61,7 @@ public class ConsoleView implements GameView {
             System.out.print("> ");
             try {
                 input = Integer.parseInt(sc.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Erroneus input, try again!");
+            } catch (NumberFormatException ignored) {
             }
         }
 
