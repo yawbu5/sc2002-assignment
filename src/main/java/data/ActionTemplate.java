@@ -4,7 +4,6 @@ public class ActionTemplate {
     public enum AbilityType {
         ACTION_TO,
         ACTION_SELF,
-        ABILITY,
         ITEM
     }
 
