@@ -1,14 +1,41 @@
 [
   {
     "name": "Easy",
-    "waves": [[0,0,0]]
+    "waves": [
+      [
+        "Goblin",
+        "Goblin",
+        "Goblin"
+      ]
+    ]
   },
   {
     "name": "Medium",
-    "waves": [[0,0,1], [1,1]]
+    "waves": [
+      [
+        "Goblin",
+        "Goblin",
+        "Wolf"
+      ],
+      [
+        "Wolf",
+        "Wolf"
+      ]
+    ]
   },
   {
     "name": "Hard",
-    "waves": [[0,1,1], [0,1,1]]
+    "waves": [
+      [
+        "Goblin",
+        "Wolf",
+        "Wolf"
+      ],
+      [
+        "Goblin",
+        "Wolf",
+        "Wolf"
+      ]
+    ]
   }
 ]
