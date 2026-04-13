@@ -67,6 +67,7 @@ public class Entity {
     public int getCurrHp() {
         return currHp;
     }
+    public List<String> getAbilities() { return this.abilities; }
     public int getDefence() {
         return defence;
     }
