@@ -1,9 +1,7 @@
 package systems.states.battle;
 
 import data.EntityTemplate;
-import data.GameResources;
 import systems.BattleEngine;
-import systems.Entity;
 import systems.states.GameState;
 import ui.GameView;
 
@@ -21,7 +19,7 @@ public class InitialiseState implements GameState {
         entities.add(engine.getSelectedPlayer());
 
         for (String s : engine.getWaves().get(0)) {
-           entities.add(engine.retrieveDbEntity(s));
+            entities.add(engine.retrieveDbEntity(s));
         }
 
         engine.startEnitityManager(entities);

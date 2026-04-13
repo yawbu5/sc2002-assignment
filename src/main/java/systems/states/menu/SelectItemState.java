@@ -5,7 +5,6 @@ import commands.StartMenuCommand;
 import data.ActionTemplate;
 import systems.BattleEngine;
 import systems.states.GameState;
-import systems.states.battle.InitialiseState;
 import ui.GameView;
 
 import java.util.ArrayList;

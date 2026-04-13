@@ -7,7 +7,6 @@ import data.Wave;
 import systems.states.GameState;
 import systems.states.battle.EndTurnState;
 import systems.states.menu.SelectCharacterState;
-import systems.states.menu.SelectDifficultyState;
 import ui.GameView;
 
 import java.util.ArrayList;
@@ -130,7 +129,9 @@ public class BattleEngine {
         this.difficulty = wave;
     }
 
-    public List<List<String>> getWaves() { return this.difficulty.waves; }
+    public List<List<String>> getWaves() {
+        return this.difficulty.waves;
+    }
 
     public boolean checkWavesCleared() {
         return this.waveCount == difficulty.waves.size();
@@ -151,7 +152,10 @@ public class BattleEngine {
     public void setSelectedPlayer(EntityTemplate e) {
         this.selectedPlayer = e;
     }
-    public EntityTemplate getSelectedPlayer() { return this.selectedPlayer; }
+
+    public EntityTemplate getSelectedPlayer() {
+        return this.selectedPlayer;
+    }
 
     public void subscribe(GameView view) {
         this.view = view;

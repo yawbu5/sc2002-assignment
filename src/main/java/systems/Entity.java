@@ -54,26 +54,38 @@ public class Entity {
         return newEntity;
     }
 
-    public int getId() { return this.id; }
+    public int getId() {
+        return this.id;
+    }
+
     public String getName() {
         return this.name;
     }
+
     public EntityType getType() {
         return this.type;
     }
+
     public int getSpeed() {
         return speed;
     }
+
     public int getCurrHp() {
         return currHp;
     }
-    public List<String> getAbilities() { return this.abilities; }
+
+    public List<String> getAbilities() {
+        return this.abilities;
+    }
+
     public int getDefence() {
         return defence;
     }
+
     public int getAttack() {
         return attack;
     }
+
     public int getMaxHp() {
         return maxHp;
     }

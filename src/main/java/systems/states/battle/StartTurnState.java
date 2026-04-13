@@ -5,7 +5,6 @@ import systems.Entity;
 import systems.states.GameState;
 import ui.GameView;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,11 +40,11 @@ public class StartTurnState implements GameState {
             // Possible scenarios after that point: Either an enemy killed or not killed.
 
             // Either way we just queue and dequeue the first element (i.e., the last played)
-           currentTurnOrder.add(currentTurnOrder.get(0));
-           currentTurnOrder.remove(0);
+            currentTurnOrder.add(currentTurnOrder.get(0));
+            currentTurnOrder.remove(0);
 
-           // set to new turn order: next in line.
-           engine.setTurnOrder(currentTurnOrder);
+            // set to new turn order: next in line.
+            engine.setTurnOrder(currentTurnOrder);
         }
 
         view.DisplayMessage("State of battle: ");
