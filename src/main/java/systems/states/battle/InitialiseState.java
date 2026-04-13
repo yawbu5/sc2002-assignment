@@ -1,26 +1,33 @@
 package systems.states.battle;
 
+import data.EntityTemplate;
+import data.GameResources;
 import systems.BattleEngine;
+import systems.Entity;
 import systems.states.GameState;
 import ui.GameView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Prepares all required systems and data and prepare for 1st turn
+ * Prepares all required systems and data and prepare player for 1st turn
  */
 public class InitialiseState implements GameState {
     @Override
-    public void onEnter(BattleEngine engine, GameView view) {
-
-    }
-
-    @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
+        List<EntityTemplate> entities = new ArrayList<>();
 
-        return new ResolveTurnState();
-    }
+        entities.add(engine.getSelectedPlayer());
 
-    @Override
-    public void onExit(BattleEngine engine, GameView view) {
+        for (String s : engine.getWaves().get(0)) {
+           entities.add(engine.retrieveDbEntity(s));
+        }
 
+        engine.startEnitityManager(entities);
+
+        view.DisplayMessage("PREPARE FOR BATTLE!");
+
+        return new StartTurnState();
     }
 }
