@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ActionManager {
-    private Map<Integer, List<ActiveAction>> activeActions = new HashMap<>();
+    private final Map<Integer, List<ActiveAction>> activeActions = new HashMap<>();
 
     public ActionManager() {
 

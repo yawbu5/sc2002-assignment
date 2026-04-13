@@ -1,6 +1,6 @@
 package data;
 
-public class Ability {
+public class ActionTemplate {
     public enum AbilityType {
         ACTION_TO,
         ACTION_SELF,
@@ -19,7 +19,7 @@ public class Ability {
     /**
      * Data template class for Action Abilities
      */
-    public Ability(String id, String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
+    public ActionTemplate(String id, String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
         this.id = id;
         this.name = name;
         this.desc = desc;

@@ -1,17 +1,17 @@
 package src.test.data;
 
+import data.ActionTemplate;
+import data.JSONLoader;
 import org.junit.Assert;
 import org.junit.Test;
-import data.Ability;
-import data.JSONLoader;
 
 import java.util.List;
 
-public class AbilityTest {
+public class ActionTemplateTest {
 
     @Test
     public void testCreateAbilityListFromJSON() {
-        List<Ability> abilities = JSONLoader.loadList("abilities.json", Ability.class);
+        List<ActionTemplate> abilities = JSONLoader.loadList("abilities.json", ActionTemplate.class);
 
         Assert.assertNotNull(abilities);
         Assert.assertEquals(8, abilities.size());
