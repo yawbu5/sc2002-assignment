@@ -96,6 +96,17 @@ public class BattleEngine {
         return database.abilities;
     }
 
+    public ActionTemplate retrieveDbAbility(String actionId) {
+        if (database.abilities != null) {
+            return database.abilities.stream()
+                    .filter(a -> actionId.equals(a.id))
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return null;
+        }
+    }
+
     public List<EntityTemplate> retrieveDbEntities() {
         return database.entityTemplates;
     }
