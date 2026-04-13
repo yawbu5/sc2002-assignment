@@ -5,6 +5,7 @@ import systems.Entity;
 import systems.states.GameState;
 import ui.GameView;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,14 +48,23 @@ public class StartTurnState implements GameState {
            engine.setTurnOrder(currentTurnOrder);
         }
 
+        view.DisplayMessage("State of battle: ");
+        //List<String> displayMsgs = new ArrayList<>();
+
+        for (Entity e : engine.getEntityManager().getAliveEntities()) {
+            String msg = "";
+            String playerStatus = (e.getType() == Entity.EntityType.PLAYER) ? " (YOU)" : "";
+
+            msg += e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
+            view.DisplayMessage(msg);
+        }
+
         // if player is first, go to player
         // if not, go to enemy
         // A bit lengthy, but it does the job
         if (engine.getEntityManager().getEntity(engine.getFirstTurnEntity()).getType() == Entity.EntityType.PLAYER) {
-            view.DisplayMessage(engine.getTurnOrder().toString());
             return new PlayerTurnState();
         } else {
-            view.DisplayMessage(engine.getTurnOrder().toString());
             return new EnemyTurnState();
         }
     }
