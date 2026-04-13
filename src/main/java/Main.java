@@ -1,7 +1,7 @@
-import systems.BattleEngine;
 import data.GameResources;
-import ui.console.ConsoleView;
+import systems.BattleEngine;
 import ui.GameView;
+import ui.console.ConsoleView;
 
 public class Main {
     public static void main(String[] args) {
