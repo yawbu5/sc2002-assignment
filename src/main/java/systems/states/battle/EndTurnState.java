@@ -9,17 +9,7 @@ import ui.GameView;
  */
 public class EndTurnState implements GameState {
     @Override
-    public void onEnter(BattleEngine engine, GameView view) {
-
-    }
-
-    @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
         return null;
-    }
-
-    @Override
-    public void onExit(BattleEngine engine, GameView view) {
-
     }
 }

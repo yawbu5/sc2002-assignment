@@ -5,9 +5,9 @@ import systems.states.GameState;
 import ui.GameView;
 
 /**
- * Responsibility: Executes actions and other "concurrent" effects
+ * Responsibility: Wait for and validate player input, and handle selecting
  */
-public class ResolveTurnState implements GameState {
+public class PlayerTurnState implements GameState {
     @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
         return null;

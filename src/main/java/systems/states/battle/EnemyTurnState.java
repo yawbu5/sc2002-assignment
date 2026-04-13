@@ -4,10 +4,7 @@ import systems.BattleEngine;
 import systems.states.GameState;
 import ui.GameView;
 
-/**
- * Responsibility: Executes actions and other "concurrent" effects
- */
-public class ResolveTurnState implements GameState {
+public class EnemyTurnState implements GameState {
     @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
         return null;

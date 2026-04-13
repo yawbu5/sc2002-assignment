@@ -1,10 +1,10 @@
 package systems;
 
-public class Action {
+public class Cooldown {
     public final String abilityId;
     public int cooldownTimer;
 
-    public Action(String abilityId) {
+    public Cooldown(String abilityId) {
         this.abilityId = abilityId;
         this.cooldownTimer = 0;
     }

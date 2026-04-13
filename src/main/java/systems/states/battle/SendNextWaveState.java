@@ -5,11 +5,11 @@ import systems.states.GameState;
 import ui.GameView;
 
 /**
- * Responsibility: Executes actions and other "concurrent" effects
+ * If there is another wave, inform the player of the incoming wave and add the new wave into the entity manager.
  */
-public class ResolveTurnState implements GameState {
+public class SendNextWaveState implements GameState {
     @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
-        return null;
+        return new StartTurnState();
     }
 }

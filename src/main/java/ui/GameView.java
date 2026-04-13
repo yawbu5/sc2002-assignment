@@ -1,7 +1,7 @@
 package ui;
 
-import systems.BattleEngine;
 import commands.Command;
+import systems.BattleEngine;
 
 import java.util.List;
 
@@ -18,6 +18,8 @@ public interface GameView {
     // Helper for displaying multiple points of info at the same time
     // i.e., menus, choices, etc.
     void DisplayList(List<String> txts);
+
+    void Update();
 
     Command PromptUserInput(String msg, Command cmd);
 
