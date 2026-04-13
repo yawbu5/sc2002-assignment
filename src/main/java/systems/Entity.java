@@ -14,15 +14,15 @@ public class Entity {
     private transient int id;
 
     private final String name;
-    private EntityType type;
+    private final EntityType type;
     private final int maxHp;
-    private int attack;
-    private int defence;
-    private int speed;
+    private final int attack;
+    private final int defence;
+    private final int speed;
     private final List<String> abilities;
-    private int currHp;
+    private final int currHp;
 
-    private transient List<Action> actions;
+    private final transient List<Cooldown> cooldowns;
 
     /**
      * Entity builder blueprint from JSON
@@ -38,9 +38,9 @@ public class Entity {
         this.abilities = abilities;
 
         // Transforming ability templates into dynamic actions
-        this.actions = new ArrayList<>();
+        this.cooldowns = new ArrayList<>();
         for (String id : this.abilities) {
-            this.actions.add(new Action(id));
+            this.cooldowns.add(new Cooldown(id));
         }
     }
 
@@ -54,8 +54,26 @@ public class Entity {
         return newEntity;
     }
 
+    public int getId() { return this.id; }
     public String getName() {
         return this.name;
     }
-    public EntityType getType() {return this.type;}
+    public EntityType getType() {
+        return this.type;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public int getCurrHp() {
+        return currHp;
+    }
+    public int getDefence() {
+        return defence;
+    }
+    public int getAttack() {
+        return attack;
+    }
+    public int getMaxHp() {
+        return maxHp;
+    }
 }
