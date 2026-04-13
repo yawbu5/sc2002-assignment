@@ -2,7 +2,7 @@ package systems.states.menu;
 
 import commands.Command;
 import commands.StartMenuCommand;
-import data.Ability;
+import data.ActionTemplate;
 import systems.BattleEngine;
 import systems.states.GameState;
 import systems.states.battle.InitialiseState;
@@ -20,10 +20,10 @@ public class SelectItemState implements GameState {
     @Override
     public GameState onUpdate(BattleEngine engine, GameView view) {
         List<Command> itemChoices = new ArrayList<>();
-        List<Ability> abilities = engine.retrieveDbAbilities();
+        List<ActionTemplate> abilities = engine.retrieveDbAbilities();
 
-        for (Ability a : abilities) {
-            if (a.type == Ability.AbilityType.ITEM) {
+        for (ActionTemplate a : abilities) {
+            if (a.type == ActionTemplate.AbilityType.ITEM) {
                 itemChoices.add(new StartMenuCommand(a.name, () -> engine.addToInventory(a.name)));
             }
         }
@@ -34,7 +34,7 @@ public class SelectItemState implements GameState {
         selected = view.PromptUserChoice("Select your 2nd item: ", itemChoices);
         selected.execute(null);
 
-        return new InitialiseState();
+        return new SelectDifficultyState();
     }
 
     @Override
