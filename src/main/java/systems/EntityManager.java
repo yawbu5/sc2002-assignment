@@ -38,7 +38,7 @@ public class EntityManager {
 
     /**
      * Use to get a List of entity(s) of a certain type.
-     * Returns a list of entites of that type.
+     * Returns a list of entities of that type.
      * i.e., Retrieve a list of enemies.
      *
      * @param type EntityType

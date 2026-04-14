@@ -3,7 +3,6 @@ package systems.states.battle;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.states.GameState;
-import ui.GameView;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,8 +12,9 @@ import java.util.stream.Collectors;
  * Responsibility: Determines turn order
  */
 public class StartTurnState implements GameState {
+
     @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
+    public GameState onUpdate(BattleEngine engine) {
         /*
          Only go through entities that are alive.
          We try not to delete entities until a wave/battle is over.
@@ -47,21 +47,20 @@ public class StartTurnState implements GameState {
             engine.setTurnOrder(currentTurnOrder);
         }
 
-        view.DisplayMessage("State of battle: ");
         //List<String> displayMsgs = new ArrayList<>();
 
-        for (Entity e : engine.getEntityManager().getAliveEntities()) {
-            String msg = "";
-            String playerStatus = (e.getType() == Entity.EntityType.PLAYER) ? " (YOU)" : "";
-
-            msg += e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
-            view.DisplayMessage(msg);
-        }
 
         // if player is first, go to player
         // if not, go to enemy
         // A bit lengthy, but it does the job
         if (engine.getEntityManager().getEntity(engine.getFirstTurnEntity()).getType() == Entity.EntityType.PLAYER) {
+            // Print field enemy stats for player to see
+            for (Entity e : engine.getEntityManager().getAliveEntities()) {
+                String playerStatus = (e.getType() == Entity.EntityType.PLAYER) ? " (YOU)" : "";
+
+                String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
+                engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
+            }
             return new PlayerTurnState();
         } else {
             return new EnemyTurnState();
