@@ -19,9 +19,5 @@ public interface GameView {
     // i.e., menus, choices, etc.
     void DisplayList(List<String> txts);
 
-    void Update();
-
-    Command PromptUserInput(String msg, Command cmd);
-
     Command PromptUserChoice(String msg, List<Command> options);
 }
