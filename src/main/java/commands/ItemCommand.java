@@ -16,6 +16,5 @@ public class ItemCommand implements Command {
 
     @Override
     public void execute(BattleEngine engine) {
-
     }
 }
