@@ -10,8 +10,8 @@ import java.util.List;
 public class ActionTemplateTest {
 
     @Test
-    public void testCreateAbilityListFromJSON() {
-        List<ActionTemplate> abilities = JSONLoader.loadList("abilities.json", ActionTemplate.class);
+    public void EnsureCreateAbilityListFromJSONIsSuccessful() {
+        List<ActionTemplate> abilities = JSONLoader.loadList("actions.json", ActionTemplate.class);
 
         Assert.assertNotNull(abilities);
         Assert.assertEquals(8, abilities.size());
