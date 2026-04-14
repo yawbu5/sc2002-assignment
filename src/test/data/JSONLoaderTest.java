@@ -10,7 +10,7 @@ import java.util.List;
 public class JSONLoaderTest {
 
     @Test
-    public void testLoadListFromJSON() {
+    public void EnsureLoadListFromJSONIsSuccessful() {
         List<DummyClass> dummies = JSONLoader.loadList("dummy_data.json", DummyClass.class);
 
         Assert.assertNotNull(dummies);
@@ -21,7 +21,7 @@ public class JSONLoaderTest {
     }
 
     @Test
-    public void testLoadListReturnsNothingWhenInvalidInputIsGiven() {
+    public void EnsureLoadListReturnsNullWhenInvalidInputIsGiven() {
         List<DummyClass> dummies = JSONLoader.loadList("blah", DummyClass.class);
 
         Assert.assertNull(dummies);

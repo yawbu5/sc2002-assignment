@@ -10,7 +10,7 @@ import java.util.List;
 public class EntityTemplateTest {
 
     @Test
-    public void testCreateEntityListFromJSON() {
+    public void EnsureCreateEntityListFromJSONIsSuccessful() {
         List<Entity> entities = JSONLoader.loadList("entities.json", Entity.class);
 
         Assert.assertNotNull(entities);
