@@ -6,14 +6,13 @@ import commands.Command;
 import commands.ItemCommand;
 import data.ActionTemplate;
 import systems.BattleEngine;
-import ui.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BattleState implements GameState {
     @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
+    public GameState onUpdate(BattleEngine engine) {
         return null;
     }
 
@@ -33,11 +32,11 @@ public class BattleState implements GameState {
                 case ACTION_SELF:
                     commands.add(new ActionSelfCommand(a.name));
                     break;
-                case ITEM:
-                    commands.add(new ItemCommand(a.name));
-                    break;
+                default:
+                    continue;
             }
         }
+        commands.add(new ItemCommand("Use an item"));
 
         return commands;
     }
