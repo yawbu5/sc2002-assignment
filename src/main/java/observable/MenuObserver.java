@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface MenuObserver {
     void onChoicePrompt(String msg, List<Command> options);
+    void onDisplayMessage(String msg);
 }
