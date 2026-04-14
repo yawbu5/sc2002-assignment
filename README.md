@@ -2,6 +2,8 @@
 
 ### Links to explanations
 - [States](src/main/java/systems/states/states.md)
+- [Observers](src/main/java/observable/observer.md)
+- [Commands](src/main/java/commands/commands.md)
 
 ## Project Architecture 
 ### Data System
