@@ -1,41 +1,46 @@
 package systems.states.menu;
 
 import commands.Command;
-import commands.StartMenuCommand;
+import commands.MenuCommand;
 import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.states.GameState;
-import ui.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectCharacterState implements GameState {
-    @Override
-    public void onEnter(BattleEngine engine, GameView view) {
-
-    }
+    private boolean initialised = false;
 
     @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
-        List<EntityTemplate> entities = engine.retrieveDbEntities();
+    public GameState onUpdate(BattleEngine engine) {
+        if (!initialised) {
+            List<EntityTemplate> entities = engine.retrieveDbEntities();
 
-        List<Command> characterChoices = new ArrayList<>();
-        for (EntityTemplate e : entities) {
-            if (e.type == Entity.EntityType.PLAYER) {
-                characterChoices.add(new StartMenuCommand(e.name, () -> engine.setSelectedPlayer(e)));
+            List<Command> characterChoices = new ArrayList<>();
+            for (EntityTemplate e : entities) {
+                if (e.type == Entity.EntityType.PLAYER) {
+                    characterChoices.add(new MenuCommand(e.name, () -> engine.setSelectedPlayer(e)));
+                }
             }
+
+            engine.notifyMenuObservers(o -> o.onChoicePrompt("Select a character: ", characterChoices));
+            initialised = true;
         }
 
-        Command selected = view.PromptUserChoice("Select a character: ", characterChoices);
-        selected.execute(null);
+        Command result = engine.retrieveLatestCommand();
+
+        if (result == null) {
+            return this;
+        }
+
+        // ensure command didn't come from somewhere else by accident
+        if (!(result instanceof MenuCommand)) {
+            return this;
+        }
+        result.execute(engine);
 
         return new SelectItemState();
-    }
-
-    @Override
-    public void onExit(BattleEngine engine, GameView view) {
-
     }
 }

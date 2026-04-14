@@ -1,43 +1,56 @@
 package systems.states.menu;
 
 import commands.Command;
-import commands.StartMenuCommand;
+import commands.MenuCommand;
 import data.ActionTemplate;
 import systems.BattleEngine;
 import systems.states.GameState;
-import ui.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectItemState implements GameState {
+    private boolean initalised = false;
+    private boolean allItemsCollected = false;
+    private final static int itemAmount = 2;
     @Override
-    public void onEnter(BattleEngine engine, GameView view) {
+    public GameState onUpdate(BattleEngine engine) {
+        if (!allItemsCollected || !initalised) {
+            List<Command> itemChoices = new ArrayList<>();
+            List<ActionTemplate> abilities = engine.retrieveDbAbilities();
 
-    }
-
-    @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
-        List<Command> itemChoices = new ArrayList<>();
-        List<ActionTemplate> abilities = engine.retrieveDbAbilities();
-
-        for (ActionTemplate a : abilities) {
-            if (a.type == ActionTemplate.AbilityType.ITEM) {
-                itemChoices.add(new StartMenuCommand(a.name, () -> engine.addToInventory(a.name)));
+            for (ActionTemplate a : abilities) {
+                if (a.type == ActionTemplate.AbilityType.ITEM) {
+                    itemChoices.add(new MenuCommand(a.name, () -> engine.addToInventory(a.id)));
+                }
             }
+
+            engine.notifyMenuObservers(o -> o.onChoicePrompt( "Select item " + (engine.getPlayerInventory().size() + 1) + ":", itemChoices));
+
+            if (engine.getPlayerInventory().size() + 1 >= itemAmount)
+                allItemsCollected = true;
+
+            initalised = true;
         }
 
-        Command selected = view.PromptUserChoice("Select your 1st item: ", itemChoices);
-        selected.execute(null);
+        Command result = engine.retrieveLatestCommand();
 
-        selected = view.PromptUserChoice("Select your 2nd item: ", itemChoices);
-        selected.execute(null);
+        if (result == null) {
+            return this;
+        }
 
-        return new SelectDifficultyState();
-    }
+        if (!(result instanceof MenuCommand)) {
+           return this;
+        }
 
-    @Override
-    public void onExit(BattleEngine engine, GameView view) {
+        result.execute(engine);
+
+        if (allItemsCollected)
+            return new SelectDifficultyState();
+        else {
+            initalised = false;
+            return this;
+        }
 
     }
 }
