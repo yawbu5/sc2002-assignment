@@ -9,8 +9,8 @@ public class Main {
         BattleEngine engine = new BattleEngine(db);
         GameView view = new ConsoleView();
 
-        engine.subscribe(view);
         view.connectEngine(engine);
+
         engine.start();
     }
 }
