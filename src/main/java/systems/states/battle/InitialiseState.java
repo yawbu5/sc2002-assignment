@@ -3,7 +3,6 @@ package systems.states.battle;
 import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.states.GameState;
-import ui.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class InitialiseState implements GameState {
     @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
+    public GameState onUpdate(BattleEngine engine) {
         List<EntityTemplate> entities = new ArrayList<>();
 
         entities.add(engine.getSelectedPlayer());
@@ -22,9 +21,7 @@ public class InitialiseState implements GameState {
             entities.add(engine.retrieveDbEntity(s));
         }
 
-        engine.startEnitityManager(entities);
-
-        view.DisplayMessage("PREPARE FOR BATTLE!");
+        engine.startEntityManager(entities);
 
         return new StartTurnState();
     }
