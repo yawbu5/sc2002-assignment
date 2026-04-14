@@ -13,7 +13,7 @@ public class GameResources {
     public final List<Wave> waves;
 
     public GameResources() {
-        abilities = JSONLoader.loadList("abilities.json", ActionTemplate.class);
+        abilities = JSONLoader.loadList("actions.json", ActionTemplate.class);
         entityTemplates = JSONLoader.loadList("entities.json", EntityTemplate.class);
         waves = JSONLoader.loadList("waves.json", Wave.class);
     }
