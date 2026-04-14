@@ -1,7 +1,6 @@
 package systems.states;
 
 import systems.BattleEngine;
-import ui.GameView;
 
 /**
  * GameState defines a certain unique phase,behaviour or action that is entered into
@@ -13,12 +12,12 @@ import ui.GameView;
  */
 public interface GameState {
     // default methods (onEnter, onExit) treated as optional
-    default void onEnter(BattleEngine engine, GameView view) {
+    default void onEnter(BattleEngine engine) {
     }
 
-    default void onExit(BattleEngine engine, GameView view) {
+    default void onExit(BattleEngine engine) {
     }
 
     // MUST define an implementation for onUpdate
-    GameState onUpdate(BattleEngine engine, GameView view);
+    GameState onUpdate(BattleEngine engine);
 }
