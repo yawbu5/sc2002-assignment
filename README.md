@@ -1,11 +1,13 @@
 # SC2002 Assignment
 
-### Links to explanations
+
+## Project Architecture 
+
+### Links to pattern usage explanations
 - [States](src/main/java/systems/states/states.md)
 - [Observers](src/main/java/observable/observer.md)
 - [Commands](src/main/java/commands/commands.md)
-
-## Project Architecture 
+ 
 ### Data System
 - data/GameResources - The central serialized data repository for all the dynamic game configurations (i.e., entities, wave data, abilities)
 - data/JSONLoader - Utility for easily loading in JSON data according to a data template class.
