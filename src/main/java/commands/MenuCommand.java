@@ -2,11 +2,11 @@ package commands;
 
 import systems.BattleEngine;
 
-public class StartMenuCommand implements Command {
+public class MenuCommand implements Command {
     private final String title;
     private final Runnable action;
 
-    public StartMenuCommand(String title, Runnable action) {
+    public MenuCommand(String title, Runnable action) {
         this.title = title;
         this.action = action;
     }
