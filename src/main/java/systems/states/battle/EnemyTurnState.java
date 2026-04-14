@@ -3,7 +3,6 @@ package systems.states.battle;
 import commands.Command;
 import systems.BattleEngine;
 import systems.states.GameState;
-import ui.GameView;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import static systems.states.BattleState.buildActionsList;
 
 public class EnemyTurnState implements GameState {
     @Override
-    public GameState onUpdate(BattleEngine engine, GameView view) {
+    public GameState onUpdate(BattleEngine engine) {
         /*
         Same ideas as the PlayerTurnState, without the need for input dialogues.
         */
@@ -19,7 +18,7 @@ public class EnemyTurnState implements GameState {
 
         commands.get(0).execute(engine);
 
-        return this;
+        return new ResolveTurnState();
     }
 
 }

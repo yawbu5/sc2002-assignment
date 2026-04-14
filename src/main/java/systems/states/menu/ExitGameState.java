@@ -3,19 +3,9 @@ package systems.states.menu;
 import systems.BattleEngine;
 import systems.states.GameState;
 
-public class ResultState implements GameState {
-    @Override
-    public void onEnter(BattleEngine engine) {
-
-    }
-
+public class ExitGameState implements GameState {
     @Override
     public GameState onUpdate(BattleEngine engine) {
         return null;
-    }
-
-    @Override
-    public void onExit(BattleEngine engine) {
-
     }
 }
