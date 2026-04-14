@@ -26,3 +26,6 @@ state machine.
 Combined with the Command pattern that we've already implemented, we can easily refactor the engine to handle state
 changes on an event-based basis, allowing non-blocking graphical UIs to simply send messages and data to the game engine
 as Commands when input is ready.
+
+References:
+- [State - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/state.html)
