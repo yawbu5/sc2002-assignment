@@ -24,3 +24,4 @@ It will then implement the methods from the interfaces and be able to handle the
 
 References:
 - [Observer - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/observer.html)
+- [Refactoring Guru - Observer](https://refactoring.guru/design-patterns/observer) 

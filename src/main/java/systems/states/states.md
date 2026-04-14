@@ -5,6 +5,10 @@
 As part of the goal to make the game more in line with SOLID principles, specifically OCP and SRP, we split individual
 actions/phases of the user-facing part of the game into their own states.
 
+#### SRP - This pattern is useful to us as it allows us to separate phases of the game into clear and organisable classes that will have their own logic for whatever job they need to perform.
+
+#### OCP - If extension is needed, we simply create a new state and make minimal changes to other states to point to or refer to this new state.
+
 - Menu (i.e., game configurations, results, non gameplay loop)
     - Split into individual dialogs
     - That is, one class for each selection
@@ -27,5 +31,7 @@ Combined with the Command pattern that we've already implemented, we can easily 
 changes on an event-based basis, allowing non-blocking graphical UIs to simply send messages and data to the game engine
 as Commands when input is ready.
 
+
 References:
-- [State - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/state.html)
+- [State - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/state.html) / Elaboration on State Machine patterns in game development.
+- [State - Refactoring Guru](https://refactoring.guru/design-patterns/state) / Explanations and elaborates on applicability to SOLID principles.
