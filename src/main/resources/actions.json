@@ -2,7 +2,7 @@
   {
     "id": "basicattack",
     "name": "Basic Attack",
-    "desc": "Deals damage to an enemy.",
+    "desc": "Deals damage to an enemy. Damage = max(0, ATK - DEF).",
     "type": "ACTION_TO",
     "aoe": false,
     "val": 1,
@@ -11,25 +11,16 @@
   {
     "id": "defend",
     "name": "Defend",
-    "desc": "Reduces incoming damage.",
+    "desc": "Increases defence by 10 for current and next round.",
     "type": "ACTION_SELF",
     "aoe": false,
-    "val": 3,
-    "cooldown": 0
-  },
-  {
-    "id": "stun",
-    "name": "Stun",
-    "desc": "Prevent an enemy from doing actions for {val} turns.",
-    "type": "ACTION_TO",
-    "aoe": false,
-    "val": 1,
+    "val": 10,
     "cooldown": 0
   },
   {
     "id": "healingpotion",
     "name": "Healing Potion",
-    "desc": "Heals for {val} HP.",
+    "desc": "Heals for 100 HP. New HP = min(currHP + 100, maxHP).",
     "type": "ITEM",
     "aoe": false,
     "val": 100,
@@ -38,7 +29,7 @@
   {
     "id": "powerstone",
     "name": "Power Stone",
-    "desc": "Triggers special ability once.",
+    "desc": "Triggers the player's special skill once without affecting its cooldown.",
     "type": "ITEM",
     "aoe": false,
     "val": 1,
@@ -47,6 +38,7 @@
   {
     "id": "smokebomb",
     "name": "Smoke Bomb",
+    "desc": "Enemy attacks deal 0 damage for the current and next round.",
     "type": "ITEM",
     "aoe": false,
     "val": 2,
@@ -55,19 +47,19 @@
   {
     "id": "shieldbash",
     "name": "Shield Bash",
-    "desc": "Warrior Special Ability",
+    "desc": "Warrior special: deal BasicAttack damage and stun target for 2 turns. Cooldown: 3 rounds.",
     "type": "ACTION_TO",
     "aoe": false,
     "val": 1,
-    "cooldown": 0
+    "cooldown": 3
   },
   {
     "id": "arcaneblast",
     "name": "Arcane Blast",
-    "desc": "Wizard Special Ability",
+    "desc": "Wizard special: deal BasicAttack damage to ALL enemies. Each kill grants +10 ATK permanently. Cooldown: 3 rounds.",
     "type": "ACTION_TO",
     "aoe": true,
     "val": 1,
-    "cooldown": 0
+    "cooldown": 3
   }
 ]
