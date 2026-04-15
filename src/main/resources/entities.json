@@ -9,7 +9,6 @@
     "abilities": [
       "basicattack",
       "defend",
-      "stun",
       "shieldbash"
     ]
   },
@@ -23,7 +22,6 @@
     "abilities": [
       "basicattack",
       "defend",
-      "stun",
       "arcaneblast"
     ]
   },
