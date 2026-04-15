@@ -2,40 +2,21 @@
   {
     "name": "Easy",
     "waves": [
-      [
-        "Goblin",
-        "Goblin",
-        "Goblin"
-      ]
+      ["Goblin", "Goblin", "Goblin"]
     ]
   },
   {
     "name": "Medium",
     "waves": [
-      [
-        "Goblin",
-        "Goblin",
-        "Wolf"
-      ],
-      [
-        "Wolf",
-        "Wolf"
-      ]
+      ["Goblin", "Wolf"],
+      ["Wolf", "Wolf"]
     ]
   },
   {
     "name": "Hard",
     "waves": [
-      [
-        "Goblin",
-        "Wolf",
-        "Wolf"
-      ],
-      [
-        "Goblin",
-        "Wolf",
-        "Wolf"
-      ]
+      ["Goblin", "Goblin"],
+      ["Goblin", "Wolf", "Wolf"]
     ]
   }
 ]
