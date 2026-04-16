@@ -10,7 +10,6 @@ import observable.MenuObserver;
 import systems.states.GameState;
 import systems.states.menu.ExitGameState;
 import systems.states.menu.SelectCharacterState;
-import ui.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +25,6 @@ public class BattleEngine {
 
     private EntityTemplate selectedPlayer;
     private final ArrayList<String> playerInventory = new ArrayList<>();
-
-    private Wave difficulty;
-    private List<Integer> turnOrder;
-    private int waveCount = 0;
 
     private final List<BattleObserver> battleObservers = new ArrayList<>();
     private final List<MenuObserver> menuObservers = new ArrayList<>();
@@ -116,13 +111,20 @@ public class BattleEngine {
         return this.commandQueue.poll();
     }
 
-    private void clearCommands() {
+    public void clearCommands() {
         this.commandQueue.clear();
     }
 
     public void startEntityManager(List<EntityTemplate> entities) {
         this.em = new EntityManager();
         this.em.addEntitiesFromList(entities);
+    }
+
+    public void startActionManager() {
+        this.am = new ActionManager();
+        for (Entity e : em.getAliveEntities()) {
+            //am.registerEntityActions();
+        }
     }
 
     public EntityManager getEntityManager() {
@@ -135,18 +137,6 @@ public class BattleEngine {
 
     public StatusManager getStatusManager() {
         return this.sm;
-    }
-
-    public List<Integer> getTurnOrder() {
-        return this.turnOrder;
-    }
-
-    public void setTurnOrder(List<Integer> newTurnOrder) {
-        this.turnOrder = newTurnOrder;
-    }
-
-    public int getFirstTurnEntity() {
-        return this.turnOrder.get(0);
     }
 
     public ArrayList<String> getPlayerInventory() {
@@ -193,30 +183,6 @@ public class BattleEngine {
 
     public List<Wave> retrieveDbWaves() {
         return database.waves;
-    }
-
-    public void setDifficulty(Wave wave) {
-        this.difficulty = wave;
-    }
-
-    public List<List<String>> getWaves() {
-        return this.difficulty.waves;
-    }
-
-    public boolean checkWavesCleared() {
-        return this.waveCount == difficulty.waves.size();
-    }
-
-    /*
-     * Wave counts are one-based.
-     */
-    public int incrementWaveCount() {
-        if (this.waveCount - 1 >= difficulty.waves.size()) {
-            return -1;
-        } else {
-            this.waveCount++;
-            return this.waveCount;
-        }
     }
 
     public void setSelectedPlayer(EntityTemplate e) {

@@ -1,0 +1,69 @@
+package systems.states.battle;
+
+import data.Wave;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Holds (temporary) battle-specific context/data.
+ * Makes it easier to restart the game
+ */
+public class BattleData {
+    private Wave difficulty;
+    private int waveCount = 0;
+    private int roundCounter = 1;
+    private List<Integer> turnOrder;
+    public boolean playerWins = false;
+
+    public void setDifficulty(Wave difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public void setRoundCounter(int round) {
+        this.roundCounter = round;
+    }
+
+    public void incrementRoundCounter() {
+        this.roundCounter++;
+    }
+
+    /**
+     * Wave counts are one-based.
+     */
+    public int incrementWaveCount() {
+        if (this.waveCount - 1 >= difficulty.waves.size()) {
+            return -1;
+        } else {
+            this.waveCount++;
+            return this.waveCount;
+        }
+    }
+
+    public void setWaveCount(int count) {
+        this.waveCount = count;
+    }
+
+    public void setTurnOrder(List<Integer> list) {
+       this.turnOrder = list;
+    }
+
+    public Wave getDifficulty() {
+        return difficulty;
+    }
+
+    public List<List<String>> getWaves() {
+        return this.difficulty.waves;
+    }
+
+    public int getRoundCounter() {
+        return roundCounter;
+    }
+
+    public List<Integer> getTurnOrder() {
+        return turnOrder;
+    }
+
+    public int getWaveCount() {
+        return waveCount;
+    }
+}
