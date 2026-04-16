@@ -1,7 +1,12 @@
 package observable;
 
+/**
+ * Exposes battle-related messages
+ */
 public interface BattleObserver {
-    void OnLogAction(String msg);
-    void OnWaveSpawn(int waveNo);
-    void OnEntitySpawn(String entId);
+    void onLogAction(String msg);
+    void onWaveSpawn(int waveNo);
+    void onEntitySpawn(String entId);
+    void onRoundStart(int roundCount);
+    void onRoundEnd(int roundCount);
 }
