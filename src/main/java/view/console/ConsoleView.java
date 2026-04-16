@@ -1,18 +1,23 @@
-package ui.console;
+package view.console;
 
 import commands.Command;
 import observable.BattleObserver;
 import observable.MenuObserver;
 import systems.BattleEngine;
-import ui.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleView implements GameView, MenuObserver, BattleObserver {
+public class ConsoleView implements MenuObserver, BattleObserver {
     private BattleEngine engine;
     private final Scanner sc;
-    private boolean running;
+
+    /**
+     * Game information tracking
+     */
+    private int roundCount = 0;
+    private ArrayList<EntityStats> entities = new ArrayList<>();
 
     public ConsoleView() {
         this.sc = new Scanner(System.in);
@@ -38,43 +43,55 @@ public class ConsoleView implements GameView, MenuObserver, BattleObserver {
         }
     }
 
-    public Command PromptUserChoice(String msg, List<Command> options) {
-        int input = -1;
-        boolean entered = false;
-        while (input < 1 || input > options.size()) {
-            if (!entered) {
-                entered = true;
-            } else {
-                System.out.println("Erroneous input, try again!");
-            }
-            System.out.println(msg);
+    //public Command PromptUserChoice(String msg, List<Command> options) {
+    //    int input = -1;
+    //    boolean entered = false;
+    //    while (input < 1 || input > options.size()) {
+    //        if (!entered) {
+    //            entered = true;
+    //        } else {
+    //            System.out.println("Erroneous input, try again!");
+    //        }
+    //        System.out.println(msg);
 
-            for (int i = 0; i < options.size(); i++) {
-                System.out.println((i + 1) + ": " + options.get(i).getDisplayText());
-            }
-            System.out.print("> ");
-            try {
-                input = Integer.parseInt(sc.nextLine());
-            } catch (NumberFormatException ignored) {
-            }
-        }
+    //        for (int i = 0; i < options.size(); i++) {
+    //            System.out.println((i + 1) + ": " + options.get(i).getDisplayText());
+    //        }
+    //        System.out.print("> ");
+    //        try {
+    //            input = Integer.parseInt(sc.nextLine());
+    //        } catch (NumberFormatException ignored) {
+    //        }
+    //    }
 
-        return options.get(input - 1);
-    }
-
-    @Override
-    public void OnLogAction(String msg) {
-
-    }
+    //    return options.get(input - 1);
+    //}
 
     @Override
-    public void OnWaveSpawn(int waveNo) {
+    public void onLogAction(String msg) {
 
     }
 
     @Override
-    public void OnEntitySpawn(String entId) {
+    public void onWaveSpawn(int waveNo) {
 
+    }
+
+    @Override
+    public void onEntitySpawn(String entId) {
+
+    }
+
+    @Override
+    public void onRoundStart(int roundCount) {
+
+    }
+
+    @Override
+    public void onRoundEnd(int roundCount) {
+        this.roundCount = roundCount;
+
+        System.out.println("End of round " + roundCount);
     }
 
     @Override
@@ -98,8 +115,9 @@ public class ConsoleView implements GameView, MenuObserver, BattleObserver {
             } catch (NumberFormatException ignored) {
             }
 
-            engine.queueNextCommand(options.get(input - 1));
         }
+
+        engine.queueNextCommand(options.get(input - 1));
     }
 
     @Override
