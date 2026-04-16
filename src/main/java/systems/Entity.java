@@ -22,8 +22,6 @@ public class Entity {
     private final List<String> abilities;
     private final int currHp;
 
-    private final transient List<Cooldown> cooldowns;
-
     /**
      * Entity builder blueprint from JSON
      */
@@ -36,12 +34,6 @@ public class Entity {
         this.defence = defence;
         this.speed = speed;
         this.abilities = abilities;
-
-        // Transforming ability templates into dynamic actions
-        this.cooldowns = new ArrayList<>();
-        for (String id : this.abilities) {
-            this.cooldowns.add(new Cooldown(id));
-        }
     }
 
     /**

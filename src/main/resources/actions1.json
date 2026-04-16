@@ -1,0 +1,65 @@
+[
+  {
+    "id": "basicattack",
+    "name": "Basic Attack",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "cooldown": 0,
+    "effects": []
+  },
+  {
+    "id": "defend",
+    "name": "Defend",
+    "type": "ACTION_SELF",
+    "aoe": false,
+    "cooldown": 0,
+    "effects": [
+      {"type": "APPLY_STATUS", "id": "defend", "duration":  1}
+    ]
+  },
+  {
+    "id": "healingpotion",
+    "name": "Healing Potion",
+    "type": "ITEM",
+    "aoe": false,
+    "cooldown": 0,
+    "effects": [
+      {"type": "HEAL", "val": "100"}
+    ]
+  },
+  {
+    "id": "powerstone",
+    "name": "Power Stone",
+    "desc": "Triggers special ability once.",
+    "type": "ITEM",
+    "aoe": false,
+    "cooldown": 0,
+    "effects": [
+      {"type": "ACTIVATE_SPECIAL"}
+    ]
+  },
+  {
+    "id": "smokebomb",
+    "name": "Smoke Bomb",
+    "type": "ITEM",
+    "aoe": false,
+    "cooldown": 0,
+    "effects" : []
+  },
+  {
+    "id": "shieldbash",
+    "name": "Shield Bash",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "cooldown": 0,
+    "effects" : []
+  },
+  {
+    "id": "arcaneblast",
+    "name": "Arcane Blast",
+    "type": "ACTION_TO",
+    "aoe": true,
+    "cooldown": 0,
+    "effects" : []
+  }
+]
