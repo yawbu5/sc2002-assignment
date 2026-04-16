@@ -6,15 +6,15 @@ import systems.states.GameState;
 
 import java.util.List;
 
-import static systems.states.BattleState.buildActionsList;
+import static systems.states.BattleSession.buildActionsList;
 
-public class EnemyTurnState implements GameState {
+public class EnemyTurnState implements BattleState {
     @Override
-    public GameState onUpdate(BattleEngine engine) {
+    public BattleState transition(BattleData data, BattleEngine engine) {
         /*
         Same ideas as the PlayerTurnState, without the need for input dialogues.
         */
-        List<Command> commands = buildActionsList(engine);
+        List<Command> commands = buildActionsList(data, engine);
 
         commands.get(0).execute(engine);
 

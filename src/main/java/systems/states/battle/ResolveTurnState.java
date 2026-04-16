@@ -6,9 +6,9 @@ import systems.states.GameState;
 /**
  * Responsibility: Executes actions and other "concurrent" effects
  */
-public class ResolveTurnState implements GameState {
+public class ResolveTurnState implements BattleState {
     @Override
-    public GameState onUpdate(BattleEngine engine) {
+    public BattleState transition(BattleData data, BattleEngine engine) {
         return new EndTurnState();
     }
 }

@@ -1,23 +1,22 @@
 package systems.states.battle;
 
 import commands.Command;
-import commands.ItemCommand;
-import commands.MenuCommand;
-import data.ActionTemplate;
+import commands.OpenInventoryCommand;
 import systems.BattleEngine;
 import systems.states.GameState;
+import systems.states.menu.ViewInventoryState;
 
 import java.util.List;
 
-import static systems.states.BattleState.buildActionsList;
+import static systems.states.BattleSession.buildActionsList;
 
 /**
  * Responsibility: Wait for and validate player input, and handle selecting
  */
-public class PlayerTurnState implements GameState {
-    private boolean initalised = false;
+public class PlayerTurnState implements BattleState {
+    private boolean initialised = false;
     @Override
-    public GameState onUpdate(BattleEngine engine) {
+    public BattleState transition(BattleData data, BattleEngine engine) {
         /*
         1. Get abilities from entity.
         2. Attach related commands to those abilities
@@ -25,30 +24,28 @@ public class PlayerTurnState implements GameState {
         4. Once confirmed, add action to actionManager to handle outcome
         5. Move to Resolve
         */
-        if (!initalised) {
-            List<Command> commands = buildActionsList(engine);
+        if (!initialised) {
+            List<Command> commands = buildActionsList(data, engine);
 
-            for (String s : engine.getPlayerInventory()) {
-                ActionTemplate action = engine.retrieveDbAbility(s);
-                commands.add(new ItemCommand("Use " + action.name));
-            }
+            commands.add(new OpenInventoryCommand());
 
             engine.notifyMenuObservers(o -> o.onChoicePrompt("Select an action: ", commands));
-            initalised = true;
+            initialised = true;
         }
 
+        // check if user has sent a response
         Command result = engine.retrieveLatestCommand();
 
         if (result == null) {
             return this;
         }
 
-        if (!(result instanceof MenuCommand)) {
-            return this;
+        if (result instanceof OpenInventoryCommand) {
+            return new ViewInventoryState();
         }
 
-        result.execute(engine);
-
+        // put response back into the queue for ResolveTurn to process.
+        engine.queueNextCommand(result);
         return new ResolveTurnState();
     }
 }

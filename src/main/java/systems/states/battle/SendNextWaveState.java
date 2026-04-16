@@ -6,9 +6,9 @@ import systems.states.GameState;
 /**
  * If there is another wave, inform the player of the incoming wave and add the new wave into the entity manager.
  */
-public class SendNextWaveState implements GameState {
+public class SendNextWaveState implements BattleState {
     @Override
-    public GameState onUpdate(BattleEngine engine) {
-        return new StartTurnState();
+    public BattleState transition(BattleData data, BattleEngine engine) {
+       return new StartTurnState();
     }
 }

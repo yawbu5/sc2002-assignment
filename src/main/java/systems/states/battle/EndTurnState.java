@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Responsibility: Check win/lose conditions, then process accordingly / move to next turn
  */
-public class EndTurnState implements GameState {
+public class EndTurnState implements BattleState {
     @Override
-    public GameState onUpdate(BattleEngine engine) {
+    public BattleState transition(BattleData data, BattleEngine engine) {
         List<Entity> aliveEntities = engine.getEntityManager().getAliveEntities();
         Entity player = engine.getEntityManager().getEntity(0);
 
         if (player.getCurrHp() <= 0) {
-            return new ResultState();
+            return null;
         } else {
             boolean allEnemiesDead = true;
             for (Entity e : aliveEntities) {
@@ -28,8 +28,11 @@ public class EndTurnState implements GameState {
             }
 
             if (allEnemiesDead) {
-                return new ResultState();
+                return null;
             }
+
+            engine.notifyBattleObservers(o -> o.onRoundEnd(data.getRoundCounter()));
+            data.incrementRoundCounter();
 
             return new StartTurnState();
         }

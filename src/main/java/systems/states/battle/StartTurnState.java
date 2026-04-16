@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 /**
  * Responsibility: Determines turn order
  */
-public class StartTurnState implements GameState {
+public class StartTurnState implements BattleState {
 
     @Override
-    public GameState onUpdate(BattleEngine engine) {
+    public BattleState transition(BattleData data, BattleEngine engine) {
         /*
          Only go through entities that are alive.
          We try not to delete entities until a wave/battle is over.
@@ -22,11 +22,10 @@ public class StartTurnState implements GameState {
          and prevents any potential weird side effects.
         */
         List<Entity> alive = engine.getEntityManager().getAliveEntities();
-
         /*
         We sort the playable (alive) entities by their current speed.
          */
-        List<Integer> currentTurnOrder = engine.getTurnOrder();
+        List<Integer> currentTurnOrder = data.getTurnOrder();
         if (currentTurnOrder == null) {
             // Handle very first turn, order turns by SPD
             alive.sort(Comparator.comparing(Entity::getSpeed).reversed());
@@ -34,7 +33,7 @@ public class StartTurnState implements GameState {
             // Transforms list of Entity data into a simple list of Entity Ids. Smaller signature, more performant.
             List<Integer> newTurnOrder = alive.stream().map(Entity::getId).collect(Collectors.toList());
 
-            engine.setTurnOrder(newTurnOrder);
+            data.setTurnOrder(newTurnOrder);
         } else {
             // What do we expect after EndTurn? Win conditions checked.
             // Possible scenarios after that point: Either an enemy killed or not killed.
@@ -44,7 +43,7 @@ public class StartTurnState implements GameState {
             currentTurnOrder.remove(0);
 
             // set to new turn order: next in line.
-            engine.setTurnOrder(currentTurnOrder);
+            data.setTurnOrder(currentTurnOrder);
         }
 
         //List<String> displayMsgs = new ArrayList<>();
@@ -53,7 +52,7 @@ public class StartTurnState implements GameState {
         // if player is first, go to player
         // if not, go to enemy
         // A bit lengthy, but it does the job
-        if (engine.getEntityManager().getEntity(engine.getFirstTurnEntity()).getType() == Entity.EntityType.PLAYER) {
+        if (engine.getEntityManager().getEntity(data.getTurnOrder().get(0)).getType() == Entity.EntityType.PLAYER) {
             // Print field enemy stats for player to see
             for (Entity e : engine.getEntityManager().getAliveEntities()) {
                 String playerStatus = (e.getType() == Entity.EntityType.PLAYER) ? " (YOU)" : "";
