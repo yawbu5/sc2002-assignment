@@ -13,6 +13,7 @@ public class BattleData {
     private int waveCount = 0;
     private int roundCounter = 1;
     private List<Integer> turnOrder;
+    public int currentTurn = 0;     // on initial startTurn check, this number is current. However on post-checks we consider this to be currentTurn++
     public boolean playerWins = false;
 
     public void setDifficulty(Wave difficulty) {

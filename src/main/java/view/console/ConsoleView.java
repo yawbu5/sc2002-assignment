@@ -69,7 +69,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onLogAction(String msg) {
-
+        System.out.println(msg);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onRoundStart(int roundCount) {
-
+        System.out.println("End of round " + roundCount);
     }
 
     @Override

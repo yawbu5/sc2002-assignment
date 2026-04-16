@@ -15,6 +15,7 @@ public class StartTurnState implements BattleState {
 
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
+
         /*
          Only go through entities that are alive.
          We try not to delete entities until a wave/battle is over.
@@ -34,16 +35,23 @@ public class StartTurnState implements BattleState {
             List<Integer> newTurnOrder = alive.stream().map(Entity::getId).collect(Collectors.toList());
 
             data.setTurnOrder(newTurnOrder);
-        } else {
-            // What do we expect after EndTurn? Win conditions checked.
-            // Possible scenarios after that point: Either an enemy killed or not killed.
+        }
 
-            // Either way we just queue and dequeue the first element (i.e., the last played)
-            currentTurnOrder.add(currentTurnOrder.get(0));
-            currentTurnOrder.remove(0);
+        if (data.currentTurn >= data.getTurnOrder().size()) {
+            data.incrementRoundCounter();
+            data.currentTurn = 0;
 
-            // set to new turn order: next in line.
-            data.setTurnOrder(currentTurnOrder);
+            engine.notifyBattleObservers(o -> o.onRoundStart(data.getRoundCounter()));
+            // tick whatever effects
+        }
+
+        // check if entity we're about to push is already dead?
+        Entity currentEntity = engine.getEntityManager().getEntity(data.currentTurn);
+
+
+        if (currentEntity.isDead()) {
+            // we skip and check next entity in line
+            return this;
         }
 
         //List<String> displayMsgs = new ArrayList<>();
@@ -52,7 +60,7 @@ public class StartTurnState implements BattleState {
         // if player is first, go to player
         // if not, go to enemy
         // A bit lengthy, but it does the job
-        if (engine.getEntityManager().getEntity(data.getTurnOrder().get(0)).getType() == Entity.EntityType.PLAYER) {
+        if (engine.getEntityManager().getEntity(data.getTurnOrder().get(data.currentTurn)).getType() == Entity.EntityType.PLAYER) {
             // Print field enemy stats for player to see
             for (Entity e : engine.getEntityManager().getAliveEntities()) {
                 String playerStatus = (e.getType() == Entity.EntityType.PLAYER) ? " (YOU)" : "";
@@ -60,8 +68,10 @@ public class StartTurnState implements BattleState {
                 String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
                 engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
             }
+            data.currentTurn++;
             return new PlayerTurnState();
         } else {
+            data.currentTurn++;
             return new EnemyTurnState();
         }
     }

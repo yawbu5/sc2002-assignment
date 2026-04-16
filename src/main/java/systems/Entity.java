@@ -46,6 +46,10 @@ public class Entity {
         return newEntity;
     }
 
+    public boolean isDead() {
+        return currHp <= 0;
+    }
+
     public int getId() {
         return this.id;
     }

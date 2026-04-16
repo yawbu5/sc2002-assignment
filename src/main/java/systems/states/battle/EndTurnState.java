@@ -31,9 +31,6 @@ public class EndTurnState implements BattleState {
                 return null;
             }
 
-            engine.notifyBattleObservers(o -> o.onRoundEnd(data.getRoundCounter()));
-            data.incrementRoundCounter();
-
             return new StartTurnState();
         }
     }
