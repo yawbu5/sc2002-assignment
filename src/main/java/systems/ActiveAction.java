@@ -6,18 +6,22 @@ import java.util.List;
 public class ActiveAction {
     private int casterId;    // casting entity ID (i.e., primary key)
     private List<Integer> targetId = new ArrayList<>();
-    private Cooldown cooldown;
+    private int cooldownTimer;
 
-    public ActiveAction(int casterId, Cooldown cooldown) {
+    public ActiveAction(int casterId) {
         this.casterId = casterId;
-        this.cooldown = cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldownTimer = cooldown;
     }
 
     public void tick() {
-        cooldown.tick();
+        if (this.cooldownTimer > 0)
+            this.cooldownTimer--;
     }
 
     public boolean isReady() {
-        return cooldown.isReady();
+        return cooldownTimer == 0;
     }
 }
