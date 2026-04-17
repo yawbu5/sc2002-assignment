@@ -5,7 +5,7 @@ import systems.BattleEngine;
 /**
  * Simple message to open the inventory, purely an identifier and no other function.
  */
-public class OpenInventoryCommand implements Command{
+public class OpenInventoryCommand implements Command {
     @Override
     public String getDisplayText() {
         return "Inventory";

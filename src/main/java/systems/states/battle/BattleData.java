@@ -1,7 +1,7 @@
 package systems.states.battle;
 
 import data.Wave;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -9,15 +9,13 @@ import java.util.List;
  * Makes it easier to restart the game
  */
 public class BattleData {
+    public int currentTurn = 0;     // on initial startTurn check, this number is current. However on post-checks we consider this to be currentTurn++
+    public boolean requestRestart = false;
+    public boolean requestExit = false;
     private Wave difficulty;
     private int waveCount = 0;
     private int roundCounter = 1;
     private List<Integer> turnOrder;
-    public int currentTurn = 0;     // on initial startTurn check, this number is current. However on post-checks we consider this to be currentTurn++
-
-    public boolean requestRestart = false;
-    public boolean requestExit = false;
-
 
     public void setDifficulty(Wave difficulty) {
         this.difficulty = difficulty;
@@ -47,10 +45,6 @@ public class BattleData {
         }
     }
 
-    public void setTurnOrder(List<Integer> list) {
-       this.turnOrder = list;
-    }
-
     public List<List<String>> getWaves() {
         return this.difficulty.waves;
     }
@@ -61,5 +55,9 @@ public class BattleData {
 
     public List<Integer> getTurnOrder() {
         return turnOrder;
+    }
+
+    public void setTurnOrder(List<Integer> list) {
+        this.turnOrder = list;
     }
 }

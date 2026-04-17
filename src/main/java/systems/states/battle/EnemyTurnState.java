@@ -1,14 +1,8 @@
 package systems.states.battle;
 
 import commands.ActionCommand;
-import commands.Command;
 import systems.BattleEngine;
 import systems.Entity;
-import systems.states.GameState;
-
-import java.util.List;
-
-import static systems.states.BattleSession.buildActionsList;
 
 public class EnemyTurnState implements BattleState {
     @Override

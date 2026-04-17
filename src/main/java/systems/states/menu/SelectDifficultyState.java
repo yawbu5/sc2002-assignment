@@ -7,15 +7,13 @@ import data.Wave;
 import systems.BattleEngine;
 import systems.states.BattleSession;
 import systems.states.GameState;
-import systems.states.battle.BattleData;
-import systems.states.battle.InitialiseState;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectDifficultyState implements GameState {
-    private boolean initalised = false;
     Wave selectedDifficulty;
+    private boolean initalised = false;
 
     @Override
     public GameState onUpdate(BattleEngine engine) {

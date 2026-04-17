@@ -4,7 +4,6 @@ import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.EntityType;
-import systems.states.GameState;
 
 import java.util.ArrayList;
 import java.util.List;

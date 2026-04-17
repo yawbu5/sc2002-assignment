@@ -31,7 +31,9 @@ Combined with the Command pattern that we've already implemented, we can easily 
 changes on an event-based basis, allowing non-blocking graphical UIs to simply send messages and data to the game engine
 as Commands when input is ready.
 
-
 References:
-- [State - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/state.html) / Elaboration on State Machine patterns in game development.
-- [State - Refactoring Guru](https://refactoring.guru/design-patterns/state) / Explanations and elaborates on applicability to SOLID principles.
+
+- [State - Design Patterns Revisited from Game Programming Patterns](https://gameprogrammingpatterns.com/state.html) /
+  Elaboration on State Machine patterns in game development.
+- [State - Refactoring Guru](https://refactoring.guru/design-patterns/state) / Explanations and elaborates on
+  applicability to SOLID principles.

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ViewInventoryState implements BattleState {
     private boolean initialised = false;
+
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
         if (!initialised) {
@@ -21,7 +22,8 @@ public class ViewInventoryState implements BattleState {
                 commands.add(new ItemCommand("Use " + action.name, data.getCurrentTurnEntityId(), data.getCurrentTurnEntityId(), action.id));
             }
 
-            commands.add(new MenuCommand("Go back", () -> {}));
+            commands.add(new MenuCommand("Go back", () -> {
+            }));
 
             engine.notifyMenuObservers(o -> o.onChoicePrompt("Choose an item: ", commands));
             initialised = true;

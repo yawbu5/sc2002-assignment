@@ -1,8 +1,8 @@
 package systems.states.battle;
 
-import commands.OpenTargetMenuCommand;
 import commands.Command;
 import commands.OpenInventoryCommand;
+import commands.OpenTargetMenuCommand;
 import systems.BattleEngine;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import static systems.states.BattleSession.buildActionsList;
  */
 public class PlayerTurnState implements BattleState {
     private boolean initialised = false;
+
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
         /*

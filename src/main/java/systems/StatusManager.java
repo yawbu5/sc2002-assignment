@@ -9,7 +9,7 @@ import java.util.List;
  * Tracks persistent status effects during battles.
  */
 public class StatusManager {
-    private List<EffectTemplate> activeStatuses = new ArrayList<>();
+    private final List<EffectTemplate> activeStatuses = new ArrayList<>();
 
     public StatusManager() {
     }

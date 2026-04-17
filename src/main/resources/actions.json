@@ -6,7 +6,10 @@
     "aoe": false,
     "cooldown": 0,
     "effects": [
-      {"type": "DAMAGE", "val": 1}
+      {
+        "type": "DAMAGE",
+        "val": 1
+      }
     ]
   },
   {
@@ -16,7 +19,11 @@
     "aoe": false,
     "cooldown": 0,
     "effects": [
-      {"type": "APPLY_STATUS", "id": "defend", "duration":  1}
+      {
+        "type": "APPLY_STATUS",
+        "id": "defend",
+        "duration": 1
+      }
     ]
   },
   {
@@ -26,7 +33,10 @@
     "aoe": false,
     "cooldown": 0,
     "effects": [
-      {"type": "HEAL", "val": "100"}
+      {
+        "type": "HEAL",
+        "val": "100"
+      }
     ]
   },
   {
@@ -37,7 +47,9 @@
     "aoe": false,
     "cooldown": 0,
     "effects": [
-      {"type": "ACTIVATE_ABILITY"}
+      {
+        "type": "ACTIVATE_ABILITY"
+      }
     ]
   },
   {
@@ -46,8 +58,11 @@
     "type": "ITEM",
     "aoe": false,
     "cooldown": 0,
-    "effects" : [
-      {"type": "APPLY_STATUS", "id": "invulnerable"}
+    "effects": [
+      {
+        "type": "APPLY_STATUS",
+        "id": "invulnerable"
+      }
     ]
   },
   {
@@ -56,8 +71,12 @@
     "type": "ACTION_TO",
     "aoe": false,
     "cooldown": 3,
-    "effects" : [
-      {"type": "APPLY_STATUS", "id": "stun", "duration": 2}
+    "effects": [
+      {
+        "type": "APPLY_STATUS",
+        "id": "stun",
+        "duration": 2
+      }
     ]
   },
   {
@@ -66,8 +85,11 @@
     "type": "ACTION_TO",
     "aoe": true,
     "cooldown": 3,
-    "effects" : [
-      {"type": "APPLY_STATUS", "id": "arcaneblast"}
+    "effects": [
+      {
+        "type": "APPLY_STATUS",
+        "id": "arcaneblast"
+      }
     ]
   }
 ]

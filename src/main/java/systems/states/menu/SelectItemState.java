@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectItemState implements GameState {
+    private final static int itemAmount = 2;
     private boolean initalised = false;
     private boolean allItemsCollected = false;
-    private final static int itemAmount = 2;
+
     @Override
     public GameState onUpdate(BattleEngine engine) {
         if (!allItemsCollected || !initalised) {
@@ -26,7 +27,7 @@ public class SelectItemState implements GameState {
                 }
             }
 
-            engine.notifyMenuObservers(o -> o.onChoicePrompt( "Select item " + (engine.getPlayerInventory().size() + 1) + ":", itemChoices));
+            engine.notifyMenuObservers(o -> o.onChoicePrompt("Select item " + (engine.getPlayerInventory().size() + 1) + ":", itemChoices));
 
             if (engine.getPlayerInventory().size() + 1 >= itemAmount)
                 allItemsCollected = true;
@@ -41,7 +42,7 @@ public class SelectItemState implements GameState {
         }
 
         if (!(result instanceof MenuCommand)) {
-           return this;
+            return this;
         }
 
         result.execute(engine);

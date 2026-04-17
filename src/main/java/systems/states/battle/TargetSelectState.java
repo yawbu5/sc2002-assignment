@@ -1,6 +1,8 @@
 package systems.states.battle;
 
-import commands.*;
+import commands.ActionCommand;
+import commands.Command;
+import commands.MenuCommand;
 import data.ActionType;
 import systems.BattleEngine;
 import systems.Entity;
@@ -8,7 +10,6 @@ import systems.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TargetSelectState implements BattleState {
     private final ActionType actionType;
@@ -33,12 +34,14 @@ public class TargetSelectState implements BattleState {
                 for (Entity e : engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY)) {
                     commands.add(new ActionCommand(e.getName(), data.getCurrentTurnEntityId(), e.getId(), this.actionId));
                 }
-                commands.add(new MenuCommand("Go back", () -> {}));
+                commands.add(new MenuCommand("Go back", () -> {
+                }));
             } else {
                 // 1. apply to self. 2. go back to selection
                 int player = data.getTurnOrder().get(data.currentTurn);
                 commands.add(new ActionCommand("You", player, player, this.actionId));
-                commands.add(new MenuCommand("Go back", () -> {}));
+                commands.add(new MenuCommand("Go back", () -> {
+                }));
             }
 
             engine.notifyMenuObservers(o -> o.onChoicePrompt("Select a target: ", commands));

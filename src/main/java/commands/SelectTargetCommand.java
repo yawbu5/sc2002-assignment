@@ -6,8 +6,8 @@ import java.util.List;
 
 public class SelectTargetCommand implements Command {
     private final Integer casterId;
-    private List<Integer> targetIds;
     private final String actionId;
+    private final List<Integer> targetIds;
 
     public SelectTargetCommand(Integer casterId, List<Integer> targetIds, String actionId) {
         this.casterId = casterId;

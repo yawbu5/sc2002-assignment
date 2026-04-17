@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Entity {
-    // unique identifier assigned at runtime
-    private transient int id;
-
     private final String name;
     private final EntityType type;
     private final int maxHp;
@@ -17,10 +14,10 @@ public class Entity {
     private final int defence;
     private final int speed;
     private final List<String> abilities;
-
     // game-unique list of cooldowns during runtime
     public transient Map<String, Integer> activeActions = new HashMap<>();
-
+    // unique identifier assigned at runtime
+    private transient int id;
     // game unique current HP tracker;
     private transient int currHp = 0;
 

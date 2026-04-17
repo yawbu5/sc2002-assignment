@@ -28,8 +28,8 @@ public class ActionManager {
         // check with the entity if action has been used and has a cooldown
         int cooldownTime;
         if ((cooldownTime = caster.activeActions.getOrDefault(actionId, 0)) > 0) {
-           engine.notifyBattleObservers(o -> o.onLogAction(action.name + " is on cooldown! " + "(" + cooldownTime + " turns remaining)"));
-           return false;
+            engine.notifyBattleObservers(o -> o.onLogAction(action.name + " is on cooldown! " + "(" + cooldownTime + " turns remaining)"));
+            return false;
         }
 
         // nominally this can just be a single int rather than a list
@@ -56,7 +56,7 @@ public class ActionManager {
                 case "HEAL":
                     for (Entity e : targets) {
                         e.setCurrHp(Math.min(e.getCurrHp() + (int) effect.val, e.getMaxHp()));
-                        engine.notifyBattleObservers(o -> o.onLogAction("HEALED: " + e.getName() + " healed for " + (int)effect.val + " up to " + e.getCurrHp() + "/" + e.getMaxHp()));
+                        engine.notifyBattleObservers(o -> o.onLogAction("HEALED: " + e.getName() + " healed for " + (int) effect.val + " up to " + e.getCurrHp() + "/" + e.getMaxHp()));
                     }
                     break;
                 case "APPLY_STATUS":

@@ -21,8 +21,8 @@ public class EndTurnState implements BattleState {
             boolean allEnemiesDead = true;
             for (Entity e : aliveEntities) {
                 if (e.getType() == EntityType.ENEMY) {
-                   allEnemiesDead = false;
-                   break;
+                    allEnemiesDead = false;
+                    break;
                 }
             }
 

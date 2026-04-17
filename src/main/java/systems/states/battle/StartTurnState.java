@@ -3,11 +3,9 @@ package systems.states.battle;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.EntityType;
-import systems.states.GameState;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**

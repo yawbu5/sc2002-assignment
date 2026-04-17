@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveAction {
-    private int casterId;    // casting entity ID (i.e., primary key)
-    private List<Integer> targetId = new ArrayList<>();
+    private final int casterId;    // casting entity ID (i.e., primary key)
+    private final List<Integer> targetId = new ArrayList<>();
     private int cooldownTimer;
 
     public ActiveAction(int casterId) {

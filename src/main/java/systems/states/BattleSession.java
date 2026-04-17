@@ -1,14 +1,13 @@
 package systems.states;
 
-import commands.OpenTargetMenuCommand;
 import commands.Command;
+import commands.OpenTargetMenuCommand;
 import data.ActionTemplate;
 import data.Wave;
 import systems.BattleEngine;
 import systems.states.battle.BattleData;
 import systems.states.battle.BattleState;
 import systems.states.battle.InitialiseState;
-import systems.states.battle.ResultState;
 import systems.states.menu.ExitGameState;
 import systems.states.menu.SelectCharacterState;
 
@@ -22,6 +21,22 @@ public class BattleSession implements GameState {
     public BattleSession(Wave selectedDifficulty) {
         this.game = new BattleData();
         game.setDifficulty(selectedDifficulty);
+    }
+
+    public static List<Command> buildActionsList(BattleData data, BattleEngine engine) {
+        List<ActionTemplate> actions = new ArrayList<>();
+
+        for (String id : engine.getEntityManager().getEntity(0).getAbilities()) {
+            actions.add(engine.retrieveDbAction(id));
+        }
+
+
+        List<Command> commands = new ArrayList<>();
+        for (ActionTemplate a : actions) {
+            commands.add(new OpenTargetMenuCommand(a.name, a.id, a.type));
+        }
+
+        return commands;
     }
 
     @Override
@@ -38,26 +53,8 @@ public class BattleSession implements GameState {
 
         if (game.requestRestart) {
             return new SelectCharacterState();
-        }
-        else {
+        } else {
             return new ExitGameState();
         }
-    }
-
-
-    public static List<Command> buildActionsList(BattleData data, BattleEngine engine) {
-        List<ActionTemplate> actions = new ArrayList<>();
-
-        for (String id : engine.getEntityManager().getEntity(0).getAbilities()) {
-            actions.add(engine.retrieveDbAction(id));
-        }
-
-
-        List<Command> commands = new ArrayList<>();
-        for (ActionTemplate a : actions) {
-            commands.add(new OpenTargetMenuCommand(a.name, a.id, a.type));
-        }
-
-        return commands;
     }
 }

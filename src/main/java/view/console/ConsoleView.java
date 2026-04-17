@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleView implements MenuObserver, BattleObserver {
-    private BattleEngine engine;
     private final Scanner sc;
-
+    private BattleEngine engine;
     /**
      * Game information tracking
      */
     private int roundCount = 0;
-    private ArrayList<EntityStats> entities = new ArrayList<>();
+    private final ArrayList<EntityStats> entities = new ArrayList<>();
 
     public ConsoleView() {
         this.sc = new Scanner(System.in);

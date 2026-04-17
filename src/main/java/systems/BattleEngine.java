@@ -19,20 +19,17 @@ import java.util.function.Consumer;
 
 public class BattleEngine {
     private final GameResources database;
-    private EntityManager em;
-    private ActionManager am;
-    private StatusManager sm;
-
-    private EntityTemplate selectedPlayer;
     private final ArrayList<String> playerInventory = new ArrayList<>();
-
     private final List<BattleObserver> battleObservers = new ArrayList<>();
     private final List<MenuObserver> menuObservers = new ArrayList<>();
-
     // Why use ConcurrentLinkedQueue?
     // Because the guy on stackoverflow told me to.
     // ...but apparently it's a thread-safe method in case we implement graphics libraries for the UI like JavaFX.
     private final Queue<Command> commandQueue = new ConcurrentLinkedQueue<>();
+    private EntityManager em;
+    private ActionManager am;
+    private StatusManager sm;
+    private EntityTemplate selectedPlayer;
 
     // TODO: ITEMS, ABILITIES ETC.
     public BattleEngine(GameResources db) {
@@ -174,11 +171,11 @@ public class BattleEngine {
         return database.waves;
     }
 
-    public void setSelectedPlayer(EntityTemplate e) {
-        this.selectedPlayer = e;
-    }
-
     public EntityTemplate getSelectedPlayer() {
         return this.selectedPlayer;
+    }
+
+    public void setSelectedPlayer(EntityTemplate e) {
+        this.selectedPlayer = e;
     }
 }

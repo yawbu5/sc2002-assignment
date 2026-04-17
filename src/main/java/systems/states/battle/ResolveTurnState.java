@@ -1,9 +1,7 @@
 package systems.states.battle;
 
-import commands.ActionCommand;
 import commands.Command;
 import systems.BattleEngine;
-import systems.states.GameState;
 
 /**
  * Responsibility: Executes actions and other "concurrent" effects

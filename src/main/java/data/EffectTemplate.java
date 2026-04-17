@@ -2,7 +2,7 @@ package data;
 
 /**
  * Status effect sub-identifier data template for actions
- *
+ * <p>
  * i.e., Actions hold this type to identify what status in "statuses.json" they link to.
  */
 public class EffectTemplate {

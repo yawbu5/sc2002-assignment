@@ -4,9 +4,9 @@ import data.ActionType;
 import systems.BattleEngine;
 
 public class OpenTargetMenuCommand implements Command {
-    private final String msg;
     public final String actionId;
     public final ActionType actionType;
+    private final String msg;
 
     public OpenTargetMenuCommand(String msg, String actionId, ActionType actionType) {
         this.msg = msg;
