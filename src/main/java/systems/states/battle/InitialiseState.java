@@ -2,8 +2,6 @@ package systems.states.battle;
 
 import data.EntityTemplate;
 import systems.BattleEngine;
-import systems.Entity;
-import systems.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
