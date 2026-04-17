@@ -1,17 +1,12 @@
 package data;
 
-import systems.Entity;
+import systems.EntityType;
 
 import java.util.List;
 
 public class EntityTemplate {
-    public enum EntityType {
-        ENEMY,
-        PLAYER
-    }
-
     public final String name;
-    public Entity.EntityType type;
+    public EntityType type;
     public final int hp;
     public final int attack;
     public final int defence;
@@ -21,7 +16,7 @@ public class EntityTemplate {
     /**
      * Data template class for Entities
      */
-    public EntityTemplate(String name, int hp, int attack, int defence, int speed, List<String> abilities) {
+    public EntityTemplate(String name, EntityType type, int hp, int attack, int defence, int speed, List<String> abilities) {
         this.name = name;
         this.hp = hp;
         this.attack = attack;

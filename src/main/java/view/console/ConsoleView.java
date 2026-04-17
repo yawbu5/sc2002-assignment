@@ -95,6 +95,11 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     }
 
     @Override
+    public void onUpdateStats(List<Integer> stats) {
+
+    }
+
+    @Override
     public void onChoicePrompt(String msg, List<Command> options) {
         int input = -1;
         boolean entered = false;

@@ -22,6 +22,7 @@ public class InitialiseState implements BattleState {
         }
 
         engine.startEntityManager(entities);
+        engine.startActionManager();
 
         return new StartTurnState();
     }

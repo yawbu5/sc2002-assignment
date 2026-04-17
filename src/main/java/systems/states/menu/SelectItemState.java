@@ -3,6 +3,7 @@ package systems.states.menu;
 import commands.Command;
 import commands.MenuCommand;
 import data.ActionTemplate;
+import data.ActionType;
 import systems.BattleEngine;
 import systems.states.GameState;
 
@@ -17,10 +18,10 @@ public class SelectItemState implements GameState {
     public GameState onUpdate(BattleEngine engine) {
         if (!allItemsCollected || !initalised) {
             List<Command> itemChoices = new ArrayList<>();
-            List<ActionTemplate> abilities = engine.retrieveDbAbilities();
+            List<ActionTemplate> abilities = engine.retrieveDbActions();
 
             for (ActionTemplate a : abilities) {
-                if (a.type == ActionTemplate.AbilityType.ITEM) {
+                if (a.type == ActionType.ITEM) {
                     itemChoices.add(new MenuCommand(a.name, () -> engine.addToInventory(a.id)));
                 }
             }

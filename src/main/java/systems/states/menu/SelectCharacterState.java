@@ -5,6 +5,7 @@ import commands.MenuCommand;
 import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.Entity;
+import systems.EntityType;
 import systems.states.GameState;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class SelectCharacterState implements GameState {
 
             List<Command> characterChoices = new ArrayList<>();
             for (EntityTemplate e : entities) {
-                if (e.type == Entity.EntityType.PLAYER) {
+                if (e.type == EntityType.PLAYER) {
                     characterChoices.add(new MenuCommand(e.name, () -> engine.setSelectedPlayer(e)));
                 }
             }

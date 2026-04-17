@@ -68,10 +68,6 @@ public class BattleEngine {
         this.battleObservers.add(obs);
     }
 
-    public void removeBattleObserver(BattleObserver obs) {
-        this.battleObservers.remove(obs);
-    }
-
     private void clearBattleObservers() {
         this.battleObservers.clear();
     }
@@ -84,10 +80,6 @@ public class BattleEngine {
 
     public void addMenuObserver(MenuObserver obs) {
         this.menuObservers.add(obs);
-    }
-
-    public void removeMenuObserver(MenuObserver obs) {
-        this.menuObservers.remove(obs);
     }
 
     private void clearMenuObservers() {
@@ -121,10 +113,7 @@ public class BattleEngine {
     }
 
     public void startActionManager() {
-        this.am = new ActionManager();
-        for (Entity e : em.getAliveEntities()) {
-            //am.registerEntityActions();
-        }
+        this.am = new ActionManager(this);
     }
 
     public EntityManager getEntityManager() {
@@ -151,11 +140,11 @@ public class BattleEngine {
         this.playerInventory.remove(index);
     }
 
-    public List<ActionTemplate> retrieveDbAbilities() {
+    public List<ActionTemplate> retrieveDbActions() {
         return database.abilities;
     }
 
-    public ActionTemplate retrieveDbAbility(String actionId) {
+    public ActionTemplate retrieveDbAction(String actionId) {
         if (database.abilities != null) {
             return database.abilities.stream()
                     .filter(a -> actionId.equals(a.id))

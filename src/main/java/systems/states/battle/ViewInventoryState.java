@@ -1,17 +1,11 @@
-package systems.states.menu;
+package systems.states.battle;
 
 import commands.Command;
 import commands.ItemCommand;
 import commands.MenuCommand;
 import data.ActionTemplate;
 import systems.BattleEngine;
-import systems.states.GameState;
-import systems.states.battle.BattleData;
-import systems.states.battle.BattleState;
-import systems.states.battle.PlayerTurnState;
-import systems.states.battle.ResolveTurnState;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +17,7 @@ public class ViewInventoryState implements BattleState {
             List<Command> commands = new ArrayList<>();
 
             for (String s : engine.getPlayerInventory()) {
-                ActionTemplate action = engine.retrieveDbAbility(s);
+                ActionTemplate action = engine.retrieveDbAction(s);
                 commands.add(new ItemCommand("Use " + action.name));
             }
 
