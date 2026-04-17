@@ -1,0 +1,23 @@
+[
+  {
+    "id": "stun",
+    "name": "Stunned",
+    "effect": "SKIP_TURN"
+  },
+  {
+    "id": "defend",
+    "name": "Defend",
+    "effect": "DAMAGE_REDUCTION"
+  },
+  {
+    "id": "arcaneblast",
+    "name": "Arcane Blast",
+    "effect": "CASTER_DAMAGE_BUFF",
+    "val": 10
+  },
+  {
+    "id": "invulnerable",
+    "name": "Invulnerable",
+    "effect": "INVULN"
+  }
+]
