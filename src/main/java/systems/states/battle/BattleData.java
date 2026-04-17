@@ -14,7 +14,10 @@ public class BattleData {
     private int roundCounter = 1;
     private List<Integer> turnOrder;
     public int currentTurn = 0;     // on initial startTurn check, this number is current. However on post-checks we consider this to be currentTurn++
-    public boolean playerWins = false;
+
+    public boolean requestRestart = false;
+    public boolean requestExit = false;
+
 
     public void setDifficulty(Wave difficulty) {
         this.difficulty = difficulty;
@@ -26,6 +29,10 @@ public class BattleData {
 
     public boolean currentTurnIsPlayer() {
         return (currentTurn == 0);
+    }
+
+    public int getCurrentTurnEntityId() {
+        return getTurnOrder().get(currentTurn - 1);
     }
 
     /**
