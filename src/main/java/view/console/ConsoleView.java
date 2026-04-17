@@ -15,7 +15,8 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     /**
      * Game information tracking
      */
-    private int roundCount = 0;
+    private int roundCount = 1;
+    private int waveCount = 1;
     private final ArrayList<EntityStats> entities = new ArrayList<>();
 
     public ConsoleView() {
@@ -32,40 +33,6 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         this.engine.addBattleObserver(this);
     }
 
-    public void DisplayMessage(String txt) {
-        System.out.println(txt);
-    }
-
-    public void DisplayList(List<String> txts) {
-        for (String t : txts) {
-            DisplayMessage(t);
-        }
-    }
-
-    //public Command PromptUserChoice(String msg, List<Command> options) {
-    //    int input = -1;
-    //    boolean entered = false;
-    //    while (input < 1 || input > options.size()) {
-    //        if (!entered) {
-    //            entered = true;
-    //        } else {
-    //            System.out.println("Erroneous input, try again!");
-    //        }
-    //        System.out.println(msg);
-
-    //        for (int i = 0; i < options.size(); i++) {
-    //            System.out.println((i + 1) + ": " + options.get(i).getDisplayText());
-    //        }
-    //        System.out.print("> ");
-    //        try {
-    //            input = Integer.parseInt(sc.nextLine());
-    //        } catch (NumberFormatException ignored) {
-    //        }
-    //    }
-
-    //    return options.get(input - 1);
-    //}
-
     @Override
     public void onLogAction(String msg) {
         System.out.println(msg);
@@ -73,7 +40,10 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onWaveSpawn(int waveNo) {
+        this.waveCount = waveNo;
 
+        System.out.println("WAVE " + (this.waveCount - 1) + " CLEARED!");
+        System.out.println("SPAWNING WAVE " + this.waveCount);
     }
 
     @Override
