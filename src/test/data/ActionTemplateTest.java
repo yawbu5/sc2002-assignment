@@ -11,12 +11,12 @@ public class ActionTemplateTest {
 
     @Test
     public void EnsureCreateAbilityListFromJSONIsSuccessful() {
-        List<ActionTemplate> abilities = JSONLoader.loadList("actions.json", ActionTemplate.class);
+        List<ActionTemplate> actionTemplates = JSONLoader.loadList("actions.json", ActionTemplate.class);
 
-        Assert.assertNotNull(abilities);
-        Assert.assertEquals(8, abilities.size());
-        Assert.assertEquals("basicattack", abilities.get(0).id);
-        Assert.assertEquals("defend", abilities.get(1).id);
-        Assert.assertEquals("stun", abilities.get(2).id);
+        Assert.assertNotNull(actionTemplates);
+        Assert.assertEquals(8, actionTemplates.size());
+        Assert.assertEquals("basicattack", actionTemplates.get(0).id);
+        Assert.assertEquals("defend", actionTemplates.get(1).id);
+        Assert.assertEquals("stun", actionTemplates.get(2).id);
     }
 }

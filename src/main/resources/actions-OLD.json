@@ -2,30 +2,38 @@
   {
     "id": "basicattack",
     "name": "Basic Attack",
+    "desc": "Deals damage to an enemy.",
     "type": "ACTION_TO",
     "aoe": false,
-    "cooldown": 0,
-    "effects": []
+    "val": 1,
+    "cooldown": 0
   },
   {
     "id": "defend",
     "name": "Defend",
+    "desc": "Reduces incoming damage.",
     "type": "ACTION_SELF",
     "aoe": false,
-    "cooldown": 0,
-    "effects": [
-      {"type": "APPLY_STATUS", "id": "defend", "duration":  1}
-    ]
+    "val": 3,
+    "cooldown": 0
+  },
+  {
+    "id": "stun",
+    "name": "Stun",
+    "desc": "Prevent an enemy from doing actions for {val} turns.",
+    "type": "ACTION_TO",
+    "aoe": false,
+    "val": 1,
+    "cooldown": 0
   },
   {
     "id": "healingpotion",
     "name": "Healing Potion",
+    "desc": "Heals for {val} HP.",
     "type": "ITEM",
     "aoe": false,
-    "cooldown": 0,
-    "effects": [
-      {"type": "HEAL", "val": "100"}
-    ]
+    "val": 100,
+    "cooldown": 0
   },
   {
     "id": "powerstone",
@@ -33,33 +41,33 @@
     "desc": "Triggers special ability once.",
     "type": "ITEM",
     "aoe": false,
-    "cooldown": 0,
-    "effects": [
-      {"type": "ACTIVATE_SPECIAL"}
-    ]
+    "val": 1,
+    "cooldown": 0
   },
   {
     "id": "smokebomb",
     "name": "Smoke Bomb",
     "type": "ITEM",
     "aoe": false,
-    "cooldown": 0,
-    "effects" : []
+    "val": 2,
+    "cooldown": 0
   },
   {
     "id": "shieldbash",
     "name": "Shield Bash",
+    "desc": "Warrior Special Ability",
     "type": "ACTION_TO",
     "aoe": false,
-    "cooldown": 0,
-    "effects" : []
+    "val": 1,
+    "cooldown": 0
   },
   {
     "id": "arcaneblast",
     "name": "Arcane Blast",
+    "desc": "Wizard Special Ability",
     "type": "ACTION_TO",
     "aoe": true,
-    "cooldown": 0,
-    "effects" : []
+    "val": 1,
+    "cooldown": 0
   }
 ]

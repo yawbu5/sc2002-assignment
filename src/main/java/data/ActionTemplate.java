@@ -1,30 +1,24 @@
 package data;
 
-public class ActionTemplate {
-    public enum AbilityType {
-        ACTION_TO,
-        ACTION_SELF,
-        ITEM
-    }
+import java.util.List;
 
+public class ActionTemplate {
     public final String id;
     public final String name;
-    public final String desc;
-    public final AbilityType type;
+    public final ActionType type;
     public final Boolean aoe;
-    public final int val;
     public final int cooldown;
+    public final List<EffectTemplate> effects;
 
     /**
      * Data template class for Action Abilities
      */
-    public ActionTemplate(String id, String name, String desc, AbilityType type, Boolean aoe, int val, int cooldown) {
+    public ActionTemplate(String id, String name, ActionType type, Boolean aoe, int cooldown, List<EffectTemplate> effects) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
         this.type = type;
         this.aoe = aoe;
-        this.val = val;
         this.cooldown = cooldown;
+        this.effects = effects;
     }
 }
