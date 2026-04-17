@@ -1,5 +1,6 @@
 package systems.states.battle;
 
+import commands.ActionCommand;
 import commands.Command;
 import systems.BattleEngine;
 import systems.Entity;
@@ -15,12 +16,8 @@ public class EnemyTurnState implements BattleState {
         /*
         Same ideas as the PlayerTurnState, without the need for input dialogues.
         */
-        List<Command> commands = buildActionsList(data, engine);
-
-        commands.get(0).execute(engine);
-
         Entity current = engine.getEntityManager().getEntity(data.getTurnOrder().get(data.currentTurn - 1));
-        engine.notifyBattleObservers(o -> o.onLogAction( current.getName() + " " +current.getId()+ "'s turn"));
+        engine.queueNextCommand(new ActionCommand("", data.getCurrentTurnEntityId(), 0, current.getAbilities().get(0)));
 
         return new ResolveTurnState();
     }
