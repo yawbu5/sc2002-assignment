@@ -5,6 +5,7 @@ import systems.BattleEngine;
 
 import java.util.List;
 
+// might deprecate
 public interface GameView {
     // TODO: updating stat view
 
