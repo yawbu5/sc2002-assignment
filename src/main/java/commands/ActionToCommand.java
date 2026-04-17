@@ -4,9 +4,11 @@ import systems.BattleEngine;
 
 public class ActionToCommand implements Command {
     private final String msg;
+    private final String id;
 
-    public ActionToCommand(String msg) {
+    public ActionToCommand(String msg, String id) {
         this.msg = msg;
+        this.id = id;
     }
 
     @Override
@@ -16,6 +18,5 @@ public class ActionToCommand implements Command {
 
     @Override
     public void execute(BattleEngine engine) {
-
     }
 }

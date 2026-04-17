@@ -1,12 +1,12 @@
 package systems.states;
 
+import commands.ActionCommand;
 import commands.ActionSelfCommand;
 import commands.ActionToCommand;
 import commands.Command;
 import data.ActionTemplate;
 import data.Wave;
 import systems.BattleEngine;
-import systems.Entity;
 import systems.states.battle.BattleData;
 import systems.states.battle.BattleState;
 import systems.states.battle.InitialiseState;
@@ -49,20 +49,14 @@ public class BattleSession implements GameState {
     public static List<Command> buildActionsList(BattleData data, BattleEngine engine) {
         List<ActionTemplate> actions = new ArrayList<>();
 
-        for (String id : engine.getEntityManager().getEntity(data.getTurnOrder().get(0)).getAbilities()) {
-            actions.add(engine.retrieveDbAbility(id));
+        for (String id : engine.getEntityManager().getEntity(0).getAbilities()) {
+            actions.add(engine.retrieveDbAction(id));
         }
+
 
         List<Command> commands = new ArrayList<>();
         for (ActionTemplate a : actions) {
-            switch (a.type) {
-                case ACTION_TO:
-                    commands.add(new ActionToCommand(a.name));
-                    break;
-                case ACTION_SELF:
-                    commands.add(new ActionSelfCommand(a.name));
-                    break;
-            }
+            commands.add(new ActionCommand(a.name, a.id, a.type));
         }
 
         return commands;

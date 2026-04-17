@@ -2,15 +2,12 @@ package systems;
 
 import data.EntityTemplate;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Entity {
-    public enum EntityType {
-        ENEMY,
-        PLAYER
-    }
-
+    // unique identifier assigned at runtime
     private transient int id;
 
     private final String name;
@@ -20,7 +17,12 @@ public class Entity {
     private final int defence;
     private final int speed;
     private final List<String> abilities;
-    private final int currHp;
+
+    // game-unique list of cooldowns during runtime
+    public transient Map<String, Integer> activeActions = new HashMap<>();
+
+    // game unique current HP tracker;
+    private transient int currHp = 0;
 
     /**
      * Entity builder blueprint from JSON
@@ -68,6 +70,11 @@ public class Entity {
 
     public int getCurrHp() {
         return currHp;
+    }
+
+    public int setCurrHp(int newHp) {
+        this.currHp = newHp;
+        return this.currHp;
     }
 
     public List<String> getAbilities() {

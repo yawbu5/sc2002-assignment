@@ -20,12 +20,12 @@ public class BattleData {
         this.difficulty = difficulty;
     }
 
-    public void setRoundCounter(int round) {
-        this.roundCounter = round;
-    }
-
     public void incrementRoundCounter() {
         this.roundCounter++;
+    }
+
+    public boolean currentTurnIsPlayer() {
+        return (currentTurn == 0);
     }
 
     /**
@@ -40,16 +40,8 @@ public class BattleData {
         }
     }
 
-    public void setWaveCount(int count) {
-        this.waveCount = count;
-    }
-
     public void setTurnOrder(List<Integer> list) {
        this.turnOrder = list;
-    }
-
-    public Wave getDifficulty() {
-        return difficulty;
     }
 
     public List<List<String>> getWaves() {
@@ -62,9 +54,5 @@ public class BattleData {
 
     public List<Integer> getTurnOrder() {
         return turnOrder;
-    }
-
-    public int getWaveCount() {
-        return waveCount;
     }
 }

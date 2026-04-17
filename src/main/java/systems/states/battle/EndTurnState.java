@@ -2,6 +2,7 @@ package systems.states.battle;
 
 import systems.BattleEngine;
 import systems.Entity;
+import systems.EntityType;
 import systems.states.GameState;
 import systems.states.menu.ResultState;
 
@@ -21,7 +22,7 @@ public class EndTurnState implements BattleState {
         } else {
             boolean allEnemiesDead = true;
             for (Entity e : aliveEntities) {
-                if (e.getType() == Entity.EntityType.ENEMY) {
+                if (e.getType() == EntityType.ENEMY) {
                    allEnemiesDead = false;
                    break;
                 }

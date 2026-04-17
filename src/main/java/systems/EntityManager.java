@@ -8,13 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The general rule of thumb for entities in combat is that we don't clear
+ * dead entities on the spot until the round/game is done.
+ * This allows us to leave room for additional 'revival' functionality
+ * and not have to think about weird side effects
+ */
 public class EntityManager {
     private final Map<Integer, Entity> entityMap = new HashMap<>();
     private int idCount = 0;
-
-    public EntityManager() {
-
-    }
 
     public int count() {
         return entityMap.size();
@@ -40,11 +42,8 @@ public class EntityManager {
      * Use to get a List of entity(s) of a certain type.
      * Returns a list of entities of that type.
      * i.e., Retrieve a list of enemies.
-     *
-     * @param type EntityType
-     * @return List
      */
-    public List<Entity> getEntityByType(Entity.EntityType type) {
+    public List<Entity> getEntityByType(EntityType type) {
         ArrayList<Entity> result = new ArrayList<>();
         for (Entity e : entityMap.values()) {
             if (e.getType() == type) {
@@ -61,6 +60,10 @@ public class EntityManager {
                 .collect(Collectors.toList());
     }
 
+    public List<Entity> getAllEntities() {
+        return new ArrayList<>(this.entityMap.values());
+    }
+
     public Entity removeEntity(int id) {
         return entityMap.remove(id);
     }
@@ -68,15 +71,11 @@ public class EntityManager {
     /**
      * Use for mass removal of entity(s) of the same type.
      * Returns the number of entities left.
-     * i.e., Remove all enemies.
-     *
-     * @param type EntityType
-     * @return int
+     * i.e., Clear all dead enemies before transitioning to next wave.
      */
-    public int removeEntityByType(Entity.EntityType type) {
+    public int removeEntityByType(EntityType type) {
         entityMap.entrySet().removeIf(entry -> type.equals(entry.getValue().getType()));
 
         return this.count();
     }
-
 }

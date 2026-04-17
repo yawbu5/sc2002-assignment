@@ -1,10 +1,10 @@
 package systems.states.battle;
 
+import commands.ActionCommand;
+import commands.ActionToCommand;
 import commands.Command;
 import commands.OpenInventoryCommand;
 import systems.BattleEngine;
-import systems.states.GameState;
-import systems.states.menu.ViewInventoryState;
 
 import java.util.List;
 
@@ -42,10 +42,11 @@ public class PlayerTurnState implements BattleState {
 
         if (result instanceof OpenInventoryCommand) {
             return new ViewInventoryState();
+        } else if (result instanceof ActionCommand) {
+            ActionCommand res = (ActionCommand) result;
+            return new TargetSelectState(res.actionId, res.actionType);
         }
 
-        // put response back into the queue for ResolveTurn to process.
-        engine.queueNextCommand(result);
-        return new ResolveTurnState();
+        return this;
     }
 }
