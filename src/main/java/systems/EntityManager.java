@@ -60,6 +60,13 @@ public class EntityManager {
                 .collect(Collectors.toList());
     }
 
+    public List<Entity> getAliveEntitiesByType(EntityType type) {
+        return this.entityMap.values().stream()
+                .filter(e -> e.getCurrHp() > 0)
+                .filter(e -> e.getType() == type)
+                .collect(Collectors.toList());
+    }
+
     public List<Entity> getAllEntities() {
         return new ArrayList<>(this.entityMap.values());
     }

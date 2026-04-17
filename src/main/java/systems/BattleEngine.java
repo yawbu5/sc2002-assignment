@@ -51,10 +51,6 @@ public class BattleEngine {
             if (potentialState != gameState) {
                 gameState.onExit(this);
 
-                // Clear unused commands between state changes.
-                // Prevents the next state from receiving a potentially unrelated command.
-                clearCommands();
-
                 gameState = potentialState;
                 gameState.onEnter(this);
             }
@@ -136,8 +132,12 @@ public class BattleEngine {
         this.playerInventory.add(a);
     }
 
-    public void removeFromInventory(int index) {
-        this.playerInventory.remove(index);
+    public void removeFromInventory(String id) {
+        this.playerInventory.remove(id);
+    }
+
+    public void clearInventory() {
+        this.playerInventory.clear();
     }
 
     public List<ActionTemplate> retrieveDbActions() {

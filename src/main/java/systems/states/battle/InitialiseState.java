@@ -2,6 +2,8 @@ package systems.states.battle;
 
 import data.EntityTemplate;
 import systems.BattleEngine;
+import systems.Entity;
+import systems.EntityType;
 import systems.states.GameState;
 
 import java.util.ArrayList;
@@ -23,6 +25,15 @@ public class InitialiseState implements BattleState {
 
         engine.startEntityManager(entities);
         engine.startActionManager();
+
+        // Print field enemy stats for player to see
+        for (Entity e : engine.getEntityManager().getAliveEntities()) {
+            String playerStatus = (e.getType() == EntityType.PLAYER) ? " (YOU)" : "";
+
+            String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
+            engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
+        }
+
 
         return new StartTurnState();
     }

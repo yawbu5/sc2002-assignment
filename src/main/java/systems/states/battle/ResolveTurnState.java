@@ -1,5 +1,7 @@
 package systems.states.battle;
 
+import commands.ActionCommand;
+import commands.Command;
 import systems.BattleEngine;
 import systems.states.GameState;
 
@@ -9,6 +11,8 @@ import systems.states.GameState;
 public class ResolveTurnState implements BattleState {
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
+        Command command = engine.retrieveLatestCommand();
+        command.execute(engine);
         return new EndTurnState();
     }
 }

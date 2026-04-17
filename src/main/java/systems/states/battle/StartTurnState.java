@@ -59,6 +59,8 @@ public class StartTurnState implements BattleState {
         if (currentEntity.isDead()) {
             // we skip and check next entity in line
             // ensures that we do not unnecessarily check if entities are dead during the turn state
+            data.currentTurn++;
+            engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> ELIMINATED: Skipped"));
             return this;
         }
 
@@ -66,14 +68,6 @@ public class StartTurnState implements BattleState {
         // if not, go to enemy
         // A bit lengthy, but it does the job
         if (engine.getEntityManager().getEntity(data.getTurnOrder().get(data.currentTurn)).getType() == EntityType.PLAYER) {
-            // Print field enemy stats for player to see
-            for (Entity e : engine.getEntityManager().getAliveEntities()) {
-                String playerStatus = (e.getType() == EntityType.PLAYER) ? " (YOU)" : "";
-
-                String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
-                engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
-            }
-
             // post increment turn counter/pointer to prepare for the next check.
             data.currentTurn++;
             return new PlayerTurnState();

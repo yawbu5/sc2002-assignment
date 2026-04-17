@@ -45,14 +45,18 @@ public class ActionManager {
                     // deals caster's attack val. worth of damage to the targets * some multiplier
                     for (Entity e : targets) {
                         int calculated_damage = Math.toIntExact(Math.round(caster.getAttack() * effect.val));
-                        e.setCurrHp(e.getCurrHp() - calculated_damage);
-                        engine.notifyBattleObservers(o -> o.onLogAction(caster.getName() + " deals " + calculated_damage + " to " + e.getName()));
+                        int old_hp = e.getCurrHp();
+                        e.setCurrHp(e.getCurrHp() - calculated_damage + e.getDefence());
+                        if (e.isDead())
+                            engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp() + " X ELIMINATED"));
+                        else
+                            engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp()));
                     }
                     break;
                 case "HEAL":
                     for (Entity e : targets) {
                         e.setCurrHp(Math.min(e.getCurrHp() + (int) effect.val, e.getMaxHp()));
-                        engine.notifyBattleObservers(o -> o.onLogAction(e.getName() + " healed for " + effect.val));
+                        engine.notifyBattleObservers(o -> o.onLogAction("HEALED: " + e.getName() + " healed for " + (int)effect.val + " up to " + e.getCurrHp() + "/" + e.getMaxHp()));
                     }
                     break;
                 case "APPLY_STATUS":

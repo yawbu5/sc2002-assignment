@@ -1,8 +1,6 @@
 package systems.states;
 
-import commands.ActionCommand;
-import commands.ActionSelfCommand;
-import commands.ActionToCommand;
+import commands.OpenTargetMenuCommand;
 import commands.Command;
 import data.ActionTemplate;
 import data.Wave;
@@ -10,7 +8,9 @@ import systems.BattleEngine;
 import systems.states.battle.BattleData;
 import systems.states.battle.BattleState;
 import systems.states.battle.InitialiseState;
-import systems.states.menu.ResultState;
+import systems.states.battle.ResultState;
+import systems.states.menu.ExitGameState;
+import systems.states.menu.SelectCharacterState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +32,15 @@ public class BattleSession implements GameState {
             BattleState nextState = currentState.transition(this.game, engine);
 
             if (nextState != currentState) {
-                engine.clearCommands();
-
                 currentState = nextState;
             }
         }
 
-        if (game.playerWins) {
-            return new ResultState();
-        } else {
-            return new ResultState();
+        if (game.requestRestart) {
+            return new SelectCharacterState();
+        }
+        else {
+            return new ExitGameState();
         }
     }
 
@@ -56,7 +55,7 @@ public class BattleSession implements GameState {
 
         List<Command> commands = new ArrayList<>();
         for (ActionTemplate a : actions) {
-            commands.add(new ActionCommand(a.name, a.id, a.type));
+            commands.add(new OpenTargetMenuCommand(a.name, a.id, a.type));
         }
 
         return commands;

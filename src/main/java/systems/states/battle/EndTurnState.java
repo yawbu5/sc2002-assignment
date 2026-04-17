@@ -3,8 +3,6 @@ package systems.states.battle;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.EntityType;
-import systems.states.GameState;
-import systems.states.menu.ResultState;
 
 import java.util.List;
 
@@ -17,8 +15,8 @@ public class EndTurnState implements BattleState {
         List<Entity> aliveEntities = engine.getEntityManager().getAliveEntities();
         Entity player = engine.getEntityManager().getEntity(0);
 
-        if (player.getCurrHp() <= 0) {
-            return null;
+        if (player.isDead()) {
+            return new ResultState();
         } else {
             boolean allEnemiesDead = true;
             for (Entity e : aliveEntities) {
@@ -29,7 +27,7 @@ public class EndTurnState implements BattleState {
             }
 
             if (allEnemiesDead) {
-                return null;
+                return new ResultState();
             }
 
             return new StartTurnState();

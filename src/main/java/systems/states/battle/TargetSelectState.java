@@ -1,15 +1,14 @@
 package systems.states.battle;
 
 import commands.*;
-import data.ActionTemplate;
 import data.ActionType;
 import systems.BattleEngine;
 import systems.Entity;
 import systems.EntityType;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TargetSelectState implements BattleState {
     private final ActionType actionType;
@@ -27,18 +26,18 @@ public class TargetSelectState implements BattleState {
         // Back option
 
         if (!initialised) {
-            ActionTemplate selectedAction = engine.retrieveDbAction(this.actionId);
             List<Command> commands = new ArrayList<>();
 
             if (this.actionType == ActionType.ACTION_TO) {
                 // 1. pick a target. 2. go back to selection.
-                for (Entity e : engine.getEntityManager().getEntityByType(EntityType.ENEMY)) {
-                    commands.add(new ActionToCommand(e.getName(), actionId));
+                for (Entity e : engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY)) {
+                    commands.add(new ActionCommand(e.getName(), data.getCurrentTurnEntityId(), e.getId(), this.actionId));
                 }
                 commands.add(new MenuCommand("Go back", () -> {}));
             } else {
                 // 1. apply to self. 2. go back to selection
-                commands.add(new ActionSelfCommand("You"));
+                int player = data.getTurnOrder().get(data.currentTurn);
+                commands.add(new ActionCommand("You", player, player, this.actionId));
                 commands.add(new MenuCommand("Go back", () -> {}));
             }
 
@@ -58,7 +57,8 @@ public class TargetSelectState implements BattleState {
                 return new PlayerTurnState();
             else
                 return new EnemyTurnState();
-        } else if (result instanceof ActionSelfCommand || result instanceof ActionToCommand) {
+        } else if (result instanceof ActionCommand) {
+            engine.queueNextCommand(result);
             return new ResolveTurnState();
         }
 
