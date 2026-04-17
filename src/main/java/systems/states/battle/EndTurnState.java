@@ -16,6 +16,7 @@ public class EndTurnState implements BattleState {
         Entity player = engine.getEntityManager().getEntity(0);
 
         if (player.isDead()) {
+            engine.notifyBattleObservers(o -> o.onGameLose(data));
             return new ResultState();
         } else {
             boolean allEnemiesDead = true;
@@ -30,6 +31,7 @@ public class EndTurnState implements BattleState {
                 if (data.getWaveCount() < data.getWaves().size()) {
                     return new SendNextWaveState();
                 }
+                engine.notifyBattleObservers(o -> o.onGameWin(data));
                 return new ResultState();
             }
 
