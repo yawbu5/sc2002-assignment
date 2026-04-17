@@ -18,6 +18,7 @@ public class SelectCharacterState implements GameState {
     public GameState onUpdate(BattleEngine engine) {
         if (!initialised) {
             List<EntityTemplate> entities = engine.retrieveDbEntities();
+            engine.clearInventory(); // clear inventory in case of new runs
 
             List<Command> characterChoices = new ArrayList<>();
             for (EntityTemplate e : entities) {
