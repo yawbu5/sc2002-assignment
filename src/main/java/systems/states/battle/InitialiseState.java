@@ -26,13 +26,7 @@ public class InitialiseState implements BattleState {
         engine.startActionManager();
 
         // Print field enemy stats for player to see
-        for (Entity e : engine.getEntityManager().getAliveEntities()) {
-            String playerStatus = (e.getType() == EntityType.PLAYER) ? " (YOU)" : "";
-
-            String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
-            engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
-        }
-
+        BattleData.printWaveInfo(engine);
 
         return new StartTurnState();
     }

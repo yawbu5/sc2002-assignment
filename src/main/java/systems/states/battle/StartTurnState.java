@@ -51,8 +51,7 @@ public class StartTurnState implements BattleState {
         }
 
         // check if entity we're about to push is already dead?
-        Entity currentEntity = engine.getEntityManager().getEntity(data.currentTurn);
-
+        Entity currentEntity = engine.getEntityManager().getEntity(data.getTurnOrder().get(data.currentTurn));
 
         if (currentEntity.isDead()) {
             // we skip and check next entity in line

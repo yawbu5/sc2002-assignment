@@ -27,6 +27,9 @@ public class EndTurnState implements BattleState {
             }
 
             if (allEnemiesDead) {
+                if (data.getWaveCount() < data.getWaves().size()) {
+                    return new SendNextWaveState();
+                }
                 return new ResultState();
             }
 
