@@ -4,6 +4,7 @@ import commands.Command;
 import observable.BattleObserver;
 import observable.MenuObserver;
 import systems.BattleEngine;
+import systems.states.battle.BattleData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onLogAction(String msg) {
+        System.out.println();
         System.out.println(msg);
     }
 
@@ -42,6 +44,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     public void onWaveSpawn(int waveNo) {
         this.waveCount = waveNo;
 
+        System.out.println();
         System.out.println("WAVE " + (this.waveCount - 1) + " CLEARED!");
         System.out.println("SPAWNING WAVE " + this.waveCount);
     }
@@ -53,19 +56,39 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onRoundStart(int roundCount) {
-        System.out.println("End of round " + roundCount);
+        this.roundCount = roundCount;
+
+        System.out.println();
+        System.out.println("Start of round " + roundCount);
     }
 
     @Override
     public void onRoundEnd(int roundCount) {
         this.roundCount = roundCount;
 
+        System.out.println();
         System.out.println("End of round " + roundCount);
     }
 
     @Override
     public void onUpdateStats(List<Integer> stats) {
 
+    }
+
+    @Override
+    public void onGameWin(BattleData data) {
+        System.out.println();
+        System.out.println("Congratulations, you have defeated all your enemies.");
+        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
+        System.out.println(result);
+    }
+
+    @Override
+    public void onGameLose(BattleData data) {
+        System.out.println();
+        System.out.println("Don't give up, try again!");
+        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
+        System.out.println(result);
     }
 
     @Override
@@ -96,6 +119,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onDisplayMessage(String msg) {
+        System.out.println();
         System.out.println(msg);
     }
 }
