@@ -1,6 +1,9 @@
 package systems.states.battle;
 
 import data.Wave;
+import systems.BattleEngine;
+import systems.Entity;
+import systems.EntityType;
 
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class BattleData {
     public boolean requestRestart = false;
     public boolean requestExit = false;
     private Wave difficulty;
-    private int waveCount = 0;
+    private int waveCount = 1;
     private int roundCounter = 1;
     private List<Integer> turnOrder;
 
@@ -41,8 +44,12 @@ public class BattleData {
             return -1;
         } else {
             this.waveCount++;
-            return this.waveCount;
+            return this.waveCount - 1;
         }
+    }
+
+    public int getWaveCount() {
+        return this.waveCount;
     }
 
     public List<List<String>> getWaves() {
@@ -59,5 +66,14 @@ public class BattleData {
 
     public void setTurnOrder(List<Integer> list) {
         this.turnOrder = list;
+    }
+
+    public static void printWaveInfo(BattleEngine engine) {
+        for (Entity e : engine.getEntityManager().getAliveEntities()) {
+            String playerStatus = (e.getType() == EntityType.PLAYER) ? " (YOU)" : "";
+
+            String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
+            engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
+        }
     }
 }
