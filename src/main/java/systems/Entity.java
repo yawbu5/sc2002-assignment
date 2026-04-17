@@ -69,9 +69,8 @@ public class Entity {
         return currHp;
     }
 
-    public int setCurrHp(int newHp) {
-        this.currHp = newHp;
-        return this.currHp;
+    public void setCurrHp(int newHp) {
+        currHp = Math.max(newHp, 0);
     }
 
     public List<String> getAbilities() {
