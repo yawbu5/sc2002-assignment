@@ -20,7 +20,7 @@ public class Entity {
     // unique identifier assigned at runtime
     private transient int id;
     // game unique current HP tracker;
-    private transient int currHp = 0;
+    private transient int currHp;
 
     /**
      * Entity builder blueprint from JSON
@@ -51,9 +51,13 @@ public class Entity {
         return currHp <= 0;
     }
 
-    public boolean isPlayer() { return this.type == EntityType.PLAYER; }
+    public boolean isPlayer() {
+        return this.type == EntityType.PLAYER;
+    }
 
-    public boolean isEnemy() { return this.type == EntityType.ENEMY; }
+    public boolean isEnemy() {
+        return this.type == EntityType.ENEMY;
+    }
 
     public int getId() {
         return this.id;

@@ -63,15 +63,15 @@ public class TargetSelectState implements BattleState {
                 List<Entity> aliveEnemies = engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY);
 
                 if (isAoe) {
-                   List<Integer> targetIds = aliveEnemies.stream()
-                           .map(Entity::getId)
-                           .collect(Collectors.toList());
+                    List<Integer> targetIds = aliveEnemies.stream()
+                            .map(Entity::getId)
+                            .collect(Collectors.toList());
 
-                   Command command = isItem
-                           ? new ItemCommand("All enemies", casterId, targetIds, this.actionId)
-                           : new ActionCommand("All enemies", casterId, targetIds, this.actionId);
+                    Command command = isItem
+                            ? new ItemCommand("All enemies", casterId, targetIds, this.actionId)
+                            : new ActionCommand("All enemies", casterId, targetIds, this.actionId);
 
-                   commands.add(command);
+                    commands.add(command);
                 } else {
                     for (Entity e : aliveEnemies) {
                         Command command = isItem
@@ -81,7 +81,8 @@ public class TargetSelectState implements BattleState {
                     }
                 }
 
-                commands.add(new MenuCommand("Go back", () -> {}));
+                commands.add(new MenuCommand("Go back", () -> {
+                }));
             } else {
                 // 1. apply to self. 2. go back to selection
                 int player = data.getCurrentTurnEntityId();

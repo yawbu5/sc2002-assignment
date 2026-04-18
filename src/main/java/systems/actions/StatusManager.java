@@ -12,21 +12,9 @@ import java.util.Map;
  * Tracks persistent status effects during battles.
  */
 public class StatusManager {
-    // makes it easier to track stacked effects like the wizard's kills
-    public static class EffectInfo {
-        public int duration;
-        public int stacks;
-
-        public EffectInfo(int duration) {
-            this.duration = duration;
-            this.stacks = 1;
-        }
-    }
-
     // Map of durations to entity IDs
     private final Map<Integer, Map<String, EffectInfo>> activeEffects = new HashMap<>();
     private final BattleEngine engine;
-
     public StatusManager(BattleEngine engine) {
         this.engine = engine;
     }
@@ -134,14 +122,6 @@ public class StatusManager {
         }
     }
 
-    public void checkKillEffects(int casterId, int targetId, String actionId) {
-        Map<String, EffectInfo> activeEffects = getActiveEffects(casterId);
-
-        for (Map.Entry<String, EffectInfo> entry : activeEffects.entrySet()) {
-
-        }
-    }
-
     public int getEffectiveStat(Entity e, StatType stat) {
         // base value from entity + calculated from status effects
         int base = 0;
@@ -187,5 +167,16 @@ public class StatusManager {
         ATTACK,
         DEFENCE,
         SPEED
+    }
+
+    // makes it easier to track stacked effects like the wizard's kills
+    public static class EffectInfo {
+        public int duration;
+        public int stacks;
+
+        public EffectInfo(int duration) {
+            this.duration = duration;
+            this.stacks = 1;
+        }
     }
 }

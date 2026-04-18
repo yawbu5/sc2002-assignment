@@ -1,6 +1,8 @@
 package systems.states.battle;
 
-import commands.*;
+import commands.Command;
+import commands.MenuCommand;
+import commands.OpenTargetMenuCommand;
 import data.ActionTemplate;
 import systems.BattleEngine;
 
