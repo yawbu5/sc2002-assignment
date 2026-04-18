@@ -35,5 +35,13 @@
         "Wolf"
       ]
     ]
+  },
+  {
+    "name": "Debug",
+    "waves": [
+      [
+        "Goblin"
+      ]
+    ]
   }
 ]
