@@ -1,6 +1,7 @@
 package systems.states.battle;
 
 import commands.Command;
+import commands.MenuCommand;
 import commands.OpenInventoryCommand;
 import commands.OpenTargetMenuCommand;
 import systems.BattleEngine;
@@ -45,6 +46,8 @@ public class PlayerTurnState implements BattleState {
         } else if (result instanceof OpenTargetMenuCommand) {
             OpenTargetMenuCommand res = (OpenTargetMenuCommand) result;
             return new TargetSelectState(res.actionId, res.actionType);
+        } else if (result instanceof MenuCommand) {
+            return new PlayerTurnState();
         }
 
         return this;
