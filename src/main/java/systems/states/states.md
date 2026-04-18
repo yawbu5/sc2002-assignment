@@ -37,3 +37,4 @@ References:
   Elaboration on State Machine patterns in game development.
 - [State - Refactoring Guru](https://refactoring.guru/design-patterns/state) / Explanations and elaborates on
   applicability to SOLID principles.
+- [What is a statechart? - statecharts.dev](https://statecharts.dev/what-is-a-statechart.html) Hierarchical State Machine/Statechart explanations
