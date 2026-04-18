@@ -1,8 +1,8 @@
 package systems.states.battle;
 
 import systems.BattleEngine;
-import systems.Entity;
-import systems.EntityType;
+import systems.entities.Entity;
+import systems.entities.EntityType;
 
 import java.util.List;
 

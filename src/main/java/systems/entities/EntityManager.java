@@ -1,4 +1,4 @@
-package systems;
+package systems.entities;
 
 import data.EntityTemplate;
 

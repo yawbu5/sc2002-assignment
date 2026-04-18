@@ -1,6 +1,6 @@
 package data;
 
-import systems.EntityType;
+import systems.entities.EntityType;
 
 import java.util.List;
 

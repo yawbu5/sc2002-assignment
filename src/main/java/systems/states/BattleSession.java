@@ -6,7 +6,7 @@ import commands.OpenTargetMenuCommand;
 import data.ActionTemplate;
 import data.Wave;
 import systems.BattleEngine;
-import systems.Entity;
+import systems.entities.Entity;
 import systems.states.battle.BattleData;
 import systems.states.battle.BattleState;
 import systems.states.battle.InitialiseState;

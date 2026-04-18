@@ -2,7 +2,7 @@ package systems.states.battle;
 
 import commands.ActionCommand;
 import systems.BattleEngine;
-import systems.Entity;
+import systems.entities.Entity;
 
 public class EnemyTurnState implements BattleState {
     @Override

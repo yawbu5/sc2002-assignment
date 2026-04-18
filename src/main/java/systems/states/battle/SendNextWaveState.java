@@ -2,7 +2,7 @@ package systems.states.battle;
 
 import data.EntityTemplate;
 import systems.BattleEngine;
-import systems.EntityType;
+import systems.entities.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;

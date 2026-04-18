@@ -1,4 +1,4 @@
-package systems;
+package systems.entities;
 
 public enum EntityType {
     ENEMY,

@@ -3,7 +3,7 @@ package src.test.data;
 import data.JSONLoader;
 import org.junit.Assert;
 import org.junit.Test;
-import systems.Entity;
+import systems.entities.Entity;
 
 import java.util.List;
 

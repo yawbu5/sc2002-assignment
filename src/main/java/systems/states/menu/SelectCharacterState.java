@@ -4,7 +4,7 @@ import commands.Command;
 import commands.MenuCommand;
 import data.EntityTemplate;
 import systems.BattleEngine;
-import systems.EntityType;
+import systems.entities.EntityType;
 import systems.states.GameState;
 
 import java.util.ArrayList;
