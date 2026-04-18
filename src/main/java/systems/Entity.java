@@ -14,6 +14,7 @@ public class Entity {
     private final int defence;
     private final int speed;
     private final List<String> abilities;
+    private final String specialAbilityId;
     // game-unique list of cooldowns during runtime
     public transient Map<String, Integer> activeActions = new HashMap<>();
     // unique identifier assigned at runtime
@@ -24,7 +25,7 @@ public class Entity {
     /**
      * Entity builder blueprint from JSON
      */
-    public Entity(String name, EntityType type, int hp, int attack, int defence, int speed, List<String> abilities) {
+    public Entity(String name, EntityType type, int hp, int attack, int defence, int speed, List<String> abilities, String specialAbilityId) {
         this.name = name;
         this.type = type;
         this.maxHp = hp;
@@ -33,6 +34,7 @@ public class Entity {
         this.defence = defence;
         this.speed = speed;
         this.abilities = abilities;
+        this.specialAbilityId = specialAbilityId;
     }
 
     /**
@@ -40,7 +42,7 @@ public class Entity {
      * Shallow copy ability list, don't need so many strings in memory
      */
     public static Entity CreateEntity(int id, EntityTemplate e) {
-        Entity newEntity = new Entity(e.name, e.type, e.hp, e.attack, e.defence, e.speed, e.abilities);
+        Entity newEntity = new Entity(e.name, e.type, e.hp, e.attack, e.defence, e.speed, e.abilities, e.specialAbilityId);
         newEntity.id = id;
         return newEntity;
     }
@@ -71,6 +73,7 @@ public class Entity {
 
     public void setCurrHp(int newHp) {
         currHp = Math.max(newHp, 0);
+        currHp = Math.min(currHp, maxHp);
     }
 
     public List<String> getAbilities() {
@@ -87,5 +90,9 @@ public class Entity {
 
     public int getMaxHp() {
         return maxHp;
+    }
+
+    public String getSpecialAbilityId() {
+        return specialAbilityId;
     }
 }

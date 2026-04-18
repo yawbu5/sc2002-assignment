@@ -10,7 +10,8 @@
       "basicattack",
       "defend",
       "shieldbash"
-    ]
+    ],
+    "specialAbilityId": "shieldbash"
   },
   {
     "name": "Wizard",
@@ -23,7 +24,8 @@
       "basicattack",
       "defend",
       "arcaneblast"
-    ]
+    ],
+    "specialAbilityId": "arcaneblast"
   },
   {
     "name": "Goblin",
@@ -34,7 +36,8 @@
     "speed": 25,
     "abilities": [
       "basicattack"
-    ]
+    ],
+    "specialAbilityId": null
   },
   {
     "name": "Wolf",
@@ -45,6 +48,7 @@
     "speed": 35,
     "abilities": [
       "basicattack"
-    ]
+    ],
+    "specialAbilityId": null
   }
 ]
