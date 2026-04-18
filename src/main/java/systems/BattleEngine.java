@@ -113,7 +113,9 @@ public class BattleEngine {
         this.am = new ActionManager(this);
     }
 
-    public void startStatusManager() { this.sm = new StatusManager(this); }
+    public void startStatusManager() {
+        this.sm = new StatusManager(this);
+    }
 
     public EntityManager getEntityManager() {
         return this.em;
@@ -131,13 +133,14 @@ public class BattleEngine {
         return this.playerInventory;
     }
 
+    public void setPlayerInventory(List<String> inv) {
+        this.playerInventory = inv;
+    }
+
     public void addToInventory(String a) {
         this.playerInventory.add(a);
     }
 
-    public void setPlayerInventory(List<String> inv) {
-        this.playerInventory = inv;
-    }
     public void removeFromInventory(String id) {
         this.playerInventory.remove(id);
     }
@@ -161,7 +164,9 @@ public class BattleEngine {
         }
     }
 
-    public List<EffectTemplate> retrieveDbEffects() { return database.effects; }
+    public List<EffectTemplate> retrieveDbEffects() {
+        return database.effects;
+    }
 
     public EffectTemplate retrieveDbEffect(String effectId) {
         if (database.effects != null) {

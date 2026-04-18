@@ -10,14 +10,8 @@ import java.util.Map;
  * Tracks persistent status effects during battles.
  */
 public class StatusManager {
-    public enum StatType {
-        ATTACK,
-        DEFENCE,
-        SPEED
-    }
     // Map of durations to entity IDs
     private final Map<Integer, Map<String, Integer>> activeEffects = new HashMap<>();
-
     private final BattleEngine engine;
 
     public StatusManager(BattleEngine engine) {
@@ -37,11 +31,11 @@ public class StatusManager {
     }
 
     public Map<String, Integer> getActiveEffects(int entityId) {
-       if (entityRegistered(entityId)) {
-           return this.activeEffects.getOrDefault(entityId, new HashMap<>());
-       } else {
-           return new HashMap<>();
-       }
+        if (entityRegistered(entityId)) {
+            return this.activeEffects.getOrDefault(entityId, new HashMap<>());
+        } else {
+            return new HashMap<>();
+        }
     }
 
     public void removeEffect(int entityId, String effectId) {
@@ -79,23 +73,23 @@ public class StatusManager {
          * 1. apply effect
          * 2. if duration after tick <= 0: remove effect
          * 3. if not, update current duration
-        */
+         */
         this.activeEffects.forEach((entityId, effectsMap) -> {
             Entity entity = engine.getEntityManager().getEntity(entityId);
             effectsMap.entrySet().removeIf(e -> {
-               String effectId = e.getKey();
-               int duration = e.getValue();
+                String effectId = e.getKey();
+                int duration = e.getValue();
 
-               EffectTemplate eff = engine.retrieveDbEffect(effectId);
-               applyEffect(entity, eff);
+                EffectTemplate eff = engine.retrieveDbEffect(effectId);
+                applyEffect(entity, eff);
 
-               if (--duration <= 0) {
-                   engine.notifyBattleObservers(o -> o.onEffectExpired(eff.name, entity.getName()));
-                   return true;
-               } else {
-                   e.setValue(duration);
-                   return false;
-               }
+                if (--duration <= 0) {
+                    engine.notifyBattleObservers(o -> o.onEffectExpired(eff.name, entity.getName()));
+                    return true;
+                } else {
+                    e.setValue(duration);
+                    return false;
+                }
             });
         });
     }
@@ -118,7 +112,7 @@ public class StatusManager {
         // base value from entity + calculated from status effects
         int base = 0;
 
-        switch(stat) {
+        switch (stat) {
             case ATTACK:
                 base = e.getAttack();
                 break;
@@ -154,5 +148,11 @@ public class StatusManager {
         }
 
         return Math.max(0, base + bonus_stat);
+    }
+
+    public enum StatType {
+        ATTACK,
+        DEFENCE,
+        SPEED
     }
 }

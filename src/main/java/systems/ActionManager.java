@@ -1,7 +1,7 @@
 package systems;
 
-import data.ActionTemplate;
 import data.ActionEffectTemplate;
+import data.ActionTemplate;
 
 import java.util.ArrayList;
 import java.util.List;

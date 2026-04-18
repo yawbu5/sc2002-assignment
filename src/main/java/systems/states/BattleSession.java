@@ -36,8 +36,9 @@ public class BattleSession implements GameState {
         List<Command> commands = new ArrayList<>();
         for (ActionTemplate a : actions) {
             if (e.activeActions.getOrDefault(a.id, 0) > 0) {
-               commands.add(new MenuCommand(a.name + " (COOLDOWN: " + e.activeActions.get(a.id) + " TURNS)", () -> {}));
-               continue;
+                commands.add(new MenuCommand(a.name + " (COOLDOWN: " + e.activeActions.get(a.id) + " TURNS)", () -> {
+                }));
+                continue;
             }
             commands.add(new OpenTargetMenuCommand(a.name, a.id, a.type));
         }

@@ -6,7 +6,6 @@ import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.EntityType;
 import systems.states.GameState;
-import systems.states.battle.BattleData;
 
 import java.util.ArrayList;
 import java.util.List;

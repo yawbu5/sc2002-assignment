@@ -64,8 +64,7 @@ public class StartTurnState implements BattleState {
                 data.currentTurn++;
                 engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> ELIMINATED: Skipped"));
                 return this;
-            }
-            else if (activeEffects.containsKey("stun")) {
+            } else if (activeEffects.containsKey("stun")) {
                 data.currentTurn++;
                 engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> STUNNED: Skipped"));
                 return this;
