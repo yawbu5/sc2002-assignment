@@ -1,20 +1,15 @@
 package data;
 
-/**
- * Status effect sub-identifier data template for actions
- * <p>
- * i.e., Actions hold this type to identify what status in "statuses.json" they link to.
- */
 public class EffectTemplate {
-    public final String type;       // only required type (identifier for effect)
-    public String id;               // optional id for status effect id to activate
-    public int duration;
-    public double val;
+    public final String id;               // optional id for status effect id to activate
+    public final String name;
+    public final String effect;
+    public final int val;
 
-    public EffectTemplate(String type, String id, int duration, double val) {
-        this.type = type;
+    public EffectTemplate(String id, String name, String effect, int val) {
         this.id = id;
-        this.duration = duration;
+        this.name = name;
+        this.effect = effect;
         this.val = val;
     }
 }

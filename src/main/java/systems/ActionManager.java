@@ -1,7 +1,7 @@
 package systems;
 
 import data.ActionTemplate;
-import data.EffectTemplate;
+import data.ActionEffectTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ActionManager {
     // We keep track by entityId and a list of ActiveActions (holds cooldowns)
-    //private final Map<Integer, List<ActiveAction>> activeActions = new HashMap<>();
+    // private final Map<Integer, Map<String, Integer>> activeActions = new HashMap<>();
     private final BattleEngine engine;
 
     public ActionManager(BattleEngine engine) {
@@ -20,7 +20,7 @@ public class ActionManager {
 
     // true -> action has been processed.
     // false -> for whatever reason the action cannot be processed, 99% should be because of cooldowns.
-    public boolean processAction(int casterId, List<Integer> targetIds, String actionId) {
+    public void processAction(int casterId, List<Integer> targetIds, String actionId) {
         Entity caster = engine.getEntityManager().getEntity(casterId);
         List<Entity> targets = new ArrayList<>();
         ActionTemplate action = engine.retrieveDbAction(actionId);
@@ -29,7 +29,7 @@ public class ActionManager {
         int cooldownTime;
         if ((cooldownTime = caster.activeActions.getOrDefault(actionId, 0)) > 0) {
             engine.notifyBattleObservers(o -> o.onLogAction(action.name + " is on cooldown! " + "(" + cooldownTime + " turns remaining)"));
-            return false;
+            return;
         }
 
         // nominally this can just be a single int rather than a list
@@ -39,14 +39,18 @@ public class ActionManager {
             targets.add(engine.getEntityManager().getEntity(id));
         }
 
-        for (EffectTemplate effect : action.effects) {
+        for (ActionEffectTemplate effect : action.effects) {
+            // calculate effective values relative to current applied status effects
+            int effectveAttack = engine.getStatusManager().getEffectiveStat(caster, StatusManager.StatType.ATTACK);
             switch (effect.type) {
                 case "DAMAGE":
                     // deals caster's attack val. worth of damage to the targets * some multiplier
                     for (Entity e : targets) {
-                        int calculated_damage = Math.toIntExact(Math.round(caster.getAttack() * effect.val));
+                        int calculated_damage = Math.toIntExact(Math.round(effectveAttack * effect.val));
+                        int effectiveDefence = engine.getStatusManager().getEffectiveStat(e, StatusManager.StatType.DEFENCE);
                         int old_hp = e.getCurrHp();
-                        e.setCurrHp(e.getCurrHp() - calculated_damage + e.getDefence());
+                        // clamp damage dealt - defense to make sure we don't accidentally heal the entity
+                        e.setCurrHp(e.getCurrHp() - Math.max(0, calculated_damage - effectiveDefence));
                         if (e.isDead())
                             engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp() + " X ELIMINATED"));
                         else
@@ -55,15 +59,23 @@ public class ActionManager {
                     break;
                 case "HEAL":
                     for (Entity e : targets) {
-                        e.setCurrHp(Math.min(e.getCurrHp() + (int) effect.val, e.getMaxHp()));
+                        e.setCurrHp(e.getCurrHp() + (int) effect.val);
                         engine.notifyBattleObservers(o -> o.onLogAction("HEALED: " + e.getName() + " healed for " + (int) effect.val + " up to " + e.getCurrHp() + "/" + e.getMaxHp()));
                     }
                     break;
                 case "APPLY_STATUS":
                     // ask status manager to apply status effect on the target
+                    for (Entity e : targets) {
+                        engine.getStatusManager().processEffect(e.getId(), effect);
+                        String eff_name = engine.retrieveDbEffect(effect.id).name;
+                        engine.notifyBattleObservers(o -> o.onEffectApplied(eff_name, caster.getName(), e.getName(), effect.duration));
+                    }
                     break;
                 case "ACTIVATE_ABILITY":
-                    // activate entity's special ability (if it exists)
+                    String id = caster.getSpecialAbilityId();
+                    if (!id.isEmpty()) {
+                        processAction(casterId, targetIds, id);
+                    }
                     break;
             }
 
@@ -72,32 +84,9 @@ public class ActionManager {
                 caster.activeActions.put(actionId, action.cooldown);
             }
         }
-
-        return true;
     }
 
-    //public void registerEntityActions(int entityId, List<ActiveAction> actions) {
-    //    activeActions.put(entityId, actions);
-    //}
-
-    //public void deregisterEntityActions(int entityId) {
-    //    activeActions.remove(entityId);
-    //}
-
-    //public List<ActiveAction> getAllActions(int entityId) {
-    //    return activeActions.getOrDefault(entityId, new ArrayList<>());
-    //}
-
-    //public List<ActiveAction> getAvailableActions(int entityId) {
-    //    List<ActiveAction> actions = getAllActions(entityId);
-
-    //    return actions.stream().filter(ActiveAction::isReady).collect(Collectors.toList());
-    //}
-
-    //public void incrementTick(int entityId) {
-    //    List<ActiveAction> actions = getAllActions(entityId);
-    //    for (ActiveAction a : actions) {
-    //        a.tick();
-    //    }
-    //}
+    public void handleEffect(ActionEffectTemplate effect, int casterId, List<Integer> targetIds, String actionId) {
+        // TODO: implement
+    }
 }

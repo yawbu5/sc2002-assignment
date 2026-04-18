@@ -6,10 +6,11 @@ import systems.EntityType;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Responsibility: Determines turn order
+ * Responsibility: Determines turn order i.e., the TurnStrategyOrder
  */
 public class StartTurnState implements BattleState {
 
@@ -43,22 +44,32 @@ public class StartTurnState implements BattleState {
             data.currentTurn = 0;
 
             engine.notifyBattleObservers(o -> o.onRoundStart(data.getRoundCounter()));
-            // tick cooldowns per round
+            // tick action cooldowns per round
             for (Entity e : engine.getEntityManager().getAllEntities()) {
                 e.activeActions.replaceAll((abilityId, cooldownTimer) -> cooldownTimer - 1);
             }
             // tick whatever effects
+            engine.getStatusManager().tickEffects();
         }
 
         // check if entity we're about to push is already dead?
-        Entity currentEntity = engine.getEntityManager().getEntity(data.getTurnOrder().get(data.currentTurn));
+        int currentEntityId = data.getTurnOrder().get(data.currentTurn);
+        Entity currentEntity = engine.getEntityManager().getEntity(currentEntityId);
+        Map<String, Integer> activeEffects = engine.getStatusManager().getActiveEffects(currentEntityId);
 
-        if (currentEntity.isDead()) {
+        if (currentEntity.isDead() || !activeEffects.isEmpty()) {
             // we skip and check next entity in line
             // ensures that we do not unnecessarily check if entities are dead during the turn state
-            data.currentTurn++;
-            engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> ELIMINATED: Skipped"));
-            return this;
+            if (currentEntity.isDead()) {
+                data.currentTurn++;
+                engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> ELIMINATED: Skipped"));
+                return this;
+            }
+            else if (activeEffects.containsKey("stun")) {
+                data.currentTurn++;
+                engine.notifyBattleObservers(o -> o.onLogAction(currentEntity.getName() + " -> STUNNED: Skipped"));
+                return this;
+            }
         }
 
         // if player is first, go to player

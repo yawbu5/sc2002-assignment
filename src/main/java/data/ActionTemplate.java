@@ -8,12 +8,12 @@ public class ActionTemplate {
     public final ActionType type;
     public final Boolean aoe;
     public final int cooldown;
-    public final List<EffectTemplate> effects;
+    public final List<ActionEffectTemplate> effects;
 
     /**
      * Data template class for Action Abilities
      */
-    public ActionTemplate(String id, String name, ActionType type, Boolean aoe, int cooldown, List<EffectTemplate> effects) {
+    public ActionTemplate(String id, String name, ActionType type, Boolean aoe, int cooldown, List<ActionEffectTemplate> effects) {
         this.id = id;
         this.name = name;
         this.type = type;
