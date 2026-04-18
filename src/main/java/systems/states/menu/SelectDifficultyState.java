@@ -13,11 +13,11 @@ import java.util.List;
 
 public class SelectDifficultyState implements GameState {
     Wave selectedDifficulty;
-    private boolean initalised = false;
+    private boolean initialised = false;
 
     @Override
     public GameState onUpdate(BattleEngine engine) {
-        if (!initalised) {
+        if (!initialised) {
             List<Wave> waves = engine.retrieveDbWaves();
             List<Command> difficultyChoices = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class SelectDifficultyState implements GameState {
             }
 
             engine.notifyMenuObservers(o -> o.onChoicePrompt("Select a difficulty:", difficultyChoices));
-            initalised = true;
+            initialised = true;
         }
 
         Command selected = engine.retrieveLatestCommand();
