@@ -22,7 +22,7 @@
       {
         "type": "APPLY_STATUS",
         "id": "defend",
-        "duration": 1
+        "duration": 2
       }
     ]
   },
@@ -61,7 +61,8 @@
     "effects": [
       {
         "type": "APPLY_STATUS",
-        "id": "invulnerable"
+        "id": "invulnerable",
+        "duration": 2
       }
     ]
   },
@@ -88,7 +89,8 @@
     "effects": [
       {
         "type": "APPLY_STATUS",
-        "id": "arcaneblast"
+        "id": "arcaneblast",
+        "duration": -1
       }
     ]
   }
