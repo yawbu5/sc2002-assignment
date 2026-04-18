@@ -6,6 +6,7 @@ import data.EntityTemplate;
 import systems.BattleEngine;
 import systems.EntityType;
 import systems.states.GameState;
+import systems.states.battle.BattleData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,12 @@ public class SelectCharacterState implements GameState {
     public GameState onUpdate(BattleEngine engine) {
         if (!initialised) {
             List<EntityTemplate> entities = engine.retrieveDbEntities();
-            engine.clearInventory(); // clear inventory in case of new runs
 
             List<Command> characterChoices = new ArrayList<>();
             for (EntityTemplate e : entities) {
                 if (e.type == EntityType.PLAYER) {
-                    characterChoices.add(new MenuCommand(e.name, () -> engine.setSelectedPlayer(e)));
+                    String attr = String.format(": HP: %d | ATK: %d | DEF: %d | SPD %d", e.hp, e.attack, e.defence, e.speed);
+                    characterChoices.add(new MenuCommand(e.name + attr, () -> engine.setSelectedPlayer(e)));
                 }
             }
 
