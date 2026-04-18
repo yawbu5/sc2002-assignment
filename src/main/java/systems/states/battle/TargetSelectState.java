@@ -38,7 +38,7 @@ public class TargetSelectState implements BattleState {
                 }));
             } else {
                 // 1. apply to self. 2. go back to selection
-                int player = data.getTurnOrder().get(data.currentTurn);
+                int player = data.getCurrentTurnEntityId();
                 commands.add(new ActionCommand("You", player, player, this.actionId));
                 commands.add(new MenuCommand("Go back", () -> {
                 }));
