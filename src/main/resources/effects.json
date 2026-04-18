@@ -2,12 +2,14 @@
   {
     "id": "stun",
     "name": "Stunned",
-    "effect": "SKIP_TURN"
+    "effect": "SKIP_TURN",
+    "val": null
   },
   {
     "id": "defend",
-    "name": "Defend",
-    "effect": "DAMAGE_REDUCTION"
+    "name": "Defending",
+    "effect": "DAMAGE_REDUCTION",
+    "val": 10
   },
   {
     "id": "arcaneblast",
@@ -17,7 +19,8 @@
   },
   {
     "id": "invulnerable",
-    "name": "Invulnerable",
-    "effect": "INVULN"
+    "name": "Smoke Bomb Invulnerability",
+    "effect": "INVULNERABLE",
+    "val": null
   }
 ]
