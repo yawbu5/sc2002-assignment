@@ -5,6 +5,7 @@ import systems.BattleEngine;
 import systems.Entity;
 import systems.EntityType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,10 +16,12 @@ public class BattleData {
     public int currentTurn = 0;     // on initial startTurn check, this number is current. However on post-checks we consider this to be currentTurn++
     public boolean requestRestart = false;
     public boolean requestExit = false;
+    public boolean requestRestartSameSettings = false;
     private Wave difficulty;
     private int waveCount = 1;
     private int roundCounter = 1;
     private List<Integer> turnOrder;
+    private List<String> playerInventory;   //  holder for restarts
 
     public void setDifficulty(Wave difficulty) {
         this.difficulty = difficulty;
@@ -75,5 +78,22 @@ public class BattleData {
             String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
             engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
         }
+    }
+
+    public void setPlayerInventory(List<String> inv) {
+        this.playerInventory = inv;
+    }
+
+    /**
+     * Reset on game restarts
+     */
+    public void reset() {
+        this.waveCount = 1;
+        this.roundCounter = 1;
+        this.currentTurn = 0;
+    }
+
+    public List<String> getPlayerInventory() {
+        return this.playerInventory;
     }
 }

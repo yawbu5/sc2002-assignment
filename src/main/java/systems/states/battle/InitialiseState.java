@@ -12,6 +12,13 @@ import java.util.List;
 public class InitialiseState implements BattleState {
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
+        if (data.requestRestartSameSettings) {
+            engine.notifyMenuObservers(o -> o.onDisplayMessage("Game restarted with same settings"));
+            data.reset();
+            engine.setPlayerInventory(new ArrayList<>(data.getPlayerInventory()));
+            data.requestRestartSameSettings = false;
+        }
+
         List<EntityTemplate> entities = new ArrayList<>();
 
         entities.add(engine.getSelectedPlayer());
@@ -22,6 +29,10 @@ public class InitialiseState implements BattleState {
 
         engine.startEntityManager(entities);
         engine.startActionManager();
+        engine.startStatusManager();
+
+        // save initial inventory in case of restarts
+        data.setPlayerInventory(new ArrayList<>(engine.getPlayerInventory()));
 
         // Print field enemy stats for player to see
         BattleData.printWaveInfo(engine);

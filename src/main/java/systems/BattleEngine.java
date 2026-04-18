@@ -1,10 +1,7 @@
 package systems;
 
 import commands.Command;
-import data.ActionTemplate;
-import data.EntityTemplate;
-import data.GameResources;
-import data.Wave;
+import data.*;
 import observable.BattleObserver;
 import observable.MenuObserver;
 import systems.states.GameState;
@@ -19,13 +16,13 @@ import java.util.function.Consumer;
 
 public class BattleEngine {
     private final GameResources database;
-    private final ArrayList<String> playerInventory = new ArrayList<>();
     private final List<BattleObserver> battleObservers = new ArrayList<>();
     private final List<MenuObserver> menuObservers = new ArrayList<>();
     // Why use ConcurrentLinkedQueue?
     // Because the guy on stackoverflow told me to.
     // ...but apparently it's a thread-safe method in case we implement graphics libraries for the UI like JavaFX.
     private final Queue<Command> commandQueue = new ConcurrentLinkedQueue<>();
+    private List<String> playerInventory = new ArrayList<>();
     private EntityManager em;
     private ActionManager am;
     private StatusManager sm;
@@ -34,6 +31,13 @@ public class BattleEngine {
     // TODO: ITEMS, ABILITIES ETC.
     public BattleEngine(GameResources db) {
         this.database = db;
+    }
+
+    /**
+     * Resets engine-only temporary tracked variables for hard restarts
+     */
+    public void reset() {
+        this.playerInventory = new ArrayList<>();
     }
 
     /**
@@ -109,6 +113,8 @@ public class BattleEngine {
         this.am = new ActionManager(this);
     }
 
+    public void startStatusManager() { this.sm = new StatusManager(this); }
+
     public EntityManager getEntityManager() {
         return this.em;
     }
@@ -121,7 +127,7 @@ public class BattleEngine {
         return this.sm;
     }
 
-    public ArrayList<String> getPlayerInventory() {
+    public List<String> getPlayerInventory() {
         return this.playerInventory;
     }
 
@@ -129,6 +135,9 @@ public class BattleEngine {
         this.playerInventory.add(a);
     }
 
+    public void setPlayerInventory(List<String> inv) {
+        this.playerInventory = inv;
+    }
     public void removeFromInventory(String id) {
         this.playerInventory.remove(id);
     }
@@ -145,6 +154,19 @@ public class BattleEngine {
         if (database.abilities != null) {
             return database.abilities.stream()
                     .filter(a -> actionId.equals(a.id))
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return null;
+        }
+    }
+
+    public List<EffectTemplate> retrieveDbEffects() { return database.effects; }
+
+    public EffectTemplate retrieveDbEffect(String effectId) {
+        if (database.effects != null) {
+            return database.effects.stream()
+                    .filter(e -> effectId.equals(e.id))
                     .findFirst()
                     .orElse(null);
         } else {

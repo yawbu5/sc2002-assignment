@@ -15,12 +15,9 @@ public class ResultState implements BattleState {
         if (!initialised) {
             List<Command> options = new ArrayList<>();
 
-            options.add(new MenuCommand("Restart", () -> {
-                data.requestRestart = true;
-            }));
-            options.add(new MenuCommand("Exit", () -> {
-                data.requestExit = true;
-            }));
+            options.add(new MenuCommand("Restart", () -> data.requestRestart = true));
+            options.add(new MenuCommand("Restart with the same settings", () -> data.requestRestartSameSettings = true));
+            options.add(new MenuCommand("Exit", () -> data.requestExit = true));
 
             engine.notifyMenuObservers(o -> o.onChoicePrompt("What would you like to do next?", options));
             initialised = true;
@@ -34,7 +31,12 @@ public class ResultState implements BattleState {
 
         result.execute(engine);
 
+        if (data.requestRestartSameSettings) {
+            return new InitialiseState();
+        }
+
         if (data.requestExit || data.requestRestart) {
+            engine.reset();
             return null;
         }
 
