@@ -76,6 +76,16 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     }
 
     @Override
+    public void onEffectExpired(String effect, String name) {
+        System.out.printf("%nEFFECT EXPIRED: %s on %s %n", effect, name);
+    }
+
+    @Override
+    public void onEffectApplied(String effect, String caster, String target, int duration) {
+        System.out.printf("%nEFFECT APPLIED: %s applies %s on %s for %d turns%n", caster, effect, target, duration);
+    }
+
+    @Override
     public void onGameWin(BattleData data) {
         System.out.println();
         System.out.println("Congratulations, you have defeated all your enemies.");
@@ -87,7 +97,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     public void onGameLose(BattleData data) {
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
+        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
         System.out.println(result);
     }
 
@@ -96,6 +106,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         int input = -1;
         boolean entered = false;
         while (input < 1 || input > options.size()) {
+            System.out.println();
             if (!entered) {
                 entered = true;
             } else {

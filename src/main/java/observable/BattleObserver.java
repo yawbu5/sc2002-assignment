@@ -21,6 +21,10 @@ public interface BattleObserver {
     // format: [, CURR_HP, MAX_HP, DEF, SPD] i.e., {0, 150, 250, 20, 30] -> Warrior (YOU) | HP: 150/250, DEF: 20, SPD: 30
     void onUpdateStats(List<Integer> stats);
 
+    void onEffectExpired(String effect, String target);
+
+    void onEffectApplied(String effect, String caster, String target, int duration);
+
     void onGameWin(BattleData data);
 
     void onGameLose(BattleData data);
