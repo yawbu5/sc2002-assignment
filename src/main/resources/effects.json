@@ -13,7 +13,7 @@
   },
   {
     "id": "arcaneblast",
-    "name": "Arcane Blast",
+    "name": "Arcane Blast Buff",
     "effect": "CASTER_DAMAGE_BUFF",
     "val": 10
   },

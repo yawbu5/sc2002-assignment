@@ -88,7 +88,11 @@
     "cooldown": 3,
     "effects": [
       {
-        "type": "APPLY_STATUS",
+        "type": "DAMAGE",
+        "val": 1
+      },
+      {
+        "type": "APPLY_STATUS_CASTER_ON_KILL",
         "id": "arcaneblast",
         "duration": -1
       }

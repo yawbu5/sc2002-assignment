@@ -1,4 +1,4 @@
-package systems;
+package systems.entities;
 
 import data.EntityTemplate;
 
@@ -50,6 +50,10 @@ public class Entity {
     public boolean isDead() {
         return currHp <= 0;
     }
+
+    public boolean isPlayer() { return this.type == EntityType.PLAYER; }
+
+    public boolean isEnemy() { return this.type == EntityType.ENEMY; }
 
     public int getId() {
         return this.id;

@@ -1,7 +1,9 @@
-package systems;
+package systems.actions;
 
 import data.ActionEffectTemplate;
 import data.ActionTemplate;
+import systems.BattleEngine;
+import systems.entities.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class ActionManager {
     // We keep track by entityId and a list of ActiveActions (holds cooldowns)
     // private final Map<Integer, Map<String, Integer>> activeActions = new HashMap<>();
     private final BattleEngine engine;
+    private int killCount = 0;      // kill tracker for on kill buffs (wizard)
 
     public ActionManager(BattleEngine engine) {
         this.engine = engine;
@@ -38,7 +41,7 @@ public class ActionManager {
         for (int id : targetIds) {
             targets.add(engine.getEntityManager().getEntity(id));
         }
-
+        boolean justKilled = false;
         for (ActionEffectTemplate effect : action.effects) {
             // calculate effective values relative to current applied status effects
             int effectveAttack = engine.getStatusManager().getEffectiveStat(caster, StatusManager.StatType.ATTACK);
@@ -46,15 +49,22 @@ public class ActionManager {
                 case "DAMAGE":
                     // deals caster's attack val. worth of damage to the targets * some multiplier
                     for (Entity e : targets) {
+                        boolean currentlyAlive = !e.isDead();
                         int calculated_damage = Math.toIntExact(Math.round(effectveAttack * effect.val));
                         int effectiveDefence = engine.getStatusManager().getEffectiveStat(e, StatusManager.StatType.DEFENCE);
                         int old_hp = e.getCurrHp();
                         // clamp damage dealt - defense to make sure we don't accidentally heal the entity
                         e.setCurrHp(e.getCurrHp() - Math.max(0, calculated_damage - effectiveDefence));
-                        if (e.isDead())
-                            engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp() + " X ELIMINATED"));
-                        else
+                        if (e.isDead()) {
+                            engine.notifyBattleObservers(o -> o.onLogAction("KILLED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp() + " X ELIMINATED"));
+                            // ensures that entity wasn't killed by some side effect before
+                            if (currentlyAlive && caster.isPlayer()) {
+                                killCount++;
+                                justKilled = true;
+                            }
+                        } else {
                             engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp()));
+                        }
                     }
                     break;
                 case "HEAL":
@@ -69,6 +79,14 @@ public class ActionManager {
                         engine.getStatusManager().processEffect(e.getId(), effect);
                         String eff_name = engine.retrieveDbEffect(effect.id).name;
                         engine.notifyBattleObservers(o -> o.onEffectApplied(eff_name, caster.getName(), e.getName(), effect.duration));
+                    }
+                    break;
+                case "APPLY_STATUS_CASTER_ON_KILL":
+                    if (killCount > 0 && justKilled) {
+                        engine.getStatusManager().processEffect(casterId, effect);
+
+                        String eff_name = engine.retrieveDbEffect(effect.id).name;
+                        engine.notifyBattleObservers(o-> o.onEffectApplied(eff_name, action.name + " (ON KILL)", caster.getName(), effect.duration));
                     }
                     break;
                 case "ACTIVATE_ABILITY":
@@ -86,7 +104,4 @@ public class ActionManager {
         }
     }
 
-    public void handleEffect(ActionEffectTemplate effect, int casterId, List<Integer> targetIds, String actionId) {
-        // TODO: implement
-    }
 }

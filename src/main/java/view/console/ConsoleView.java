@@ -82,7 +82,11 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onEffectApplied(String effect, String caster, String target, int duration) {
-        System.out.printf("%nEFFECT APPLIED: %s applies %s on %s for %d turns%n", caster, effect, target, duration);
+        if (duration == -1) {
+            System.out.printf("%nEFFECT APPLIED: %s applies %s on %s %n", caster, effect, target);
+        } else {
+            System.out.printf("%nEFFECT APPLIED: %s applies %s on %s for %d turns%n", caster, effect, target, duration);
+        }
     }
 
     @Override

@@ -1,8 +1,9 @@
 package systems.states.battle;
 
 import systems.BattleEngine;
-import systems.Entity;
-import systems.EntityType;
+import systems.actions.StatusManager;
+import systems.entities.Entity;
+import systems.entities.EntityType;
 
 import java.util.Comparator;
 import java.util.List;
@@ -55,7 +56,7 @@ public class StartTurnState implements BattleState {
         // check if entity we're about to push is already dead?
         int currentEntityId = data.getTurnOrder().get(data.currentTurn);
         Entity currentEntity = engine.getEntityManager().getEntity(currentEntityId);
-        Map<String, Integer> activeEffects = engine.getStatusManager().getActiveEffects(currentEntityId);
+        Map<String, StatusManager.EffectInfo> activeEffects = engine.getStatusManager().getActiveEffects(currentEntityId);
 
         if (currentEntity.isDead() || !activeEffects.isEmpty()) {
             // we skip and check next entity in line

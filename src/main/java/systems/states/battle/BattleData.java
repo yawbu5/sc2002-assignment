@@ -2,8 +2,8 @@ package systems.states.battle;
 
 import data.Wave;
 import systems.BattleEngine;
-import systems.Entity;
-import systems.EntityType;
+import systems.entities.Entity;
+import systems.entities.EntityType;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class BattleData {
     }
 
     public boolean currentTurnIsPlayer() {
-        return (currentTurn == 0);
+        return (getCurrentTurnEntityId() == 0);
     }
 
     public int getCurrentTurnEntityId() {
