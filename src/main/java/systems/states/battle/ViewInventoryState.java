@@ -1,8 +1,6 @@
 package systems.states.battle;
 
-import commands.Command;
-import commands.ItemCommand;
-import commands.MenuCommand;
+import commands.*;
 import data.ActionTemplate;
 import systems.BattleEngine;
 
@@ -19,7 +17,7 @@ public class ViewInventoryState implements BattleState {
 
             for (String s : engine.getPlayerInventory()) {
                 ActionTemplate action = engine.retrieveDbAction(s);
-                commands.add(new ItemCommand("Use " + action.name, data.getCurrentTurnEntityId(), data.getCurrentTurnEntityId(), action.id, data));
+                commands.add(new OpenTargetMenuCommand("Use " + action.name, action.id, action.type));
             }
 
             commands.add(new MenuCommand("Go back", () -> {
@@ -39,9 +37,9 @@ public class ViewInventoryState implements BattleState {
             return new PlayerTurnState();
         }
 
-        if (result instanceof ItemCommand) {
-            engine.queueNextCommand(result);
-            return new ResolveTurnState();
+        if (result instanceof OpenTargetMenuCommand) {
+            OpenTargetMenuCommand res = (OpenTargetMenuCommand) result;
+            return new TargetSelectState(res.actionId, res.actionType, true);
         }
 
         return this;

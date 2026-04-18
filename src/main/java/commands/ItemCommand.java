@@ -1,23 +1,28 @@
 package commands;
 
 import systems.BattleEngine;
-import systems.states.battle.BattleData;
 
 import java.util.Collections;
+import java.util.List;
 
 public class ItemCommand implements Command {
     private final String msg;
     private final int casterId;
-    private final int targetId;
+    private final List<Integer> targetIds;
     private final String itemid;
-    private final BattleData data;
 
-    public ItemCommand(String msg, int casterId, int targetId, String itemid, BattleData data) {
+    public ItemCommand(String msg, int casterId, int targetId, String itemid) {
         this.msg = msg;
         this.casterId = casterId;
-        this.targetId = targetId;
+        this.targetIds = Collections.singletonList(targetId);
         this.itemid = itemid;
-        this.data = data;
+    }
+
+    public ItemCommand(String msg, int casterId, List<Integer> targetIds, String itemid) {
+        this.msg = msg;
+        this.casterId = casterId;
+        this.targetIds = targetIds;
+        this.itemid = itemid;
     }
 
     @Override
@@ -28,6 +33,6 @@ public class ItemCommand implements Command {
     @Override
     public void execute(BattleEngine engine) {
         engine.removeFromInventory(itemid);
-        engine.getActionManager().processAction(this.casterId, Collections.singletonList(this.targetId), this.itemid);
+        engine.getActionManager().processAction(this.casterId, this.targetIds, this.itemid);
     }
 }

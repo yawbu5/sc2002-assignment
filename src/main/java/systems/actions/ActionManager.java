@@ -2,8 +2,10 @@ package systems.actions;
 
 import data.ActionEffectTemplate;
 import data.ActionTemplate;
+import data.ActionType;
 import systems.BattleEngine;
 import systems.entities.Entity;
+import systems.entities.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,17 @@ public class ActionManager {
         for (int id : targetIds) {
             targets.add(engine.getEntityManager().getEntity(id));
         }
+
+        processEffects(caster, targets, action);
+
+        // apply cooldown to abilities that have a set cooldown value
+        if (action.cooldown > 0) {
+            caster.activeActions.put(actionId, action.cooldown);
+        }
+    }
+
+
+    public void processEffects(Entity caster, List<Entity> targets, ActionTemplate action) {
         boolean justKilled = false;
         for (ActionEffectTemplate effect : action.effects) {
             // calculate effective values relative to current applied status effects
@@ -83,25 +96,32 @@ public class ActionManager {
                     break;
                 case "APPLY_STATUS_CASTER_ON_KILL":
                     if (killCount > 0 && justKilled) {
-                        engine.getStatusManager().processEffect(casterId, effect);
+                        engine.getStatusManager().processEffect(caster.getId(), effect);
 
                         String eff_name = engine.retrieveDbEffect(effect.id).name;
-                        engine.notifyBattleObservers(o-> o.onEffectApplied(eff_name, action.name + " (ON KILL)", caster.getName(), effect.duration));
+                        engine.notifyBattleObservers(o -> o.onEffectApplied(eff_name, action.name + " (ON KILL)", caster.getName(), effect.duration));
                     }
                     break;
                 case "ACTIVATE_ABILITY":
                     String id = caster.getSpecialAbilityId();
                     if (!id.isEmpty()) {
-                        processAction(casterId, targetIds, id);
+                        ActionTemplate specialAction = engine.retrieveDbAction(id);
+                        if (specialAction != null) {
+                            List<Entity> newTargets = targets;
+                            if (specialAction.aoe) {
+                                if (specialAction.type == ActionType.ACTION_TO) {
+                                    newTargets = engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY);
+                                } else if (specialAction.type == ActionType.ACTION_SELF) {
+                                    newTargets = engine.getEntityManager().getAliveEntitiesByType(EntityType.PLAYER);
+                                }
+                            }
+                            engine.notifyBattleObservers(o -> o.onLogAction(caster.getName() + "'s power stone used! " + specialAction.name + " activated!"));
+
+                            processEffects(caster, newTargets, specialAction);
+                        }
                     }
                     break;
             }
-
-            // apply cooldown to abilities that have a set cooldown value
-            if (action.cooldown > 0) {
-                caster.activeActions.put(actionId, action.cooldown);
-            }
         }
     }
-
 }

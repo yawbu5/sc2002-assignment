@@ -8,13 +8,22 @@ import java.util.List;
 public class ActionCommand implements Command {
     private final String msg;
     private final int casterId;
-    private final int targetId;
+    private final List<Integer> targetIds;
     private final String actionId;
 
+    // default single-target (non aoe)
     public ActionCommand(String msg, int casterId, int targetId, String actionId) {
         this.msg = msg;
         this.casterId = casterId;
-        this.targetId = targetId;
+        this.targetIds = Collections.singletonList(targetId);
+        this.actionId = actionId;
+    }
+
+    // multi-target (aoe)
+    public ActionCommand(String msg, int casterId, List<Integer> targetIds, String actionId) {
+        this.msg = msg;
+        this.casterId = casterId;
+        this.targetIds = targetIds;
         this.actionId = actionId;
     }
 
@@ -25,7 +34,6 @@ public class ActionCommand implements Command {
 
     @Override
     public void execute(BattleEngine engine) {
-        List<Integer> targetlist = Collections.singletonList(this.targetId);
-        engine.getActionManager().processAction(this.casterId, targetlist, this.actionId);
+        engine.getActionManager().processAction(this.casterId, this.targetIds, this.actionId);
     }
 }

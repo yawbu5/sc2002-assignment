@@ -2,44 +2,93 @@ package systems.states.battle;
 
 import commands.ActionCommand;
 import commands.Command;
+import commands.ItemCommand;
 import commands.MenuCommand;
+import data.ActionEffectTemplate;
+import data.ActionTemplate;
 import data.ActionType;
 import systems.BattleEngine;
-import systems.Entity;
-import systems.EntityType;
+import systems.entities.Entity;
+import systems.entities.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TargetSelectState implements BattleState {
     private final ActionType actionType;
     private final String actionId;
+    private final boolean isItem;
     private boolean initialised = false;
 
-    public TargetSelectState(String actionId, ActionType type) {
+    public TargetSelectState(String actionId, ActionType type, boolean isItem) {
         this.actionId = actionId;
         this.actionType = type;
+        this.isItem = isItem;
     }
 
     @Override
     public BattleState transition(BattleData data, BattleEngine engine) {
+        // Option structure:
         // List of targets
         // Back option
 
         if (!initialised) {
             List<Command> commands = new ArrayList<>();
 
-            if (this.actionType == ActionType.ACTION_TO) {
-                // 1. pick a target. 2. go back to selection.
-                for (Entity e : engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY)) {
-                    commands.add(new ActionCommand(e.getName(), data.getCurrentTurnEntityId(), e.getId(), this.actionId));
+            int casterId = data.getCurrentTurnEntityId();
+            Entity caster = engine.getEntityManager().getEntity(casterId);
+            ActionTemplate action = engine.retrieveDbAction(actionId);
+            boolean isAoe = (action != null && action.aoe);
+
+            // messed up, hacky(?) fix for AOE targeting UX problem
+            if (action != null && action.effects != null) {
+                for (ActionEffectTemplate effect : action.effects) {
+                    if ("ACTIVATE_ABILITY".equals(effect.type)) {
+                        String specialAbilityId = caster.getSpecialAbilityId();
+
+                        if (specialAbilityId != null && !specialAbilityId.isEmpty()) {
+                            ActionTemplate specialAction = engine.retrieveDbAction(specialAbilityId);
+
+                            if (specialAction != null && specialAction.aoe != null) {
+                                isAoe = specialAction.aoe;
+                            }
+                        }
+                    }
                 }
-                commands.add(new MenuCommand("Go back", () -> {
-                }));
+            }
+
+            if (this.actionType == ActionType.ACTION_TO || this.actionType == ActionType.ITEM_TO) {
+                // 1. pick a target. 2. go back to selection.
+                List<Entity> aliveEnemies = engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY);
+
+                if (isAoe) {
+                   List<Integer> targetIds = aliveEnemies.stream()
+                           .map(Entity::getId)
+                           .collect(Collectors.toList());
+
+                   Command command = isItem
+                           ? new ItemCommand("All enemies", casterId, targetIds, this.actionId)
+                           : new ActionCommand("All enemies", casterId, targetIds, this.actionId);
+
+                   commands.add(command);
+                } else {
+                    for (Entity e : aliveEnemies) {
+                        Command command = isItem
+                                ? new ItemCommand(e.getName(), casterId, e.getId(), this.actionId)
+                                : new ActionCommand(e.getName(), casterId, e.getId(), this.actionId);
+                        commands.add(command);
+                    }
+                }
+
+                commands.add(new MenuCommand("Go back", () -> {}));
             } else {
                 // 1. apply to self. 2. go back to selection
                 int player = data.getCurrentTurnEntityId();
-                commands.add(new ActionCommand("You", player, player, this.actionId));
+                Command command = isItem
+                        ? new ItemCommand("You", player, player, this.actionId)
+                        : new ActionCommand("You", player, player, this.actionId);
+                commands.add(command);
                 commands.add(new MenuCommand("Go back", () -> {
                 }));
             }
@@ -60,7 +109,7 @@ public class TargetSelectState implements BattleState {
                 return new PlayerTurnState();
             else
                 return new EnemyTurnState();
-        } else if (result instanceof ActionCommand) {
+        } else if (result instanceof ActionCommand || result instanceof ItemCommand) {
             engine.queueNextCommand(result);
             return new ResolveTurnState();
         }

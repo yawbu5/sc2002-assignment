@@ -45,7 +45,7 @@ public class PlayerTurnState implements BattleState {
             return new ViewInventoryState();
         } else if (result instanceof OpenTargetMenuCommand) {
             OpenTargetMenuCommand res = (OpenTargetMenuCommand) result;
-            return new TargetSelectState(res.actionId, res.actionType);
+            return new TargetSelectState(res.actionId, res.actionType, false);
         } else if (result instanceof MenuCommand) {
             return new PlayerTurnState();
         }

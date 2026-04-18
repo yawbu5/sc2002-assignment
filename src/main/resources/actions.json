@@ -43,7 +43,7 @@
     "id": "powerstone",
     "name": "Power Stone",
     "desc": "Triggers special ability once.",
-    "type": "ITEM",
+    "type": "ITEM_TO",
     "aoe": false,
     "cooldown": 0,
     "effects": [
@@ -73,6 +73,10 @@
     "aoe": false,
     "cooldown": 3,
     "effects": [
+      {
+        "type": "DAMAGE",
+        "val": 1
+      },
       {
         "type": "APPLY_STATUS",
         "id": "stun",

@@ -19,10 +19,10 @@ public class SelectItemState implements GameState {
     public GameState onUpdate(BattleEngine engine) {
         if (!allItemsCollected || !initalised) {
             List<Command> itemChoices = new ArrayList<>();
-            List<ActionTemplate> abilities = engine.retrieveDbActions();
+            List<ActionTemplate> actions = engine.retrieveDbActions();
 
-            for (ActionTemplate a : abilities) {
-                if (a.type == ActionType.ITEM) {
+            for (ActionTemplate a : actions) {
+                if (a.type == ActionType.ITEM || a.type == ActionType.ITEM_TO) {
                     itemChoices.add(new MenuCommand(a.name, () -> engine.addToInventory(a.id)));
                 }
             }
