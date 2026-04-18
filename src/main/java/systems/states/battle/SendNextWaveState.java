@@ -20,6 +20,7 @@ public class SendNextWaveState implements BattleState {
 
         // reset relevant temp variables
         data.currentTurn = 0;
+        data.incrementRoundCounter();
         data.setTurnOrder(null);        // Not resetting turn order caused constant crashes, through painful debugging took an hour to fix :)
 
         for (String s : data.getWaves().get(data.incrementWaveCount())) {
