@@ -19,7 +19,7 @@ public class ViewInventoryState implements BattleState {
 
             for (String s : engine.getPlayerInventory()) {
                 ActionTemplate action = engine.retrieveDbAction(s);
-                commands.add(new ItemCommand("Use " + action.name, data.getCurrentTurnEntityId(), data.getCurrentTurnEntityId(), action.id));
+                commands.add(new ItemCommand("Use " + action.name, data.getCurrentTurnEntityId(), data.getCurrentTurnEntityId(), action.id, data));
             }
 
             commands.add(new MenuCommand("Go back", () -> {
