@@ -36,7 +36,6 @@ public class SendNextWaveState implements BattleState {
 
         // inform observers to update their local entity database
         engine.getEntityManager().getAllEntities().forEach(e -> engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack())));
-        engine.notifyBattleObservers(o -> o.onRoundStart(data.getRoundCounter()));
 
         return new StartTurnState();
     }

@@ -36,6 +36,8 @@ public class StartTurnState implements BattleState {
             // Transforms list of Entity data into a simple list of Entity Ids. Smaller signature, more performant.
             List<Integer> newTurnOrder = alive.stream().map(Entity::getId).collect(Collectors.toList());
 
+            engine.notifyBattleObservers(o -> o.onRoundStart(data.getRoundCounter()));
+
             data.setTurnOrder(newTurnOrder);
         }
 
