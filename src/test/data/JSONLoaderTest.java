@@ -1,11 +1,12 @@
 package src.test.data;
 
 import data.JSONLoader;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import src.test.DummyClass;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JSONLoaderTest {
 
@@ -13,17 +14,17 @@ public class JSONLoaderTest {
     public void EnsureLoadListFromJSONIsSuccessful() {
         List<DummyClass> dummies = JSONLoader.loadList("dummy_data.json", DummyClass.class);
 
-        Assert.assertNotNull(dummies);
-        Assert.assertEquals("John", dummies.get(0).name);
-        Assert.assertEquals(2, dummies.get(1).id);
-        Assert.assertEquals("Charlie", dummies.get(2).name);
-        Assert.assertEquals(4, dummies.get(3).id);
+        assertNotNull(dummies);
+        assertEquals("John", dummies.get(0).name);
+        assertEquals(2, dummies.get(1).id);
+        assertEquals("Charlie", dummies.get(2).name);
+        assertEquals(4, dummies.get(3).id);
     }
 
     @Test
     public void EnsureLoadListReturnsNullWhenInvalidInputIsGiven() {
         List<DummyClass> dummies = JSONLoader.loadList("blah", DummyClass.class);
 
-        Assert.assertNull(dummies);
+        assertNull(dummies);
     }
 }

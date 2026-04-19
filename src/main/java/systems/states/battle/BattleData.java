@@ -85,4 +85,8 @@ public class BattleData {
     public void setPlayerInventory(List<String> inv) {
         this.playerInventory = inv;
     }
+
+    public Wave getWave() {
+        return this.difficulty;
+    }
 }

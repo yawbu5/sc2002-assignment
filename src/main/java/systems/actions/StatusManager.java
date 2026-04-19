@@ -112,14 +112,16 @@ public class StatusManager {
     // handles recurring (per round) effects (i.e., DOT)
     // effectively pointless for now, but better to have a handle
     public void applyEffect(Entity e, EffectTemplate effect) {
-        switch (effect.effect) {
-            // these effects at the bottom don't have a recurring effect
-            // (because these change stats passively or are a general check)
-            case "SKIP_TURN":
-            case "DAMAGE_REDUCTION":
-            case "CASTER_DAMAGE_BUFF":
-            case "INVULNERABLE":
-                break;
+        if (effect != null) {
+            switch (effect.effect) {
+                // these effects at the bottom don't have a recurring effect
+                // (because these change stats passively or are a general check)
+                case "SKIP_TURN":
+                case "DAMAGE_REDUCTION":
+                case "CASTER_DAMAGE_BUFF":
+                case "INVULNERABLE":
+                    break;
+            }
         }
     }
 
