@@ -1,6 +1,7 @@
 package systems.states.menu;
 
 import commands.Command;
+import commands.ItemCommand;
 import commands.MenuCommand;
 import data.ActionTemplate;
 import data.ActionType;
@@ -23,7 +24,10 @@ public class SelectItemState implements GameState {
 
             for (ActionTemplate a : actions) {
                 if (a.type == ActionType.ITEM || a.type == ActionType.ITEM_TO) {
-                    itemChoices.add(new MenuCommand(a.name, () -> engine.addToInventory(a.id)));
+                    itemChoices.add(new MenuCommand(a.name, () -> {
+                        engine.addToInventory(a.id);
+                        ItemCommand.updateInventoryObs(engine);
+                    }));
                 }
             }
 

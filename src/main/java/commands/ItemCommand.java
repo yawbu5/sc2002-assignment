@@ -2,6 +2,7 @@ package commands;
 
 import systems.BattleEngine;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +34,16 @@ public class ItemCommand implements Command {
     @Override
     public void execute(BattleEngine engine) {
         engine.removeFromInventory(itemid);
-        engine.notifyBattleObservers(o -> o.onUpdateInventory(engine.getPlayerInventory()));
+        updateInventoryObs(engine);
         engine.getActionManager().processAction(this.casterId, this.targetIds, this.itemid);
+    }
+
+    public static void updateInventoryObs(BattleEngine engine) {
+        ArrayList<String> inventory = new ArrayList<>();
+        for (String id : engine.getPlayerInventory()) {
+            String name = engine.retrieveDbAction(id).name;
+            inventory.add(name);
+        }
+        engine.notifyBattleObservers(o -> o.onUpdateInventory(inventory));
     }
 }

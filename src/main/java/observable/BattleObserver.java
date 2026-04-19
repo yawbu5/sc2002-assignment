@@ -27,6 +27,8 @@ public interface BattleObserver {
 
     void onEffectApplied(String effect, String caster, String target, int duration);
 
+    void onGameStart(BattleData data);
+
     void onGameWin(BattleData data);
 
     void onGameLose(BattleData data);

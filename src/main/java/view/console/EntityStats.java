@@ -26,4 +26,9 @@ public class EntityStats {
         this.currHP = currHP;
         return this;
     }
+
+    // easier to sort by speed, for turn order visualising
+    public int getSpeed() {
+        return this.speed;
+    }
 }

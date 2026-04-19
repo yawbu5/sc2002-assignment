@@ -67,6 +67,8 @@ public class BattleData {
         return this.difficulty.waves;
     }
 
+    public Wave getDifficulty() { return this.difficulty; }
+
     public int getRoundCounter() {
         return roundCounter;
     }

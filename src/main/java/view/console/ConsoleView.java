@@ -1,12 +1,15 @@
 package view.console;
 
 import commands.Command;
+import data.EntityTemplate;
 import observable.BattleObserver;
 import observable.MenuObserver;
 import systems.BattleEngine;
 import systems.states.battle.BattleData;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class ConsoleView implements MenuObserver, BattleObserver {
     private final Scanner sc;
@@ -103,11 +106,75 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     }
 
     @Override
+    public void onGameStart(BattleData data) {
+        EntityStats player = entities.get(0);
+        System.out.printf("%nPlayer: %s, Player Stats: HP: %d, ATK: %d, DEF: %d, SPD: %d%n", player.name, player.maxHP, player.attack, player.defence, player.speed);
+        System.out.printf("Items: %s%n", buildInventoryString());
+        System.out.printf("Level: %s - %s%n", data.getDifficulty().name, buildLevelEnemiesString(data));
+        System.out.printf("Turn Order: %s %n", buildTurnOrder(data));
+    }
+
+    // Having a actual clone BattleData/EntityTemplate like implementation and update call
+    // will take too long...
+    // So we have to call them directly from the engine.
+    // Otherwise, this view would be decoupled completely.
+    private String buildLevelEnemiesString(BattleData data) {
+        Map<String, Long> entityCounts = entities.entrySet().stream()
+                .filter(e -> e.getKey() != 0)
+                .collect(Collectors.groupingBy(e -> e.getValue().name, Collectors.counting()));
+
+        String firstWaveString = entityCounts.entrySet().stream()
+                .map(e -> e.getValue() + " " + e.getKey())
+                .collect(Collectors.joining(" + "));
+
+        if (firstWaveString.isEmpty()) {
+            return "";
+        }
+
+        Map<String, Long> backupEntityCounts = data.getWaves().stream()
+                .skip(data.getWaveCount())
+                .flatMap(List::stream)
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()));
+
+        String backupsString = backupEntityCounts.entrySet().stream()
+                .map(e -> e.getValue() + " " + e.getKey())
+                .collect(Collectors.joining(" + "));
+
+        return backupsString.isEmpty() ? firstWaveString : String.format("%s | Backup: %s", firstWaveString, backupsString);
+    }
+
+    private String buildTurnOrder(BattleData data) {
+        // credits - https://javadevcentral.com/java-stream-distinct-by-property/
+        Map<Integer, String> uniqueEnemies = new HashMap<>();
+
+        if (entities.containsKey(0)) {
+            EntityStats player = entities.get(0);
+            uniqueEnemies.putIfAbsent(player.speed, player.name);
+        }
+
+        // VERY hacky and not so decoupled from the engine...
+        data.getWaves().stream()
+                .flatMap(List::stream)
+                .distinct()
+                .forEach(name -> {
+                    EntityTemplate entity = engine.retrieveDbEntity(name);
+                    if (entity != null) {
+                        uniqueEnemies.putIfAbsent(entity.speed, entity.name);
+                    }
+                });
+
+        return uniqueEnemies.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .map(e -> String.format("%s (SPD %d)", e.getValue(), e.getKey()))
+                .collect(Collectors.joining(" -> "));
+    }
+
+    @Override
     public void onGameWin(BattleData data) {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Congratulations, you have defeated all your enemies.");
-        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP, data.getRoundCounter(), playerInventory.size());
+        String result = String.format("Result: Player Victory | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, data.getRoundCounter(), buildInventoryCountString());
         System.out.println(result);
         this.entities.clear();
     }
@@ -117,9 +184,21 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP, data.getRoundCounter(), playerInventory.size());
+        String result = String.format("Result: Player Defeat | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, data.getRoundCounter(), buildInventoryCountString());
         System.out.println(result);
         this.entities.clear();
+    }
+
+    private String buildInventoryString() {
+        return String.join(" + ", this.playerInventory);
+    }
+
+    private String buildInventoryCountString() {
+        return playerInventory.stream()
+                .collect(Collectors.groupingBy(s -> s, Collectors.counting()))
+                .entrySet().stream()
+                .map(e -> e.getKey() + ": " + e.getValue())
+                .collect(Collectors.joining(", "));
     }
 
     @Override
