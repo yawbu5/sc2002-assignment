@@ -66,24 +66,28 @@ public class ActionManager {
                         int calculated_damage = Math.toIntExact(Math.round(effectveAttack * effect.val));
                         int effectiveDefence = engine.getStatusManager().getEffectiveStat(e, StatusManager.StatType.DEFENCE);
                         int old_hp = e.getCurrHp();
+
                         // clamp damage dealt - defense to make sure we don't accidentally heal the entity
-                        e.setCurrHp(e.getCurrHp() - Math.max(0, calculated_damage - effectiveDefence));
+                        int damageDealt = Math.max(0, calculated_damage - effectiveDefence);
+                        e.setCurrHp(e.getCurrHp() - damageDealt);
+                        engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack()));
                         if (e.isDead()) {
-                            engine.notifyBattleObservers(o -> o.onLogAction("KILLED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp() + " X ELIMINATED"));
+                            engine.notifyBattleObservers(o -> o.onDamage(caster.getId(), e.getId(), action.name, damageDealt, old_hp, true));
                             // ensures that entity wasn't killed by some side effect before
                             if (currentlyAlive && caster.isPlayer()) {
                                 killCount++;
                                 justKilled = true;
                             }
                         } else {
-                            engine.notifyBattleObservers(o -> o.onLogAction("DAMAGED: " + caster.getName() + " -> " + action.name + " -> " + e.getName() + ": HP: " + old_hp + " -> " + e.getCurrHp()));
+                            engine.notifyBattleObservers(o -> o.onDamage(caster.getId(), e.getId(), action.name, damageDealt, old_hp, false));
                         }
                     }
                     break;
                 case "HEAL":
                     for (Entity e : targets) {
                         e.setCurrHp(e.getCurrHp() + (int) effect.val);
-                        engine.notifyBattleObservers(o -> o.onLogAction("HEALED: " + e.getName() + " healed for " + (int) effect.val + " up to " + e.getCurrHp() + "/" + e.getMaxHp()));
+                        engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack()));
+                        engine.notifyBattleObservers(o -> o.onHeal(e.getId(), (int) effect.val));
                     }
                     break;
                 case "APPLY_STATUS":

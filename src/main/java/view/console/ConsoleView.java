@@ -6,19 +6,13 @@ import observable.MenuObserver;
 import systems.BattleEngine;
 import systems.states.battle.BattleData;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleView implements MenuObserver, BattleObserver {
     private final Scanner sc;
-    private final ArrayList<EntityStats> entities = new ArrayList<>();
+    private final Map<Integer, EntityStats> entities = new HashMap<>();
+    private List<String> playerInventory = new ArrayList<>();
     private BattleEngine engine;
-    /**
-     * Game information tracking
-     */
-    private int roundCount = 1;
-    private int waveCount = 1;
 
     public ConsoleView() {
         this.sc = new Scanner(System.in);
@@ -42,37 +36,56 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onWaveSpawn(int waveNo) {
-        this.waveCount = waveNo;
+        this.entities.clear();
 
         System.out.println();
-        System.out.println("WAVE " + (this.waveCount - 1) + " CLEARED!");
-        System.out.println("SPAWNING WAVE " + this.waveCount);
-    }
-
-    @Override
-    public void onEntitySpawn(String entId) {
-
+        System.out.println("WAVE " + (waveNo - 1) + " CLEARED!");
+        System.out.println("SPAWNING WAVE " + waveNo + "...");
     }
 
     @Override
     public void onRoundStart(int roundCount) {
-        this.roundCount = roundCount;
+         // Game information tracking
 
         System.out.println();
         System.out.println("Start of round " + roundCount);
+
+        for (EntityStats e : entities.values()) {
+            String playerStatus = (e.type.equals("PLAYER")) ? " (YOU)" : "";
+            String killedStatus = (e.currHP <= 0) ? " (KILLED)" : "";
+
+            String msg = e.name + playerStatus + " | HP: " + e.currHP + "/" + e.maxHP + ", DEF: " + e.defence + ", SPD: " + e.speed + killedStatus;
+            System.out.printf("%n%s%n", msg);
+        }
     }
 
     @Override
-    public void onRoundEnd(int roundCount) {
-        this.roundCount = roundCount;
+    public void onDamage(int casterId, int targetId, String actionName, int damageDealt, int oldHp, boolean killed) {
+        EntityStats caster = this.entities.get(casterId);
+        EntityStats target = this.entities.get(targetId);
 
-        System.out.println();
-        System.out.println("End of round " + roundCount);
+        if (killed) {
+            System.out.printf("%nKILLED: %s -> %s -> %s: HP: %d - %d -> %d X ELIMINATED%n",caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
+        } else {
+            System.out.printf("%nDAMAGED: %s -> %s -> %s: HP: %d - %d -> %d%n",caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
+        }
     }
 
     @Override
-    public void onUpdateStats(List<Integer> stats) {
+    public void onHeal(int targetId, int healAmount) {
+        EntityStats target = this.entities.get(targetId);
+        System.out.printf("%nHEALED: %s healed for %d up to %d / %d HP.%n", target.name, healAmount, target.currHP, target.maxHP);
+    }
 
+    @Override
+    public void onUpdateStats(int id, String type, String name, int currHp, int maxHp, int def, int spd, int atk) {
+        // if entity doesn't exist, insert. otherwise just update its HP since it's the only thing that can change.
+        this.entities.compute(id, (k, v) -> (v == null) ? new EntityStats(name, type, currHp, maxHp, atk, def, spd) : v.update(currHp));
+    }
+
+    @Override
+    public void onUpdateInventory(List<String> items) {
+        this.playerInventory = new ArrayList<>(items);
     }
 
     @Override
@@ -91,18 +104,22 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onGameWin(BattleData data) {
+        EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Congratulations, you have defeated all your enemies.");
-        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
+        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP , data.getRoundCounter(), playerInventory.size());
         System.out.println(result);
+        this.entities.clear();
     }
 
     @Override
     public void onGameLose(BattleData data) {
+        EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", 69, data.getRoundCounter(), 69);
+        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP , data.getRoundCounter(), playerInventory.size());
         System.out.println(result);
+        this.entities.clear();
     }
 
     @Override

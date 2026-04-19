@@ -34,8 +34,8 @@ public class InitialiseState implements BattleState {
         // save initial inventory in case of restarts
         data.setPlayerInventory(new ArrayList<>(engine.getPlayerInventory()));
 
-        // Print field enemy stats for player to see
-        BattleData.printWaveInfo(engine);
+        // inform observers to update their local entity database
+        engine.getEntityManager().getAllEntities().forEach(e -> engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack())));
 
         return new StartTurnState();
     }

@@ -33,6 +33,7 @@ public class ItemCommand implements Command {
     @Override
     public void execute(BattleEngine engine) {
         engine.removeFromInventory(itemid);
+        engine.notifyBattleObservers(o -> o.onUpdateInventory(engine.getPlayerInventory()));
         engine.getActionManager().processAction(this.casterId, this.targetIds, this.itemid);
     }
 }

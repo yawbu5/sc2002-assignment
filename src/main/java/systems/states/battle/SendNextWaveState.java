@@ -30,11 +30,13 @@ public class SendNextWaveState implements BattleState {
         // add new enemies
         engine.getEntityManager().addEntitiesFromList(entities);
 
+
         // let player know current wave is finished and show current wave
         engine.notifyBattleObservers(o -> o.onWaveSpawn(data.getWaveCount()));
 
-        // Print field enemy stats for player to see
-        BattleData.printWaveInfo(engine);
+        // inform observers to update their local entity database
+        engine.getEntityManager().getAllEntities().forEach(e -> engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack())));
+        engine.notifyBattleObservers(o ->o.onRoundStart(data.getRoundCounter()));
 
         return new StartTurnState();
     }
