@@ -1,6 +1,7 @@
 package systems.states.battle;
 
 import data.EntityTemplate;
+import observable.BattleObserver;
 import systems.BattleEngine;
 
 import java.util.ArrayList;
@@ -37,7 +38,10 @@ public class InitialiseState implements BattleState {
         // inform observers to update their local entity database
         engine.getEntityManager().getAllEntities().forEach(e -> engine.notifyBattleObservers(o -> o.onUpdateStats(e.getId(), e.getType().toString(), e.getName(), e.getCurrHp(), e.getMaxHp(), e.getDefence(), e.getSpeed(), e.getAttack())));
 
-        engine.notifyBattleObservers(o -> o.onGameStart(data.getWave()));
+        engine.notifyBattleObservers(BattleObserver::onGameStart);
+
+        BattleData.printGameInfo(data, engine);
+        BattleData.printTurnOrder(data, engine);
 
         return new StartTurnState();
     }

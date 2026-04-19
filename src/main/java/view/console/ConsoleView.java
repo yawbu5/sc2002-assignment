@@ -1,8 +1,6 @@
 package view.console;
 
 import commands.Command;
-import data.EntityTemplate;
-import data.Wave;
 import observable.BattleObserver;
 import observable.MenuObserver;
 import systems.BattleEngine;
@@ -106,68 +104,10 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     }
 
     @Override
-    public void onGameStart(Wave wave) {
+    public void onGameStart() {
         EntityStats player = entities.get(0);
         System.out.printf("%nPlayer: %s, Player Stats: HP: %d, ATK: %d, DEF: %d, SPD: %d%n", player.name, player.maxHP, player.attack, player.defence, player.speed);
         System.out.printf("Items: %s%n", buildInventoryString());
-        //System.out.printf("Level: %s - %s%n", wave.name, buildLevelEnemiesString(wave));
-        //System.out.printf("Turn Order: %s %n", buildTurnOrder(wave));
-    }
-
-    private String buildLevelEnemiesString(Wave wave) {
-        Map<String, Long> entityCounts = entities.entrySet().stream()
-                .filter(e -> e.getKey() != 0)
-                .collect(Collectors.groupingBy(e -> e.getValue().name, Collectors.counting()));
-
-        String firstWaveString = entityCounts.entrySet().stream()
-                .map(e -> e.getValue() + " " + e.getKey())
-                .collect(Collectors.joining(" + "));
-
-        if (firstWaveString.isEmpty()) {
-            return "";
-        }
-
-        Map<String, Long> backupEntityCounts = wave.waves.stream()
-                .skip(wave.waves.size())
-                .flatMap(List::stream)
-                .collect(Collectors.groupingBy(name -> name, Collectors.counting()));
-
-        String backupsString = backupEntityCounts.entrySet().stream()
-                .map(e -> e.getValue() + " " + e.getKey())
-                .collect(Collectors.joining(" + "));
-
-        return backupsString.isEmpty() ? firstWaveString : String.format("%s | Backup: %s", firstWaveString, backupsString);
-    }
-
-    // This makes BattleObserver a leaky interface!
-    // Having an actual clone EntityTemplate like implementation and update call
-    // will take too long...
-    // So we have to call them directly from the engine.
-    // Otherwise, this view would be decoupled completely.
-    private String buildTurnOrder(Wave wave) {
-        // credits - https://javadevcentral.com/java-stream-distinct-by-property/
-        Map<Integer, String> uniqueEnemies = new HashMap<>();
-
-        if (entities.containsKey(0)) {
-            EntityStats player = entities.get(0);
-            uniqueEnemies.putIfAbsent(player.speed, player.name);
-        }
-
-        // VERY hacky and not so decoupled from the engine...
-        wave.waves.stream()
-                .flatMap(List::stream)
-                .distinct()
-                .forEach(name -> {
-                    EntityTemplate entity = engine.retrieveDbEntity(name);
-                    if (entity != null) {
-                        uniqueEnemies.putIfAbsent(entity.speed, entity.name);
-                    }
-                });
-
-        return uniqueEnemies.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
-                .map(e -> String.format("%s (SPD %d)", e.getValue(), e.getKey()))
-                .collect(Collectors.joining(" -> "));
     }
 
     @Override
@@ -185,7 +125,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Defeat | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, roundCount, buildInventoryCountString());
+        String result = String.format("Result: Player Defeat | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, roundCount, buildInventoryCountString().isEmpty());
         System.out.println(result);
         this.entities.clear();
     }
@@ -195,11 +135,12 @@ public class ConsoleView implements MenuObserver, BattleObserver {
     }
 
     private String buildInventoryCountString() {
-        return playerInventory.stream()
+        String result = playerInventory.stream()
                 .collect(Collectors.groupingBy(s -> s, Collectors.counting()))
                 .entrySet().stream()
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .collect(Collectors.joining(", "));
+        return result.isEmpty() ? "None" : result;
     }
 
     @Override
@@ -231,7 +172,6 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onDisplayMessage(String msg) {
-        System.out.println();
         System.out.println(msg);
     }
 }

@@ -1,8 +1,16 @@
 package systems.states.battle;
 
+import data.EntityTemplate;
 import data.Wave;
+import systems.BattleEngine;
+import systems.entities.Entity;
+import systems.entities.EntityType;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Holds (temporary) battle-specific context/data.
@@ -55,8 +63,6 @@ public class BattleData {
         return this.difficulty.waves;
     }
 
-    public Wave getDifficulty() { return this.difficulty; }
-
     public int getRoundCounter() {
         return roundCounter;
     }
@@ -88,5 +94,65 @@ public class BattleData {
 
     public Wave getWave() {
         return this.difficulty;
+    }
+
+    public static void printTurnOrder(BattleData data, BattleEngine engine) {
+        Map<Integer, String> uniqueEnemies = new HashMap<>();
+
+        Entity player;
+        if ((player = engine.getEntityManager().getEntity(0)) != null) {
+            uniqueEnemies.putIfAbsent(player.getSpeed(), player.getName());
+        }
+
+        data.getWaves().stream()
+                .flatMap(List::stream)
+                .distinct()
+                .forEach(name -> {
+                    EntityTemplate entity = engine.retrieveDbEntity(name);
+                    if (entity != null) {
+                        uniqueEnemies.put(entity.speed, entity.name);
+                    }
+                });
+
+        String order = uniqueEnemies.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .map(e -> String.format("%s (SPD %d)", e.getValue(), e.getKey()))
+                .collect(Collectors.joining(" -> "));
+
+        String result = String.format("Turn order: %s", order);
+
+        engine.notifyMenuObservers(o -> o.onDisplayMessage(result));
+    }
+
+    public static void printGameInfo(BattleData data, BattleEngine engine) {
+        List<Entity> currentEnemies = engine.getEntityManager().getAliveEntitiesByType(EntityType.ENEMY);
+
+        Map<String, Long> currentCounts = currentEnemies.stream()
+                .collect(Collectors.groupingBy(Entity::getName, Collectors.counting()));
+
+        String currentWaveStr = currentCounts.entrySet().stream()
+                .map(e -> e.getValue() + " " + e.getKey())
+                .collect(Collectors.joining(" + "));
+
+        if (currentWaveStr.isEmpty()) {
+            currentWaveStr = "None";
+        }
+
+        Map<String, Long> backupEntityCounts = data.getWaves().stream()
+                .skip(data.getWaveCount())
+                .flatMap(List::stream)
+                .collect(Collectors.groupingBy(name -> name, Collectors.counting()));
+
+        String backupsString = backupEntityCounts.entrySet().stream()
+                .map(e -> e.getValue() + " " + e.getKey())
+                .collect(Collectors.joining(" + "));
+
+        if (backupsString.isEmpty()) {
+            backupsString = "None";
+        }
+
+        String result = String.format("Level: %s - %s | Backup : %s", data.difficulty.name, currentWaveStr, backupsString);
+
+        engine.notifyMenuObservers(o -> o.onDisplayMessage(result));
     }
 }

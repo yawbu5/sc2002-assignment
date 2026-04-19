@@ -1,7 +1,5 @@
 package observable;
 
-import data.Wave;
-
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ public interface BattleObserver {
 
     void onEffectApplied(String effect, String caster, String target, int duration);
 
-    void onGameStart(Wave wave);
+    void onGameStart();
 
     void onGameWin(int roundCount);
 
