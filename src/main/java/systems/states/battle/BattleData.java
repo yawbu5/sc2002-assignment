@@ -1,9 +1,6 @@
 package systems.states.battle;
 
 import data.Wave;
-import systems.BattleEngine;
-import systems.entities.Entity;
-import systems.entities.EntityType;
 
 import java.util.List;
 
@@ -21,15 +18,6 @@ public class BattleData {
     private int roundCounter = 1;
     private List<Integer> turnOrder;
     private List<String> playerInventory;   //  holder for restarts
-
-    public static void printWaveInfo(BattleEngine engine) {
-        for (Entity e : engine.getEntityManager().getAliveEntities()) {
-            String playerStatus = (e.getType() == EntityType.PLAYER) ? " (YOU)" : "";
-
-            String msg = e.getName() + playerStatus + " | HP: " + e.getCurrHp() + "/" + e.getMaxHp() + ", DEF: " + e.getDefence() + ", SPD: " + e.getSpeed();
-            engine.notifyMenuObservers(o -> o.onDisplayMessage(msg));
-        }
-    }
 
     public void setDifficulty(Wave difficulty) {
         this.difficulty = difficulty;
