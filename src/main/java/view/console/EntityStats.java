@@ -7,10 +7,10 @@ public class EntityStats {
     public final String name;
     public final String type;
     public final int maxHP;
-    public int currHP;
     public final int attack;
     public final int defence;
     public final int speed;
+    public int currHP;
 
     public EntityStats(String name, String type, int currHp, int maxHP, int attack, int defence, int speed) {
         this.type = type;

@@ -31,7 +31,6 @@ public class BattleEngine {
     private StatusManager sm;
     private EntityTemplate selectedPlayer;
 
-    // TODO: ITEMS, ABILITIES ETC.
     public BattleEngine(GameResources db) {
         this.database = db;
     }
@@ -103,10 +102,6 @@ public class BattleEngine {
         return this.commandQueue.poll();
     }
 
-    public void clearCommands() {
-        this.commandQueue.clear();
-    }
-
     public void startEntityManager(List<EntityTemplate> entities) {
         this.em = new EntityManager();
         this.em.addEntitiesFromList(entities);
@@ -148,10 +143,6 @@ public class BattleEngine {
         this.playerInventory.remove(id);
     }
 
-    public void clearInventory() {
-        this.playerInventory.clear();
-    }
-
     public List<ActionTemplate> retrieveDbActions() {
         return database.abilities;
     }
@@ -165,10 +156,6 @@ public class BattleEngine {
         } else {
             return null;
         }
-    }
-
-    public List<EffectTemplate> retrieveDbEffects() {
-        return database.effects;
     }
 
     public EffectTemplate retrieveDbEffect(String effectId) {

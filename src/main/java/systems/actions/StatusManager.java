@@ -15,6 +15,7 @@ public class StatusManager {
     // Map of durations to entity IDs
     private final Map<Integer, Map<String, EffectInfo>> activeEffects = new HashMap<>();
     private final BattleEngine engine;
+
     public StatusManager(BattleEngine engine) {
         this.engine = engine;
     }

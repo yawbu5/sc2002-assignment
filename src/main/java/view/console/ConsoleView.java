@@ -45,7 +45,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
 
     @Override
     public void onRoundStart(int roundCount) {
-         // Game information tracking
+        // Game information tracking
 
         System.out.println();
         System.out.println("Start of round " + roundCount);
@@ -65,9 +65,9 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats target = this.entities.get(targetId);
 
         if (killed) {
-            System.out.printf("%nKILLED: %s -> %s -> %s: HP: %d - %d -> %d X ELIMINATED%n",caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
+            System.out.printf("%nKILLED: %s -> %s -> %s: HP: %d - %d -> %d X ELIMINATED%n", caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
         } else {
-            System.out.printf("%nDAMAGED: %s -> %s -> %s: HP: %d - %d -> %d%n",caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
+            System.out.printf("%nDAMAGED: %s -> %s -> %s: HP: %d - %d -> %d%n", caster.name, actionName, target.name, oldHp, damageDealt, target.currHP);
         }
     }
 
@@ -107,7 +107,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Congratulations, you have defeated all your enemies.");
-        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP , data.getRoundCounter(), playerInventory.size());
+        String result = String.format("Result: Player Victory | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP, data.getRoundCounter(), playerInventory.size());
         System.out.println(result);
         this.entities.clear();
     }
@@ -117,7 +117,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP , data.getRoundCounter(), playerInventory.size());
+        String result = String.format("Result: Player Defeat | Remaining HP: %d | Total Rounds: %d | Remaining items: %d", player.currHP, data.getRoundCounter(), playerInventory.size());
         System.out.println(result);
         this.entities.clear();
     }
