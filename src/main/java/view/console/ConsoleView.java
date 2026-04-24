@@ -125,7 +125,7 @@ public class ConsoleView implements MenuObserver, BattleObserver {
         EntityStats player = entities.get(0);
         System.out.println();
         System.out.println("Don't give up, try again!");
-        String result = String.format("Result: Player Defeat | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, roundCount, buildInventoryCountString().isEmpty());
+        String result = String.format("Result: Player Defeat | Remaining HP: %d / %d | Total Rounds: %d | Remaining items: %s", player.currHP, player.maxHP, roundCount, buildInventoryCountString());
         System.out.println(result);
         this.entities.clear();
     }
