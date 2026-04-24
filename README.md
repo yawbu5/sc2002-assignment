@@ -1,5 +1,18 @@
 # NTU - SC2002 Assignment
 
+## Building
+This project depends on Maven as its build tool.
+
+External Libraries:
+- Gson: JSON deserializing
+- JUnit: Testing framework
+
+Compiled JAR files are provided in the releases to run directly using `java -jar`, however if you wish to compile from source it is recommended to use an IDE to make the process faster.
+
+Otherwise, if you *really* insist on using a command line from source:
+
+1. execute `mvn package`
+2. then `mvn exec:java -Dexec.mainClass="Main"` to run.
 
 ## Project Architecture 
 
@@ -12,7 +25,7 @@
 - `data/GameResources` - The central serialized data repository for all the dynamic game configurations (i.e., entities, wave data, abilities)
 - `data/JSONLoader` - Utility for easily loading in JSON data according to a data template class.
 - `data/ActionTemplate` - Read-only blueprint defining what an action should do
-- `data/ActionEffectTemplate` - Read-only blueprint defining the types of status effects a action can perform.
+- `data/ActionEffectTemplate` - Read-only blueprint defining the types of status effects an action can perform.
 - `data/EffectTemplate` - Describes status effects
 - `actions/ActionManager` - Class that keeps tracks of action cooldowns and is overall in charge of the combat calculations 
 - `actions/StatusManager` - Class that keeps track of all status effects and handles the relative calculations

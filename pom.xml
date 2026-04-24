@@ -9,6 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <name>SC2002 Assignment</name>
 
+    <build>
+        <sourceDirectory>src/main</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>

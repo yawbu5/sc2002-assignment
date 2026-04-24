@@ -1,7 +1,6 @@
 package src.test.systems.actions;
 
 import data.ActionEffectTemplate;
-import data.EffectTemplate;
 import data.EntityTemplate;
 import data.GameResources;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,9 +58,9 @@ public class StatusManagerTest {
 
         statusManager.tickEffects();
         assertTrue(statusManager.getActiveEffects(0).containsKey("dmg_buff"));
-        assertEquals(1, statusManager.getActiveEffects(0).get("atk_buff").duration);
+        assertEquals(1, statusManager.getActiveEffects(0).get("dmg_buff").duration);
 
         statusManager.tickEffects();
-        assertFalse(statusManager.getActiveEffects(0).containsKey("atk_buff"));
+        assertFalse(statusManager.getActiveEffects(0).containsKey("dmg_buff"));
     }
 }
